@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语录合集 - 世说金语</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="quotes-page">
+    <!-- 左侧导航栏 -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-quote-left"></i> 世说金语</h2>
+            <p class="sidebar-subtitle">校园语录档案馆</p>
+        </div>
+        
+        <nav class="nav-categories">
+            <!-- 语文 -->
+            <div class="nav-item chinese active" data-subject="chinese">
+                <i class="fas fa-book"></i> 语文
+            </div>
+            <div class="teacher-list chinese active">
+                <div class="teacher-item" data-teacher="chenlin">陈琳</div>
+                <div class="teacher-item" data-teacher="xiaobao">小宝</div>
+            </div>
+            
+            <!-- 数学 -->
+            <div class="nav-item math" data-subject="math">
+                <i class="fas fa-calculator"></i> 数学
+            </div>
+            <div class="teacher-list math">
+                <div class="teacher-item" data-teacher="jinsheng">金声</div>
+                <div class="teacher-item" data-teacher="huangxin">黄歆</div>
+            </div>
+            
+            <!-- 英语 -->
+            <div class="nav-item english" data-subject="english">
+                <i class="fas fa-language"></i> 英语
+            </div>
+            <div class="teacher-list english">
+                <div class="teacher-item" data-teacher="fengqiuyun">冯秋云</div>
+                <div class="teacher-item" data-teacher="zhaoyongheng">赵永恒</div>
+            </div>
+            
+            <!-- 物理 -->
+            <div class="nav-item physics" data-subject="physics">
+                <i class="fas fa-atom"></i> 物理
+            </div>
+            <div class="teacher-list physics">
+                <div class="teacher-item" data-teacher="yanyouhong">颜有虹</div>
+            </div>
+            
+            <!-- 化学 -->
+            <div class="nav-item chemistry" data-subject="chemistry">
+                <i class="fas fa-flask"></i> 化学
+            </div>
+            <div class="teacher-list chemistry">
+                <div class="teacher-item" data-teacher="yanzhifang">严志芳</div>
+                <div class="teacher-item" data-teacher="chengbaoquan">程保权</div>
+            </div>
+            
+            <!-- 生物 -->
+            <div class="nav-item biology" data-subject="biology">
+                <i class="fas fa-dna"></i> 生物
+            </div>
+            <div class="teacher-list biology">
+                <div class="teacher-item" data-teacher="chenhuiqin">陈卉琴</div>
+                <div class="teacher-item" data-teacher="yeyongjing">叶永菁</div>
+            </div>
+            
+            <!-- 政治 -->
+            <div class="nav-item politics" data-subject="politics">
+                <i class="fas fa-landmark"></i> 政治
+            </div>
+            <div class="teacher-list politics">
+                <div class="teacher-item" data-teacher="lingen">林根</div>
+                <div class="teacher-item" data-teacher="fumin">傅敏</div>
+            </div>
+            
+            <!-- 学生语录 -->
+            <div class="nav-item" data-subject="students">
+                <i class="fas fa-user-graduate"></i> 学生语录
+            </div>
+            <div class="teacher-list students">
+                <div class="teacher-item active" data-teacher="shishuojiayu">《世说佳语》</div>
+            </div>
+            
+            <!-- 教官语录 -->
+            <div class="nav-item" data-subject="military">
+                <i class="fas fa-user-shield"></i> 教官语录
+            </div>
+            <div class="teacher-list military">
+                <div class="teacher-item" data-teacher="xingchen">星辰</div>
+            </div>
+        </nav>
+    </aside>
+    
+    <!-- 右侧内容区域 -->
+    <main class="content">
+        <header class="content-header">
+            <h1>校园语录合集</h1>
+            <div class="breadcrumb">
+                当前位置：<span id="breadcrumb-path">语文 / 陈琳</span>
+            </div>
+        </header>
+        
+        <!-- 各个老师的语录容器 -->
+        <div id="quotes-container" class="quotes-container active">
+            <!-- 内容由JavaScript动态加载 -->
+        </div>
+    </main>
+    
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
