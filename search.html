@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索语录 - 世说金语</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="quotes-page">
+    <!-- 左侧导航栏 -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-quote-left"></i> 世说金语</h2>
+            <p class="sidebar-subtitle">校园语录档案馆</p>
+        </div>
+        
+        <nav class="nav-categories">
+            <!-- 搜索菜单项 -->
+            <div class="nav-item search active">
+                <i class="fas fa-search"></i> 搜索语录
+            </div>
+            
+            <!-- 语文 -->
+            <div class="nav-item chinese" data-subject="chinese">
+                <i class="fas fa-book"></i> 语文
+            </div>
+            <div class="teacher-list chinese">
+                <div class="teacher-item" data-teacher="chenlin">陈琳</div>
+                <div class="teacher-item" data-teacher="xiaobao">小宝</div>
+            </div>
+            
+            <!-- 数学 -->
+            <div class="nav-item math" data-subject="math">
+                <i class="fas fa-calculator"></i> 数学
+            </div>
+            <div class="teacher-list math">
+                <div class="teacher-item" data-teacher="jinsheng">金声</div>
+                <div class="teacher-item" data-teacher="huangxin">黄歆</div>
+            </div>
+            
+            <!-- 英语 -->
+            <div class="nav-item english" data-subject="english">
+                <i class="fas fa-language"></i> 英语
+            </div>
+            <div class="teacher-list english">
+                <div class="teacher-item" data-teacher="fengqiuyun">冯秋云</div>
+                <div class="teacher-item" data-teacher="zhaoyongheng">赵永恒</div>
+            </div>
+            
+            <!-- 物理 -->
+            <div class="nav-item physics" data-subject="physics">
+                <i class="fas fa-atom"></i> 物理
+            </div>
+            <div class="teacher-list physics">
+                <div class="teacher-item" data-teacher="yanyouhong">颜有虹</div>
+            </div>
+            
+            <!-- 化学 -->
+            <div class="nav-item chemistry" data-subject="chemistry">
+                <i class="fas fa-flask"></i> 化学
+            </div>
+            <div class="teacher-list chemistry">
+                <div class="teacher-item" data-teacher="yanzhifang">严志芳</div>
+                <div class="teacher-item" data-teacher="chengbaoquan">程保权</div>
+            </div>
+            
+            <!-- 生物 -->
+            <div class="nav-item biology" data-subject="biology">
+                <i class="fas fa-dna"></i> 生物
+            </div>
+            <div class="teacher-list biology">
+                <div class="teacher-item" data-teacher="chenhuiqin">陈卉琴</div>
+                <div class="teacher-item" data-teacher="yeyongjing">叶永菁</div>
+            </div>
+            
+            <!-- 政治 -->
+            <div class="nav-item politics" data-subject="politics">
+                <i class="fas fa-landmark"></i> 政治
+            </div>
+            <div class="teacher-list politics">
+                <div class="teacher-item" data-teacher="lingen">林根</div>
+                <div class="teacher-item" data-teacher="fumin">傅敏</div>
+            </div>
+            
+            <!-- 学生语录 -->
+            <div class="nav-item" data-subject="students">
+                <i class="fas fa-user-graduate"></i> 学生语录
+            </div>
+            <div class="teacher-list students">
+                <div class="teacher-item" data-teacher="shishuojiayu">《世说佳语》</div>
+            </div>
+            
+            <!-- 教官语录 -->
+            <div class="nav-item" data-subject="military">
+                <i class="fas fa-user-shield"></i> 教官语录
+            </div>
+            <div class="teacher-list military">
+                <div class="teacher-item" data-teacher="xingchen">星辰</div>
+            </div>
+        </nav>
+    </aside>
+    
+    <!-- 右侧内容区域 -->
+    <main class="content">
+        <header class="content-header">
+            <h1>搜索语录</h1>
+            <div class="breadcrumb">
+                当前位置：<span id="breadcrumb-path">搜索语录</span>
+            </div>
+        </header>
+        
+        <!-- 搜索面板 -->
+        <div class="search-panel">
+            <div class="search-input-container">
+                <div class="search-input-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-keyword" placeholder="输入关键词搜索语录..." autocomplete="off">
+                    <button id="search-button" class="btn-search">
+                        <i class="fas fa-search"></i> 搜索
+                    </button>
+                </div>
+                
+                <div class="search-options">
+                    <div class="option-group">
+                        <label>搜索范围：</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="search-scope" value="all" checked>
+                                <span class="radio-custom"></span>
+                                全部语录
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="search-scope" value="specific">
+                                <span class="radio-custom"></span>
+                                指定老师
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group teacher-select-group" style="display: none;">
+                        <label>选择老师：</label>
+                        <select id="teacher-select">
+                            <option value="">请选择老师</option>
+                            <!-- 选项将由JavaScript动态生成 -->
+                        </select>
+                    </div>
+                    
+                    <div class="search-tips">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>提示：支持多个关键词，用空格分隔（如：外星人 金声）</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-results" id="search-results">
+                <!-- 初始状态 -->
+                <div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <h3>输入关键词开始搜索</h3>
+                    <p>搜索范围可选"全部语录"或"指定老师"</p>
+                </div>
+            </div>
+            
+            <div class="search-stats" id="search-stats" style="display: none;">
+                <!-- 搜索结果统计 -->
+            </div>
+        </div>
+    </main>
+    
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
