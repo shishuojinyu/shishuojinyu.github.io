@@ -1470,3 +1470,446 @@ function logout() {
     localStorage.removeItem('quotesAuthenticated');
     window.location.href = 'index.html';
 }
+
+
+// 搜索功能模块
+function initSearchPage() {
+    // 检查是否通过验证
+    if (localStorage.getItem('quotesAuthenticated') !== 'true') {
+        window.location.href = 'index.html';
+        return;
+    }
+    
+    // 初始化搜索页面
+    initSearchNavigation();
+    initSearchFunctionality();
+    initBackToTop();
+    populateTeacherSelect();
+    
+    // 检查URL中是否有搜索参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyword = urlParams.get('q');
+    const teacher = urlParams.get('teacher');
+    
+    if (keyword) {
+        document.getElementById('search-keyword').value = keyword;
+        if (teacher) {
+            document.querySelector('input[name="search-scope"][value="specific"]').checked = true;
+            document.querySelector('.teacher-select-group').style.display = 'block';
+            document.getElementById('teacher-select').value = teacher;
+        }
+        performSearch();
+    }
+}
+
+// 初始化搜索页面导航
+function initSearchNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    const teacherItems = document.querySelectorAll('.teacher-item');
+    
+    // 移除搜索项的点击事件，防止展开老师列表
+    document.querySelector('.nav-item.search').addEventListener('click', function(e) {
+        e.stopPropagation();
+        // 不执行任何操作，保持在搜索页面
+    });
+    
+    // 其他导航项仍然可用
+    navItems.forEach(item => {
+        if (!item.classList.contains('search')) {
+            item.addEventListener('click', function() {
+                const subject = this.getAttribute('data-subject');
+                window.location.href = `quotes.html#${subject}`;
+            });
+        }
+    });
+    
+    teacherItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const teacherId = this.getAttribute('data-teacher');
+            window.location.href = `quotes.html#${teacherId}`;
+        });
+    });
+}
+
+// 填充老师选择下拉框
+function populateTeacherSelect() {
+    const select = document.getElementById('teacher-select');
+    
+    // 添加所有老师选项
+    const teacherOptions = [
+        { id: 'chenlin', name: '陈琳（语文）' },
+        { id: 'xiaobao', name: '小宝（语文）' },
+        { id: 'jinsheng', name: '金声（数学）' },
+        { id: 'huangxin', name: '黄歆（数学）' },
+        { id: 'fengqiuyun', name: '冯秋云（英语）' },
+        { id: 'zhaoyongheng', name: '赵永恒（英语）' },
+        { id: 'yanyouhong', name: '颜有虹（物理）' },
+        { id: 'yanzhifang', name: '严志芳（化学）' },
+        { id: 'chengbaoquan', name: '程保权（化学）' },
+        { id: 'chenhuiqin', name: '陈卉琴（生物）' },
+        { id: 'yeyongjing', name: '叶永菁（生物）' },
+        { id: 'lingen', name: '林根（政治）' },
+        { id: 'fumin', name: '傅敏（政治）' },
+        { id: 'shishuojiayu', name: '《世说佳语》（学生）' },
+        { id: 'xingchen', name: '星辰（教官）' }
+    ];
+    
+    teacherOptions.forEach(teacher => {
+        const option = document.createElement('option');
+        option.value = teacher.id;
+        option.textContent = teacher.name;
+        select.appendChild(option);
+    });
+}
+
+// 初始化搜索功能
+function initSearchFunctionality() {
+    const searchButton = document.getElementById('search-button');
+    const searchInput = document.getElementById('search-keyword');
+    const scopeRadios = document.querySelectorAll('input[name="search-scope"]');
+    const teacherSelectGroup = document.querySelector('.teacher-select-group');
+    const teacherSelect = document.getElementById('teacher-select');
+    
+    // 监听搜索范围变化
+    scopeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'specific') {
+                teacherSelectGroup.style.display = 'block';
+                teacherSelect.focus();
+            } else {
+                teacherSelectGroup.style.display = 'none';
+            }
+        });
+    });
+    
+    // 搜索按钮点击事件
+    searchButton.addEventListener('click', performSearch);
+    
+    // 输入框回车事件
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+    
+    // 获取所有语录数据（用于搜索）
+    window.allQuotesData = getAllQuotesData();
+}
+
+// 获取所有语录数据
+function getAllQuotesData() {
+    // 如果已经有完整数据，直接返回
+    if (window.completeQuotesData) {
+        return window.completeQuotesData;
+    }
+    
+    // 这里应该是完整的语录数据
+    // 为了演示，我扩展了示例数据
+    const completeData = {
+        chenlin: {
+            name: "陈琳老师",
+            subject: "语文",
+            quotes: [
+                "平时不愿意做这些事（整文件夹），要成绩时又那么迫切，让人匪夷所思。",
+                "如果谁讲父为子纲，你要跳起来了",
+                "人生的一些遗憾，比如考上清华没上北大",
+                "（辩论赛）不能你抛出个球，我踢个毽子过去，咱们各玩各的",
+                "你们就31吧，老师又不是瞎子",
+                "让你站一会儿，让你练一会儿核心力量",
+                "政治成绩出来之前怎么不\"热奋\"一下呢？",
+                "刘梓楷，你骗我，只有49个字",
+                "好可怕，这是什么怪兽的眼睛",
+                "\"手撕鬼子\"为什么不想看？瞎扯淡！"
+            ]
+        },
+        jinsheng: {
+            name: "金声老师",
+            subject: "数学",
+            quotes: [
+                "知行合一，刻意练习",
+                "我对你的爱，就像这个圆一样，永远没有终点/起点",
+                "生气，真的很生气！！！",
+                "你们在福州格致中学是极大值，但在福州市不是",
+                "只有在别的课上做数学作业的份，没有在数学课上做别的作业的份",
+                "我觉得大家一定要去运动的",
+                "注意力资源分配失衡",
+                "我其实挺喜欢考试，考试能把你们的问题暴露出来",
+                "我这个人不喜欢欠债，来还债了",
+                "tan的图象婀娜多姿，前凸后翘"
+            ]
+        },
+        shishuojiayu: {
+            name: "《世说佳语》",
+            subject: "学生语录",
+            quotes: [
+                "我就是\"细胞质\"！（佳佳发现自己与\"细胞质\"同一天生日）",
+                "来迟了，不曾迎接远客（koè）",
+                "你是不是一头------大肥猪（对林铠墨）",
+                "呵哼呵（似人笑声）",
+                "没有加热的稀有化学书，可以卖到几万（林铠墨评：那你涂掉啊）",
+                "你是~我的~我是~你的~谁",
+                "互相挑逗------逗着玩呢",
+                "（鼓掌）全格致最伟大的老师（指金声）",
+                "章皓晨好凶猛",
+                "不是扫了吗？（佳佳摆出神秘妖娆姿势）（林慧琳：佳佳，不要讲话了）"
+            ]
+        },
+        xingchen: {
+            name: "星辰教官",
+            subject: "教官语录",
+            quotes: [
+                "国有国法，家有家规，实践基地也有自己的规章制度",
+                "我信任你们，相信你们已经将手机和零食上交了",
+                "现在可以举手了吧，我看看有多少人带手机",
+                "（叫周善进一直站在外面不进队列）",
+                "\"向前对正\"\"1,2,3！\"\"调整坐姿\"\"四变二！\"",
+                "365792#，246802#",
+                "没想到你们下来的还挺早（哎哟，撞上配电箱了）",
+                "\"跳啊，继续跳啊\"",
+                "（福州格致中学校长：某某某）",
+                "（5秒钟之内鼓掌30下，手没红就是偷懒）（坐下的时候做椅子的前1/3）"
+            ]
+        }
+        // 这里可以添加更多老师的完整数据
+    };
+    
+    window.completeQuotesData = completeData;
+    return completeData;
+}
+
+// 执行搜索
+function performSearch() {
+    const keywordInput = document.getElementById('search-keyword');
+    const keywords = keywordInput.value.trim();
+    const scope = document.querySelector('input[name="search-scope"]:checked').value;
+    const teacherSelect = document.getElementById('teacher-select');
+    
+    if (!keywords) {
+        showEmptyState('请输入搜索关键词');
+        return;
+    }
+    
+    // 拆分多个关键词
+    const searchTerms = keywords.split(/\s+/).filter(term => term.length > 0);
+    
+    // 确定搜索范围
+    let searchData = {};
+    if (scope === 'all') {
+        searchData = window.allQuotesData;
+    } else {
+        const teacherId = teacherSelect.value;
+        if (!teacherId) {
+            showEmptyState('请选择要搜索的老师');
+            return;
+        }
+        searchData[teacherId] = window.allQuotesData[teacherId];
+    }
+    
+    // 执行搜索
+    const results = searchQuotes(searchData, searchTerms);
+    
+    // 显示结果
+    displaySearchResults(results, searchTerms, keywords);
+    
+    // 更新URL（不刷新页面）
+    updateSearchURL(keywords, scope, teacherSelect.value);
+}
+
+// 搜索语录
+function searchQuotes(data, searchTerms) {
+    const results = [];
+    
+    Object.keys(data).forEach(teacherId => {
+        const teacher = data[teacherId];
+        
+        teacher.quotes.forEach((quote, index) => {
+            // 检查是否包含所有关键词（AND逻辑）
+            const matchesAll = searchTerms.every(term => 
+                quote.toLowerCase().includes(term.toLowerCase())
+            );
+            
+            if (matchesAll) {
+                results.push({
+                    teacherId: teacherId,
+                    teacherName: teacher.name,
+                    subject: teacher.subject,
+                    quote: quote,
+                    quoteIndex: index + 1,
+                    // 计算匹配度（匹配的关键词数量）
+                    matchScore: searchTerms.reduce((score, term) => 
+                        score + (quote.toLowerCase().split(term.toLowerCase()).length - 1), 0)
+                });
+            }
+        });
+    });
+    
+    // 按匹配度排序
+    return results.sort((a, b) => b.matchScore - a.matchScore);
+}
+
+// 显示搜索结果
+function displaySearchResults(results, searchTerms, originalQuery) {
+    const resultsContainer = document.getElementById('search-results');
+    const statsContainer = document.getElementById('search-stats');
+    
+    if (results.length === 0) {
+        showNoResults(originalQuery);
+        statsContainer.style.display = 'none';
+        return;
+    }
+    
+    // 显示统计信息
+    const teacherCount = new Set(results.map(r => r.teacherId)).size;
+    statsContainer.innerHTML = `
+        <div class="stats-info">
+            <div class="stat-item">
+                <span class="stat-value">${results.length}</span>
+                <span class="stat-label">条结果</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">${teacherCount}</span>
+                <span class="stat-label">位老师</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">${searchTerms.length}</span>
+                <span class="stat-label">个关键词</span>
+            </div>
+        </div>
+        <div class="suggestions">
+            <button class="btn-view-original" onclick="clearSearch()">清除搜索</button>
+        </div>
+    `;
+    statsContainer.style.display = 'flex';
+    
+    // 显示结果列表
+    let resultsHTML = '';
+    
+    results.forEach((result, index) => {
+        // 高亮显示关键词
+        let highlightedQuote = result.quote;
+        searchTerms.forEach(term => {
+            const regex = new RegExp(`(${term})`, 'gi');
+            highlightedQuote = highlightedQuote.replace(regex, '<span class="highlight">$1</span>');
+        });
+        
+        resultsHTML += `
+            <div class="search-result-item">
+                <div class="result-header">
+                    <div class="result-teacher">
+                        <span class="teacher-badge">${result.teacherName}</span>
+                        <span class="result-subject">${result.subject}</span>
+                    </div>
+                </div>
+                <div class="result-content">${highlightedQuote}</div>
+                <div class="result-meta">
+                    <span class="result-index">语录 #${result.quoteIndex}</span>
+                    <div class="result-actions">
+                        <a href="quotes.html#${result.teacherId}" class="btn-view-original">
+                            查看完整语录
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    resultsContainer.innerHTML = resultsHTML;
+}
+
+// 显示无结果状态
+function showNoResults(query) {
+    const resultsContainer = document.getElementById('search-results');
+    
+    // 常见搜索建议
+    const suggestions = ['金声', '陈琳', '外星人', '作业', '考试', '睡觉', '数学'];
+    
+    const suggestionsHTML = suggestions.map(term => 
+        `<span class="suggestion-tag" onclick="suggestSearch('${term}')">${term}</span>`
+    ).join('');
+    
+    resultsContainer.innerHTML = `
+        <div class="no-results">
+            <i class="fas fa-search-minus"></i>
+            <h3>未找到包含"${query}"的语录</h3>
+            <p>尝试其他关键词或减少搜索条件</p>
+            <div class="suggestions">
+                <h4>试试搜索：</h4>
+                <div class="suggestion-tags">
+                    ${suggestionsHTML}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// 显示空状态
+function showEmptyState(message) {
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = `
+        <div class="empty-state">
+            <i class="fas fa-search"></i>
+            <h3>${message}</h3>
+            <p>输入关键词搜索语录内容</p>
+        </div>
+    `;
+}
+
+// 建议搜索
+function suggestSearch(term) {
+    document.getElementById('search-keyword').value = term;
+    performSearch();
+}
+
+// 清除搜索
+function clearSearch() {
+    document.getElementById('search-keyword').value = '';
+    document.querySelector('input[name="search-scope"][value="all"]').checked = true;
+    document.querySelector('.teacher-select-group').style.display = 'none';
+    
+    const resultsContainer = document.getElementById('search-results');
+    const statsContainer = document.getElementById('search-stats');
+    
+    resultsContainer.innerHTML = `
+        <div class="empty-state">
+            <i class="fas fa-search"></i>
+            <h3>输入关键词开始搜索</h3>
+            <p>搜索范围可选"全部语录"或"指定老师"</p>
+        </div>
+    `;
+    
+    statsContainer.style.display = 'none';
+    
+    // 清除URL参数
+    history.replaceState({}, document.title, window.location.pathname);
+}
+
+// 更新搜索URL
+function updateSearchURL(keyword, scope, teacherId) {
+    const params = new URLSearchParams();
+    params.set('q', keyword);
+    
+    if (scope === 'specific' && teacherId) {
+        params.set('teacher', teacherId);
+    }
+    
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    history.replaceState({}, document.title, newUrl);
+}
+
+// 在主初始化函数中添加搜索页面检测
+document.addEventListener('DOMContentLoaded', function() {
+    // 检查当前页面
+    if (document.body.classList.contains('login-page')) {
+        initLoginPage();
+    } else if (document.body.classList.contains('quotes-page')) {
+        // 检查是否在搜索页面
+        const isSearchPage = window.location.pathname.includes('search.html') || 
+                           document.querySelector('.nav-item.search');
+        
+        if (isSearchPage) {
+            initSearchPage();
+        } else {
+            initQuotesPage();
+        }
+    }
+});
