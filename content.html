@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世说金语 - 校园语录合集</title>
+    <!-- 引用全局样式文件（index的样式+新增扩展） -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="content-page">
+    <!-- 左侧侧边栏容器 -->
+    <div class="sidebar" id="sidebar">
+        <!-- 侧边栏收缩/展开按钮 -->
+        <button class="sidebar-toggle" id="sidebar-toggle">≡</button>
+        <!-- 侧边栏内容 -->
+        <div class="sidebar-content">
+            <!-- 侧边栏顶部标题 -->
+            <div class="sidebar-header">
+                <h2 class="sidebar-main-title">世说金语</h2>
+                <p class="sidebar-sub-title">校园语录档案馆</p>
+                <hr class="sidebar-divider">
+            </div>
+            <!-- 科目导航列表 -->
+            <div class="subject-list">
+                <!-- 语文 -->
+                <div class="subject-item">
+                    <span class="subject-title">📖 语文</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="语文" data-teacher="陈琳">陈琳</span>
+                        <span class="teacher-item" data-subject="语文" data-teacher="范叶斌">范叶斌</span>
+                        <span class="teacher-item" data-subject="语文" data-teacher="郑宇（小宝）">郑宇（小宝）</span>
+                    </div>
+                </div>
+                <!-- 数学 -->
+                <div class="subject-item">
+                    <span class="subject-title">🔢 数学</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="数学" data-teacher="金声">金声</span>
+                    </div>
+                </div>
+                <!-- 英语 -->
+                <div class="subject-item">
+                    <span class="subject-title">🗣️ 英语</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="英语" data-teacher="冯秋云（fqy，frequently）">冯秋云</span>
+                        <span class="teacher-item" data-subject="英语" data-teacher="赵永恒（仓山一哥）">赵永恒（仓山一哥）</span>
+                    </div>
+                </div>
+                <!-- 物理 -->
+                <div class="subject-item">
+                    <span class="subject-title">⚛️ 物理</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="物理" data-teacher="颜有虹">颜有虹</span>
+                    </div>
+                </div>
+                <!-- 化学 -->
+                <div class="subject-item">
+                    <span class="subject-title">🧪 化学</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="化学" data-teacher="严志芳">严志芳</span>
+                        <span class="teacher-item" data-subject="化学" data-teacher="程保权">程保权</span>
+                    </div>
+                </div>
+                <!-- 生物 -->
+                <div class="subject-item">
+                    <span class="subject-title">🧬 生物</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="生物" data-teacher="陈卉琴">陈卉琴</span>
+                        <span class="teacher-item" data-subject="生物" data-teacher="叶永菁">叶永菁</span>
+                    </div>
+                </div>
+                <!-- 政治 -->
+                <div class="subject-item">
+                    <span class="subject-title">📜 政治</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="政治" data-teacher="傅敏">傅敏</span>
+                        <span class="teacher-item" data-subject="政治" data-teacher="林根">林根</span>
+                    </div>
+                </div>
+                <!-- 教官语录 -->
+                <div class="subject-item">
+                    <span class="subject-title">🥁 教官语录</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="教官语录" data-teacher="星辰">星辰</span>
+                    </div>
+                </div>
+                <!-- 学生语录（新增） -->
+                <div class="subject-item">
+                    <span class="subject-title">👨‍🎓 学生语录</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="学生语录" data-teacher="未整理">学生语录</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右侧内容区 -->
+    <div class="main-content" id="main-content">
+        <!-- 顶部搜索栏 -->
+        <div class="top-bar">
+            <a href="search.html" class="search-btn">
+                <span>🔍</span> 搜索
+            </a>
+        </div>
+
+        <!-- 内容展示区 -->
+        <div class="content-display" id="content-display">
+            <!-- 默认提示 -->
+            <div class="default-tip">
+                <h3>请从左侧选择科目/老师查看语录</h3>
+            </div>
+
+            <!-- 金声专属模块（默认隐藏，点击金声后显示） -->
+            <div class="jin-sheng-module" id="jin-sheng-module" style="display: none;">
+                <div class="module-title">金氏专属档案</div>
+                <div class="module-content">
+                    <div class="module-item">
+                        <h4>🔢 金氏方法</h4>
+                        <p>金氏代入法，特征三角形，主导函数，谁大显谁形，设联判韦译，焦点三角形，班牌拐杖，六大经典结论，等距抽取，基本量，先猜后证，颠来倒去，二检字，定序问题，除序法，查字典，正难则反，看图说话；</p>
+                        <!-- 预留补充空间（可直接在下方加文本） -->
+                        <div class="add-space"></div>
+                    </div>
+                    <div class="module-item">
+                        <h4>💬 金氏评语</h4>
+                        <p>土人计算，化简土人，土人，打死，乱来，面批，做的跟屎一样，太假，过了，计算好像有问题，好可怕的作业！</p>
+                        <div class="add-space"></div>
+                    </div>
+                    <div class="module-item">
+                        <h4>🥊 金氏拳法</h4>
+                        <p>响指，勾引；狂扇猛攻；捂嘴擦黑板；左手插口袋；伸长脖子喝水；最丑的马步姿势；让啊猛推，反手扫码，金氏遮板法，金氏空间四边形。</p>
+                        <div class="add-space"></div>
+                    </div>
+                    <div class="module-item">
+                        <h4>🏆 独特称号</h4>
+                        <p>金·土人的培育者·先行的教育家·金氏代入法的创造者·每日一笑的拍摄者·乱来做法的批判者·金氏拳法的代言人·新型擦黑板方式的发明家·太阳光芒的播撒者·课前五分钟的美食家·极化恒等式的摧毁者·物理强于数学的特异人士·逆水行舟的逆行者·太极扇与跑操的阻挡者·保持生气的情绪管理者·注意力资源分配失衡的宏观调控者·排列组合的掌控者·粉圈文化与宗教文化的集大成者·金声玉振的传播者·金声模仿大赛亚军·全年段所有人的爸爸·故意写错字的钓鱼者·发现火车站生育率高的调查者·作业的守护者·萝莉曲线的发明者·发现y=tanx曲线前凸后翘的量化调酒师·真实身份为柯西的弟弟柯南·韦神的接班人伪神（金神）·认为出卷老师男子有坑的叛逆者·孤独狂欢的辩证转化者·勇于提出自身错误的自我革命者·做高考卷前沐浴更衣的天才·幼儿园的宝玉老师·比肩Yau的数学皇帝·有4/5很喜欢你的追慕者·集卡家·解题路径统一与国家统一的捍卫者·黄金组合成员·红包的发送者·不断做题的升级玩家·豆包的测试者·袒胸露乳的篮球运动员·泄露天机的普罗米修斯·GPT5的翻墙使用者·烂唧唧的剩蛋老人·眼高手高作文题目的出题人·很有安全感之人·拉马努“金”·声老师。</p>
+                        <!-- 预留大量补充空间 -->
+                        <div class="add-space"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 语录列表容器（默认隐藏） -->
+            <div class="quote-list" id="quote-list" style="display: none;">
+                <!-- 标题区 -->
+                <h1 class="quote-main-title">校园语录合集</h1>
+                <div class="teacher-info">
+                    <span class="teacher-name" id="teacher-name">XXX老师</span>
+                    <span class="subject-tag" id="subject-tag">科目</span>
+                </div>
+                <p class="current-location" id="current-location">当前位置：科目/XXX老师。</p>
+                <hr class="content-divider">
+
+                <!-- 语录内容（动态填充） -->
+                <div class="quotes-container" id="quotes-container"></div>
+            </div>
+
+            <!-- 学生语录未整理提示（默认隐藏） -->
+            <div class="student-tip" id="student-tip" style="display: none;">
+                <h3>正在整理中，敬请期待✨</h3>
+            </div>
+
+            <!-- 星辰老师预留模板提示（默认隐藏） -->
+            <div class="xingchen-tip" id="xingchen-tip" style="display: none;">
+                <h3>星辰教官语录待补充～</h3>
+                <p class="add-tip">【新增语录方法】：打开content.html，找到“语录数据区”的星辰语录部分，复制模板行替换文本即可。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="back-to-top">↑</button>
+
+    <script>
+        // **************************
+        // 第一步：语录数据区（你新增语录只需改这里！）
+        // **************************
+        const quoteData = {
+            // 语文
+            "语文-陈琳": [
+                "平时不愿意做这些事（整文件夹），要成绩时又那么迫切，让人匪夷所思（FeSO4）",
+                "如果谁讲父为子纲，你要跳起来了",
+                "人生的一些遗憾，比如考上清华没上北大"
+            ],
+            "语文-范叶斌": [
+                "红颜福水",
+                "她（孙犁）说了我就信了",
+                "她（孙犁）的小说没有那种油腻味或者城市的尾气味儿"
+            ],
+            "语文-郑宇（小宝）": [
+                "@全体成员 背诵《六国论》时，务必将译文放在边上，一边理顺大意一边背诵，不要把这两件事情分开完成。课下注释一定要跟进记忆。今天小测也是不太理想。大家要加油了哈！",
+                "@全体成员 大家还是尽可能把六国论给它背掉。还有一篇《阿房宫赋》要背。下周一就要月考了。记住背诵的时候头脑要有画面感，摇头晃脑背起来。发出声音来。背诵以后去旅游还可以免门票",
+                "@全体成员 讲评课件一定要认真看，作业一定要认真做。这些内容一定要留到高三。"
+            ],
+            // 数学
+            "数学-金声": [
+                "赖祉祺，睡着了，是不是好久没上课睡习惯了",
+                "你们把叶可聿照片放讲台上干嘛？",
+                "是不是我走到哪，太阳光就照到哪。"
+            ],
+            // 英语
+            "英语-冯秋云（fqy，frequently）": [
+                "出去！不要在我的课上写其他作业！",
+                "你们全是情感荒漠",
+                "阅读的耐受力太差"
+            ],
+            "英语-赵永恒（仓山一哥）": [
+                "我的笔记本上有我的大头照，不过处理过了，因为原原本本会吓到同学",
+                "故意的，保留实力",
+                "等我有钱的时候，就开万人演唱会",
+                "国有国法，家有家规，实践基地也有自己的规章制度",
+                "我信任你们，相信你们已经将手机和零食上交了",
+                "现在可以举手了吧，我看看有多少人带手机"
+            ],
+            // 物理
+            "物理-颜有虹": [
+                "改到第一问：“嗯？三角函数还不错~”改到第二问：“还是一样的渣”",
+                "密密麻麻地绕10圈",
+                "所有的交流电统统给你掐死"
+            ],
+            // 化学
+            "化学-严志芳": [
+                "Na离子（第一声），估读（第三声），距离（第三声）",
+                "根都要烂了（评价林根）",
+                "中年油腻大叔（评价金声）"
+            ],
+            "化学-程保权": [
+                "金刚石晶胞请牢牢记住它有9个C",
+                "碳酸酸性怎么会比硝酸强呢？",
+                "1mol金刚石含有8molC"
+            ],
+            // 生物
+            "生物-陈卉琴": [
+                "均匀地死去",
+                "不讲评，我待会儿讲评",
+                "现在这么会说，待会儿要给你一道题你又不乐意"
+            ],
+            "生物-叶永菁": [
+                "你真是哪壶不开提哪壶，我就在这里算不算人",
+                "OK你个头啊，我看你是要KO了",
+                "这个男的是野生型"
+            ],
+            // 政治
+            "政治-傅敏": [
+                "人高马大，他还能涨，大学还能长",
+                "黑猫白猫，能抓老鼠的就是好老鼠",
+                "吕奕铮跟个猴系帅哥一样，陈林佳也是邻家小伙"
+            ],
+            "政治-林根": [
+                "林氏哲学是唯一正确的哲学",
+                "下雨要带伞（咯吱也有自己的天气之子）",
+                "只有两条路：考公，考研"
+            ],
+            // 教官语录（预留模板）
+            "教官语录-星辰": [
+                // 模板："新增语录1",
+                // 模板："新增语录2",
+                // 模板："新增语录3"
+            ]
+        };
+
+        // **************************
+        // 第二步：核心交互逻辑（不用改）
+        // **************************
+        // 1. 侧边栏收缩/展开
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const mainContent = document.getElementById('main-content');
+        let sidebarCollapsed = false;
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebarCollapsed = !sidebarCollapsed;
+            if (sidebarCollapsed) {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('sidebar-collapsed');
+                sidebarToggle.textContent = '☰';
+            } else {
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('sidebar-collapsed');
+                sidebarToggle.textContent = '≡';
+            }
+        });
+
+        // 2. 点击老师标签加载语录
+        const teacherItems = document.querySelectorAll('.teacher-item');
+        const contentDisplay = document.getElementById('content-display');
+        const defaultTip = document.querySelector('.default-tip');
+        const jinShengModule = document.getElementById('jin-sheng-module');
+        const quoteList = document.getElementById('quote-list');
+        const studentTip = document.getElementById('student-tip');
+        const xingchenTip = document.getElementById('xingchen-tip');
+        const teacherName = document.getElementById('teacher-name');
+        const subjectTag = document.getElementById('subject-tag');
+        const currentLocation = document.getElementById('current-location');
+        const quotesContainer = document.getElementById('quotes-container');
+
+        teacherItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // 隐藏所有区域
+                defaultTip.style.display = 'none';
+                jinShengModule.style.display = 'none';
+                quoteList.style.display = 'none';
+                studentTip.style.display = 'none';
+                xingchenTip.style.display = 'none';
+
+                const subject = item.dataset.subject;
+                const teacher = item.dataset.teacher;
+
+                // 学生语录
+                if (subject === '学生语录') {
+                    studentTip.style.display = 'flex';
+                    return;
+                }
+
+                // 星辰教官（未补充）
+                if (subject === '教官语录' && teacher === '星辰') {
+                    xingchenTip.style.display = 'flex';
+                    return;
+                }
+
+                // 加载语录列表
+                quoteList.style.display = 'block';
+                teacherName.textContent = `${teacher}老师`;
+                subjectTag.textContent = subject;
+                currentLocation.textContent = `当前位置：${subject}/${teacher}老师。`;
+
+                // 金声专属模块显示
+                if (teacher === '金声') {
+                    jinShengModule.style.display = 'block';
+                }
+
+                // 填充语录
+                const quotes = quoteData[`${subject}-${teacher}`] || [];
+                quotesContainer.innerHTML = '';
+                quotes.forEach((quote, index) => {
+                    const quoteCard = document.createElement('div');
+                    quoteCard.className = 'quote-card';
+                    quoteCard.innerHTML = `
+                        <span class="quote-number">${index + 1}</span>
+                        <p class="quote-text">${quote}</p>
+                    `;
+                    quotesContainer.appendChild(quoteCard);
+                });
+
+                // 滚动到顶部
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // 3. 回到顶部按钮
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
