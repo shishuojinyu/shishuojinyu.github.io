@@ -118,3 +118,426 @@ body {
         max-width: 220px;
     }
 }
+
+/* ========== content.html 专属样式（完整重写版） ========== */
+/* 1. 页面整体布局 */
+.content-page {
+    background: #f5f7fa; /* 右侧浅色调（比纯白深一点） */
+    min-height: 100vh;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. 左侧深蓝色侧边栏 */
+.sidebar {
+    width: 280px;
+    background: #2c3e50; /* 侧边栏主色：深蓝色 */
+    color: #fff;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* 侧边栏右侧滚动条 */
+    transition: width 0.3s ease;
+    z-index: 100;
+}
+
+/* 侧边栏收缩状态 */
+.sidebar.collapsed {
+    width: 60px;
+}
+
+/* 侧边栏收缩/展开按钮 */
+.sidebar-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #34495e;
+    color: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 101;
+}
+
+.sidebar.collapsed .sidebar-toggle {
+    right: 5px;
+}
+
+/* 侧边栏内容容器 */
+.sidebar-content {
+    padding: 20px 10px;
+    padding-top: 60px;
+}
+
+/* 收缩后隐藏文字 */
+.sidebar.collapsed .sidebar-main-title,
+.sidebar.collapsed .sidebar-sub-title,
+.sidebar.collapsed .subject-title span,
+.sidebar.collapsed .teacher-item {
+    display: none;
+}
+
+/* 侧边栏顶部标题区 */
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-main-title {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.sidebar-sub-title {
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}
+
+.sidebar-divider {
+    border: none;
+    border-top: 1px solid #34495e;
+    margin: 15px 0;
+}
+
+/* 科目列表样式 */
+.subject-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.subject-item {
+    background: #34495e;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.subject-title {
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 老师列表（悬浮展开） */
+.teacher-list {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.subject-item:hover .teacher-list {
+    display: flex;
+}
+
+.teacher-item {
+    font-size: 0.9rem;
+    color: #bdc3c7;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.teacher-item:hover {
+    background: #667eea;
+    color: #fff;
+}
+
+/* 3. 右侧主内容区 */
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* 侧边栏收缩后调整主内容区边距 */
+.main-content.sidebar-collapsed {
+    margin-left: 60px;
+}
+
+/* 顶部搜索按钮 */
+.top-bar {
+    text-align: right;
+    margin-bottom: 30px;
+}
+
+.search-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #667eea;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.search-btn:hover {
+    background: #5a6edb;
+}
+
+/* 4. 内容展示区通用提示（默认/学生/星辰） */
+.content-display {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.default-tip, .student-tip, .xingchen-tip {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    color: #666;
+    text-align: center;
+}
+
+.student-tip h3, .xingchen-tip h3 {
+    font-size: 1.8rem;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.add-tip {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+/* 5. 金声专属模块（金光闪闪土味版） */
+.jin-sheng-module {
+    background: linear-gradient(135deg, #fff8e1 0%, #ffeb3b 20%, #ffc107 50%, #ffeb3b 80%, #fff8e1 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 3px solid #ff8f00; /* 粗金色边框 */
+    box-shadow: 0 0 15px #ffeb3b, 0 0 30px #ffc107; /* 金色发光阴影 */
+    position: relative;
+    animation: goldFlash 3s infinite alternate; /* 轻微闪烁动画 */
+}
+
+/* 金光闪烁动画 */
+@keyframes goldFlash {
+    0% { box-shadow: 0 0 15px #ffeb3b, 0 0 30px #ffc107; }
+    100% { box-shadow: 0 0 20px #ffff00, 0 0 40px #ff9800; }
+}
+
+.module-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #825800; /* 深土黄色 */
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107; /* 文字描金发光 */
+    letter-spacing: 2px; /* 字间距拉大更土 */
+}
+
+.module-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.module-item {
+    background: #fffef0; /* 米黄色背景 */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+    border: 2px solid #ffc107; /* 金色细边框 */
+    margin-bottom: 10px;
+}
+
+.module-item h4 {
+    color: #b76e00; /* 土金色 */
+    margin-bottom: 10px;
+    text-shadow: 0 0 3px #ffeb3b; /* 小标题发光 */
+    font-weight: 800;
+}
+
+.module-item p {
+    line-height: 1.6;
+    color: #333;
+}
+
+.add-space {
+    height: 20px; /* 预留补充空间 */
+}
+
+/* 鼠标悬浮模块项，金光更亮 */
+.module-item:hover {
+    box-shadow: 0 0 10px #ffff00, 0 0 20px #ffc107;
+}
+
+/* 6. 语录列表展示区 */
+.quote-list {
+    display: none; /* 默认隐藏，点击老师后显示 */
+}
+
+.quote-main-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.teacher-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.teacher-name {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.subject-tag {
+    background: #667eea;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.current-location {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.content-divider {
+    border: none;
+    border-top: 2px solid #eee;
+    margin-bottom: 30px;
+}
+
+/* 7. 语录卡片样式 */
+.quotes-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.quote-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* 悬浮上浮效果 */
+.quote-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* 语录序号（带颜色） */
+.quote-number {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.quote-text {
+    line-height: 1.8;
+    color: #333;
+    padding-left: 30px;
+    margin: 0;
+}
+
+/* 8. 回到顶部按钮 */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #667eea;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: background 0.3s;
+    z-index: 99;
+}
+
+.back-to-top:hover {
+    background: #5a6edb;
+}
+
+/* 9. 移动端适配 */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 220px;
+    }
+    .main-content {
+        margin-left: 220px;
+        padding: 15px;
+    }
+    .sidebar.collapsed {
+        width: 50px;
+    }
+    .main-content.sidebar-collapsed {
+        margin-left: 50px;
+    }
+    .quote-main-title {
+        font-size: 2rem;
+    }
+    .module-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+        z-index: 200;
+    }
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+    }
+    .sidebar-toggle {
+        right: 10px;
+        left: auto;
+        z-index: 201;
+    }
+    .quote-card {
+        padding: 15px;
+    }
+    .back-to-top {
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        right: 20px;
+    }
+    }
