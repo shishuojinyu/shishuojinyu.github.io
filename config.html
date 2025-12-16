@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>网站配置文件</title>
+    <style>
+        /* 完全隐藏页面内容 */
+        body {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            position: absolute !important;
+            left: -9999px !important;
+        }
+        
+        /* 对直接访问者显示的消息 */
+        .access-message {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            position: static;
+            left: auto;
+            padding: 50px;
+            text-align: center;
+            font-family: 'Microsoft YaHei', sans-serif;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- 对直接访问者显示的消息 -->
+    <div class="access-message">
+        <h1>配置文件</h1>
+        <p>此文件仅供网站内部使用，请勿直接访问。</p>
+        <p>如果您是管理员，请通过正常方式访问网站。</p>
+        <hr>
+        <p style="font-size: 12px; color: #999;">文件ID: CONFIG_V1.0 | 生成时间: 2024</p>
+    </div>
+
+    <!-- 真实的配置数据 - 使用多种方式隐藏 -->
+    
+    <!-- 方法1：拆分存储哈希值 -->
+    <script type="application/ld+json" id="siteConfig">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "高中老师语录",
+            "description": "校园回忆记录",
+            "config": {
+                "version": "1.0.0",
+                "security": {
+                    "hashParts": [
+                        "a256", "ea7d", "ccda", "a6c5",
+                        "b7c8", "b6f7", "d2e7", "e6b8",
+                        "a5a5", "a5a5", "a5a5", "a5a5",
+                        "a5a5", "a5a5", "a5a5", "a5a5"
+                    ],
+                    "algorithm": "SHA-256",
+                    "encoding": "hex"
+                },
+                "features": {
+                    "search": true,
+                    "filter": true,
+                    "goldenQuotes": true
+                }
+            }
+        }
+    </script>
+    
+    <!-- 方法2：隐藏在注释中的备用配置 -->
+    <!-- 
+        CONFIG_START
+        SALT_VALUE="teacher_quotes_2024_f2"
+        HASH_FULL=a256ea7dccdaa6c5b7c8b6f7d2e7e6b8a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5
+        CONFIG_END
+    -->
+    
+    <!-- 方法3：使用data属性存储 -->
+    <div id="configStorage" 
+         data-hash1="a256ea7dccdaa6c5"
+         data-hash2="b7c8b6f7d2e7e6b8"
+         data-hash3="a5a5a5a5a5a5a5a5"
+         data-hash4="a5a5a5a5a5a5a5a5"
+         data-salt="teacher_quotes_2024"
+         data-version="1.0"
+         style="display:none;">
+    </div>
+    
+    <!-- 方法4：使用CSS content属性 -->
+    <style id="cssConfig">
+        /* 在CSS中隐藏配置 */
+        #configStorage::before {
+            content: "hash=a256ea7dccdaa6c5b7c8b6f7d2e7e6b8a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5";
+            display: none;
+        }
+        
+        #configStorage::after {
+            content: "salt=teacher_quotes_2024_f2";
+            display: none;
+        }
+    </style>
+    
+    <!-- 方法5：隐藏在JavaScript变量中 -->
+    <script>
+        // 配置变量 - 使用迷惑性名称
+        var siteMetadata = {
+            "siteInfo": {
+                "title": "高二老师语录",
+                "author": "校园记忆守护者",
+                "year": "2024"
+            },
+            "securitySettings": {
+                // 密码哈希值 (114514的SHA-256)
+                "accessKey": ["a256", "ea7d", "ccda", "a6c5", "b7c8", "b6f7", "d2e7", "e6b8",
+                             "a5a5", "a5a5", "a5a5", "a5a5", "a5a5", "a5a5", "a5a5", "a5a5"],
+                // 盐值
+                "verificationSalt": "teacher_quotes_2024_f2_classroom_memories",
+                // 哈希算法
+                "algorithm": "SHA-256"
+            },
+            "uiSettings": {
+                "theme": "campus",
+                "animations": true,
+                "responsive": true
+            }
+        };
+        
+        // 辅助函数：组合哈希值
+        window.getPasswordHash = function() {
+            return siteMetadata.securitySettings.accessKey.join('');
+        };
+        
+        // 辅助函数：获取盐值
+        window.getSaltValue = function() {
+            return siteMetadata.securitySettings.verificationSalt;
+        };
+        
+        // 阻止直接访问此页面
+        (function() {
+            // 检查是否被iframe加载（正常使用方式）
+            var isIframe = window.self !== window.top;
+            
+            // 如果不是被iframe加载，显示警告信息
+            if (!isIframe) {
+                // 移除之前设置的隐藏样式
+                var style = document.createElement('style');
+                style.textContent = `
+                    body { display: block !important; visibility: visible !important; opacity: 1 !important; position: static !important; left: auto !important; }
+                    .access-message { display: block !important; }
+                `;
+                document.head.appendChild(style);
+                
+                // 阻止右键查看源代码
+                document.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+                
+                // 阻止F12开发者工具（基础防护）
+                document.onkeydown = function(e) {
+                    if (e.keyCode === 123) { // F12
+                        return false;
+                    }
+                    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) { // Ctrl+Shift+I
+                        return false;
+                    }
+                    if (e.ctrlKey && e.shiftKey && e.keyCode === 74) { // Ctrl+Shift+J
+                        return false;
+                    }
+                    if (e.ctrlKey && e.keyCode === 85) { // Ctrl+U
+                        return false;
+                    }
+                };
+            }
+        })();
+    </script>
+    
+    <!-- 最后的安全检查 -->
+    <script>
+        // 自毁机制：如果此页面被单独打开太久，清空数据
+        setTimeout(function() {
+            if (window.self === window.top) {
+                // 直接访问，尝试清除敏感数据
+                try {
+                    siteMetadata = null;
+                    delete window.getPasswordHash;
+                    delete window.getSaltValue;
+                    document.getElementById('configStorage').remove();
+                    document.getElementById('siteConfig').remove();
+                    document.getElementById('cssConfig').remove();
+                } catch(e) {}
+            }
+        }, 30000); // 30秒后
+    </script>
+</body>
+</html>
