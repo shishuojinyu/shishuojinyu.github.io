@@ -1,0 +1,35 @@
+# 高二老师语录网站 - 禁止搜索引擎抓取
+User-agent: *
+Disallow: /
+
+# 明确禁止主流搜索引擎
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Googlebot-Image
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: 360Spider
+Disallow: /
+
+User-agent: Sogou web spider
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+# 禁止爬虫访问配置文件和脚本
+Disallow: /config.html
+Disallow: /script.js
+
+# 隐藏网站地图（我们没有，所以注释掉）
+# Sitemap: https://example.com/sitemap.xml
+
+# 延迟爬取速度（如果有爬虫无视禁止）
+# Crawl-delay: 10
