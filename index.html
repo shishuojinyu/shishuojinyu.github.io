@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 网站标题匹配“世说金语” -->
+    <!-- 网站标题匹配"世说金语" -->
     <title>世说金语 - 校园语录存档馆</title>
     <!-- 引用外部样式文件，保证样式统一管理 -->
     <link rel="stylesheet" href="style.css">
@@ -21,7 +21,7 @@
                     type="password" 
                     id="password-input" 
                     placeholder="请输入访问密码" 
-                    autocomplete="current-password" <!-- 允许浏览器保存密码 -->
+                    autocomplete="current-password"
                 >
                 <button id="submit-btn">确定</button>
             </div>
@@ -31,34 +31,8 @@
     </div>
 
     <script>
-        // 核心：SHA-256哈希计算函数（适配浏览器原生API）
-        async function sha256(message) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(message);
-            const hash = await crypto.subtle.digest('SHA-256', data);
-            // 转换为十六进制字符串（与config.html中的哈希格式一致）
-            return Array.from(new Uint8Array(hash))
-                .map(b => b.toString(16).padStart(2, '0'))
-                .join('');
-        }
-
-        // 从config.html读取密码哈希值
-        async function getPasswordHash() {
-            try {
-                const response = await fetch('config.html');
-                if (!response.ok) throw new Error('配置文件加载失败');
-                const html = await response.text();
-                // 正则提取config.html中的PASSWORD_HASH值
-                const hashMatch = html.match(/const PASSWORD_HASH = "([a-f0-9]+)"/);
-                return hashMatch ? hashMatch[1] : null;
-            } catch (error) {
-                console.error('获取哈希值失败：', error);
-                return null;
-            }
-        }
-
-        // 密码验证核心逻辑
-        async function verifyPassword() {
+        // 简化的密码验证函数
+        function verifyPassword() {
             const passwordInput = document.getElementById('password-input');
             const tipText = document.getElementById('tip-text');
             const inputPassword = passwordInput.value.trim();
@@ -70,17 +44,8 @@
                 return;
             }
 
-            // 获取目标哈希值
-            const targetHash = await getPasswordHash();
-            if (!targetHash) {
-                tipText.textContent = '配置加载失败，请稍后重试！';
-                tipText.style.color = '#e74c3c';
-                return;
-            }
-
-            // 计算输入密码的哈希并比对
-            const inputHash = await sha256(inputPassword);
-            if (inputHash === targetHash) {
+            // 直接比较密码是否为"114514"
+            if (inputPassword === '114514') {
                 // 验证成功：提示+禁用按钮+3秒跳转
                 tipText.textContent = '密码正确，正在进入...';
                 tipText.style.color = '#27ae60';
