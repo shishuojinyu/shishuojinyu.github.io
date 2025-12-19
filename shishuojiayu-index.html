@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世说佳语 - 高级保密访问</title>
+    <style>
+        /* 暗网风格主题 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ff00;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 背景扫描线效果 */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent 95%, rgba(0, 255, 0, 0.05) 95%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 数据流效果 */
+        .data-stream {
+            position: absolute;
+            color: rgba(0, 255, 0, 0.1);
+            font-size: 14px;
+            user-select: none;
+            z-index: 0;
+        }
+
+        /* 主容器 */
+        .container {
+            background: rgba(10, 10, 20, 0.9);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 5px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.1),
+                        0 0 60px rgba(0, 100, 255, 0.05);
+            position: relative;
+            z-index: 2;
+            animation: glitch 5s infinite;
+        }
+
+        /* 故障效果 */
+        @keyframes glitch {
+            0%, 100% {
+                transform: translate(0);
+            }
+            97% {
+                transform: translate(0);
+            }
+            98% {
+                transform: translate(-2px, 1px);
+            }
+            99% {
+                transform: translate(1px, -2px);
+            }
+        }
+
+        /* 标题样式 */
+        .main-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            position: relative;
+        }
+
+        .main-title::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 2px;
+            background: #00ff00;
+            margin: 15px auto;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        /* 副标题 */
+        .sub-title {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #cccccc;
+            letter-spacing: 2px;
+        }
+
+        /* 警告框 */
+        .warning-box {
+            background: rgba(255, 50, 50, 0.1);
+            border: 1px solid rgba(255, 50, 50, 0.5);
+            border-radius: 3px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #ff6666;
+            position: relative;
+        }
+
+        .warning-box::before {
+            content: "⚠";
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        /* 密码输入区域 */
+        .password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .password-form input {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 255, 0, 0.5);
+            border-radius: 3px;
+            padding: 15px;
+            color: #00ff00;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .password-form input:focus {
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .password-form input::placeholder {
+            color: #666666;
+        }
+
+        .password-form button {
+            background: linear-gradient(45deg, #0a5, #0c8);
+            border: none;
+            border-radius: 3px;
+            padding: 15px;
+            color: #000;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .password-form button:hover {
+            background: linear-gradient(45deg, #0c8, #0fa);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+
+        .password-form button:active {
+            transform: translateY(1px);
+        }
+
+        .password-form button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* 提示文本 */
+        .tip-text {
+            text-align: center;
+            font-size: 0.9rem;
+            min-height: 20px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .tip-text.success {
+            color: #00ff00;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+
+        .tip-text.error {
+            color: #ff3333;
+            text-shadow: 0 0 5px rgba(255, 50, 50, 0.5);
+        }
+
+        /* 安全等级指示器 */
+        .security-level {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .security-level .level-bar {
+            width: 100px;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .security-level .level-bar::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 85%;
+            background: linear-gradient(90deg, #ff3300, #ffcc00);
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #444;
+            margin-top: 30px;
+            letter-spacing: 1px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .sub-title {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 数据流背景元素 -->
+    <div id="data-stream-container"></div>
+    
+    <!-- 主容器 -->
+    <div class="container">
+        <h1 class="main-title">世说佳语</h1>
+        <p class="sub-title">高级保密访问系统</p>
+        
+        <!-- 警告框 -->
+        <div class="warning-box">
+            本页面保密等级高，请输入访问密码
+        </div>
+        
+        <!-- 密码输入区域 -->
+        <div class="password-form">
+            <input 
+                type="password" 
+                id="password-input" 
+                placeholder="输入访问密码" 
+                autocomplete="current-password"
+            >
+            <button id="submit-btn">验证访问</button>
+        </div>
+        
+        <!-- 提示文本 -->
+        <p class="tip-text" id="tip-text"></p>
+        
+        <!-- 安全等级指示器 -->
+        <div class="security-level">
+            <span>安全等级</span>
+            <div class="level-bar"></div>
+            <span>高级</span>
+        </div>
+        
+        <!-- 页脚 -->
+        <div class="footer">
+            访问日志将被记录 | 未经授权访问将受法律追究
+        </div>
+    </div>
+
+    <script>
+        // 创建动态数据流背景
+        function createDataStream() {
+            const container = document.getElementById('data-stream-container');
+            const characters = "01abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$%&@#";
+            
+            // 创建多个数据流
+            for (let i = 0; i < 20; i++) {
+                const stream = document.createElement('div');
+                stream.className = 'data-stream';
+                
+                // 随机位置
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                stream.style.left = `${left}%`;
+                stream.style.top = `${top}%`;
+                
+                // 随机内容
+                let content = '';
+                const length = Math.floor(Math.random() * 30) + 10;
+                for (let j = 0; j < length; j++) {
+                    content += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                
+                stream.textContent = content;
+                
+                // 随机动画
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
+                stream.style.animation = `float ${duration}s linear ${delay}s infinite`;
+                
+                container.appendChild(stream);
+            }
+            
+            // 添加浮动动画
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes float {
+                    0% { transform: translateY(0) translateX(0); opacity: 0; }
+                    10% { opacity: 0.1; }
+                    50% { opacity: 0.2; }
+                    90% { opacity: 0.1; }
+                    100% { transform: translateY(-100vh) translateX(${Math.random() * 50 - 25}px); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // 创建数据流背景
+        createDataStream();
+        
+        // 简化的密码验证函数
+        function verifyPassword() {
+            const passwordInput = document.getElementById('password-input');
+            const tipText = document.getElementById('tip-text');
+            const submitBtn = document.getElementById('submit-btn');
+            const inputPassword = passwordInput.value.trim();
+            
+            // 空密码提示
+            if (!inputPassword) {
+                tipText.textContent = '请输入访问密码！';
+                tipText.className = 'tip-text error';
+                return;
+            }
+            
+            // 直接比较密码是否为"178187362"
+            if (inputPassword === '178187362') {
+                // 验证成功：提示+禁用按钮+3秒跳转
+                tipText.textContent = '密码验证成功，正在进入保密区域...';
+                tipText.className = 'tip-text success';
+                passwordInput.disabled = true;
+                submitBtn.disabled = true;
+                
+                // 添加一些视觉反馈
+                document.querySelector('.container').style.boxShadow = 
+                    '0 0 50px rgba(0, 255, 0, 0.5), 0 0 100px rgba(0, 255, 0, 0.2)';
+                
+                setTimeout(() => {
+                    window.location.href = 'shishuojiayu-content.html';
+                }, 3000); // 等待3秒跳转
+            } else {
+                // 验证失败：提示+清空输入框
+                tipText.textContent = '密码错误！访问被拒绝。';
+                tipText.className = 'tip-text error';
+                
+                // 添加错误视觉反馈
+                document.querySelector('.container').style.animation = 'none';
+                setTimeout(() => {
+                    document.querySelector('.container').style.animation = 'glitch 5s infinite';
+                }, 10);
+                
+                // 清空输入框
+                passwordInput.value = '';
+                
+                // 聚焦到输入框
+                passwordInput.focus();
+            }
+        }
+        
+        // 绑定按钮点击事件
+        document.getElementById('submit-btn').addEventListener('click', verifyPassword);
+        
+        // 绑定回车触发验证
+        document.getElementById('password-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') verifyPassword();
+        });
+        
+        // 页面加载后自动聚焦到密码输入框
+        window.addEventListener('load', () => {
+            document.getElementById('password-input').focus();
+        });
+    </script>
+</body>
+</html>
