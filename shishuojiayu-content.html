@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
-            background-color: #2a2a2a; /* 介于黑白中间的灰色 */
+            background-color: #3a3a3a; /* 调亮一些的背景颜色 */
             color: #333;
             line-height: 1.6;
             display: flex;
@@ -43,7 +43,7 @@
         /* 侧边栏样式 */
         .sidebar {
             width: 250px;
-            background-color: #1e1e1e;
+            background-color: #2a2a2a; /* 调亮侧边栏 */
             color: #ddd;
             height: 100vh;
             position: fixed;
@@ -63,7 +63,7 @@
             position: absolute;
             right: 10px;
             top: 10px;
-            background: #333;
+            background: #444;
             color: white;
             border: none;
             width: 40px;
@@ -76,7 +76,7 @@
         }
 
         .sidebar-toggle:hover {
-            background: #444;
+            background: #555;
             transform: scale(1.1);
         }
 
@@ -88,7 +88,7 @@
             text-align: center;
             margin-bottom: 30px;
             padding-bottom: 15px;
-            border-bottom: 1px solid #444;
+            border-bottom: 1px solid #555;
         }
 
         .sidebar-main-title {
@@ -99,7 +99,7 @@
         }
 
         .sidebar-sub-title {
-            color: #aaa;
+            color: #bbb;
             font-size: 0.9rem;
             letter-spacing: 2px;
         }
@@ -111,11 +111,11 @@
         }
 
         .subject-item {
-            background: #2a2a2a;
+            background: #333;
             border-radius: 8px;
             overflow: hidden;
             transition: all 0.3s ease;
-            border: 1px solid #444;
+            border: 1px solid #555;
         }
 
         .subject-item:hover {
@@ -128,7 +128,7 @@
             padding: 12px 15px;
             font-weight: bold;
             font-size: 1.1rem;
-            background: #333;
+            background: #3a3a3a;
             color: #ff9999;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -136,7 +136,7 @@
         }
 
         .subject-item:hover .subject-title {
-            background: #3a3a3a;
+            background: #444;
         }
 
         .subject-note {
@@ -159,7 +159,7 @@
 
         .teacher-item {
             padding: 8px 12px;
-            background: #333;
+            background: #3a3a3a;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -169,7 +169,7 @@
         }
 
         .teacher-item:hover {
-            background: #3a3a3a;
+            background: #444;
             color: #ff9999;
             border-color: #ff5555;
             transform: scale(1.02);
@@ -207,7 +207,7 @@
             border-radius: 8px;
             text-decoration: none;
             transition: all 0.3s ease;
-            border: 1px solid #444;
+            border: 1px solid #555;
             min-width: 120px;
             text-align: center;
         }
@@ -225,7 +225,7 @@
 
         /* 内容展示区 */
         .content-display {
-            background: #3a3a3a;
+            background: #4a4a4a; /* 调亮内容区域 */
             border-radius: 12px;
             padding: 30px;
             min-height: 70vh;
@@ -241,7 +241,7 @@
         }
 
         .default-tip h3 {
-            color: #aaa;
+            color: #bbb;
             font-size: 1.5rem;
             text-align: center;
         }
@@ -283,7 +283,7 @@
 
         .current-location {
             text-align: center;
-            color: #aaa;
+            color: #bbb;
             margin-bottom: 25px;
             font-size: 0.95rem;
         }
@@ -295,11 +295,11 @@
             margin: 25px 0;
         }
 
-        /* 语录卡片 */
+        /* 语录卡片 - 长条形状，从上到下排列 */
         .quotes-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             margin-top: 20px;
         }
 
@@ -307,23 +307,20 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            position: relative;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             display: flex;
-            flex-direction: column;
-            min-height: 180px;
+            align-items: center;
+            position: relative;
+            min-height: 80px;
         }
 
         .quote-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .quote-number {
-            position: absolute;
-            top: 10px;
-            left: 10px;
             background: #ff3333; /* 红色序号 */
             color: white;
             width: 30px;
@@ -335,36 +332,42 @@
             font-weight: bold;
             font-size: 1rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            margin-right: 20px;
         }
 
         .quote-text {
-            margin-top: 40px;
             font-size: 1.1rem;
             line-height: 1.7;
             color: #333;
             flex-grow: 1;
+            padding-right: 20px;
         }
 
-        /* 语录时间戳 */
-        .quote-date {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0; /* 浅色分割线 */
+        /* 语录时间戳 - 放在最右边，用竖线分割 */
+        .quote-time {
+            display: flex;
+            align-items: center;
             color: #888;
             font-size: 0.9rem;
-            text-align: right;
             font-style: italic;
+            padding-left: 20px;
+            border-left: 2px solid #e0e0e0; /* 竖线分割 */
+            height: 40px;
+            flex-shrink: 0;
+            min-width: 120px;
+            justify-content: center;
         }
 
         /* 特殊提示 */
-        .student-tip, .xingchen-tip {
+        .student-tip {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 50vh;
         }
 
-        .student-tip h3, .xingchen-tip h3 {
+        .student-tip h3 {
             color: #ff9999;
             font-size: 1.8rem;
             text-align: center;
@@ -411,10 +414,6 @@
             .main-content.sidebar-collapsed {
                 margin-left: 50px;
             }
-            
-            .quotes-container {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
         }
 
         @media (max-width: 768px) {
@@ -440,6 +439,33 @@
                 width: 100%;
                 max-width: 200px;
             }
+            
+            .quote-card {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            
+            .quote-number {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .quote-text {
+                padding-right: 0;
+                margin-bottom: 15px;
+                width: 100%;
+            }
+            
+            .quote-time {
+                border-left: none;
+                border-top: 1px solid #e0e0e0;
+                padding-left: 0;
+                padding-top: 10px;
+                height: auto;
+                width: 100%;
+                justify-content: flex-end;
+            }
         }
 
         @media (max-width: 576px) {
@@ -450,10 +476,6 @@
             
             .quote-main-title {
                 font-size: 1.5rem;
-            }
-            
-            .quotes-container {
-                grid-template-columns: 1fr;
             }
             
             .content-display {
@@ -487,7 +509,7 @@
                 <div class="subject-item">
                     <span class="subject-title">📜 旧世说佳语</span>
                     <div class="teacher-list">
-                        <span class="teacher-item" data-subject="旧世说佳语" data-teacher="未整理">旧语录合集</span>
+                        <span class="teacher-item" data-subject="旧世说佳语" data-teacher="2025年6月">2025年6月语录</span>
                     </div>
                 </div>
                 
@@ -496,7 +518,7 @@
                     <span class="subject-title">✨ 新世说佳语</span>
                     <span class="subject-note">由于十二·一事变，《旧世说佳语》目前已停止更新，以下为《新世说佳语》</span>
                     <div class="teacher-list">
-                        <span class="teacher-item" data-subject="新世说佳语" data-teacher="2025年">2025年语录</span>
+                        <span class="teacher-item" data-subject="新世说佳语" data-teacher="2025年12月">2025年12月语录</span>
                     </div>
                 </div>
             </div>
@@ -552,19 +574,20 @@
         // 第一步：语录数据区（你新增语录只需改这里！）
         // **************************
         const quoteData = {
-            // 旧世说佳语
-            "旧世说佳语-未整理": [
+            // 旧世说佳语 - 2025年6月语录
+            "旧世说佳语-2025年6月": [
                 {text: "我就是'细胞质'！（佳佳发现自己与'细胞质'同一天生日）", date: "2025-06-03"},
                 {text: "来迟了，不曾迎接远客（koè）", date: "2025-06-03"},
-                {text: "你是不是一头——大肥猪（对林铠墨）", date: "2025-06-03"},
+                {text: "你是不是一头——大肥猪（对林铠墨）", date: "2025-06-03"}
+                // 可以在这里继续添加旧语录...
             ],
             
-            // 新世说佳语
-            "新世说佳语-2025年": [
+            // 新世说佳语 - 2025年12月语录
+            "新世说佳语-2025年12月": [
                 {text: "你也是css大神？（张子扬：我这全部代码都是用Deepseek写的）啊？", date: "2025-12-01"},
                 {text: "先在家里找嘛…（指找Sara）", date: "2025-12-01"},
                 {text: "对不起……（陈卉琴：对不起有用要警察干嘛）", date: "2025-12-01"}
-                // 以后你可以在这里继续添加，格式保持一致即可
+                // 以后你可以在这里继续添加新语录，格式保持一致即可
                 // {text: "新语录内容", date: "YYYY-MM-DD"}
             ]
         };
@@ -612,12 +635,6 @@
                 const subject = item.dataset.subject;
                 const teacher = item.dataset.teacher;
 
-                // 未整理分类
-                if (teacher === '未整理') {
-                    studentTip.style.display = 'flex';
-                    return;
-                }
-
                 // 加载语录列表
                 quoteList.style.display = 'block';
                 teacherName.textContent = `${teacher}`;
@@ -629,7 +646,7 @@
                 quotesContainer.innerHTML = '';
                 
                 if (quotes.length === 0) {
-                    quotesContainer.innerHTML = '<p class="no-quotes">暂无语录，欢迎补充！</p>';
+                    quotesContainer.innerHTML = '<p class="no-quotes" style="color:#bbb; text-align:center; padding:30px;">暂无语录，欢迎补充！</p>';
                 } else {
                     quotes.forEach((quoteObj, index) => {
                         const quoteCard = document.createElement('div');
@@ -637,7 +654,7 @@
                         quoteCard.innerHTML = `
                             <span class="quote-number">${index + 1}</span>
                             <p class="quote-text">${quoteObj.text}</p>
-                            <div class="quote-date">${quoteObj.date}</div>
+                            <div class="quote-time">${quoteObj.date}</div>
                         `;
                         quotesContainer.appendChild(quoteCard);
                     });
