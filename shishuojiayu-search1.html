@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世说佳语 - 本页面搜索</title>
+    <style>
+        /* 基础重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background-color: #3a3a3a;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 警告标语 */
+        .warning-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #ff3333, #cc0000);
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            background: #2a2a2a;
+            padding: 15px 20px;
+            margin-top: 50px; /* 给警告标语留出空间 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            color: #ff5555;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
+            color: #ddd;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #ff5555;
+            color: white;
+        }
+
+        /* 搜索主容器 */
+        .search-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* 搜索标题 */
+        .search-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .search-title {
+            color: #ff5555;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 85, 85, 0.3);
+        }
+
+        .search-subtitle {
+            color: #bbb;
+            font-size: 1.1rem;
+        }
+
+        /* 搜索框区域 */
+        .search-box {
+            background: #4a4a4a;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .search-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-label {
+            color: #ddd;
+            font-size: 1.1rem;
+            min-width: 120px;
+            font-weight: bold;
+        }
+
+        .keyword-input {
+            flex: 1;
+            background: #333;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px 20px;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .keyword-input:focus {
+            outline: none;
+            border-color: #ff5555;
+            box-shadow: 0 0 10px rgba(255, 85, 85, 0.3);
+        }
+
+        .date-input {
+            background: #333;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            color: white;
+            font-size: 1.1rem;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .date-input:focus {
+            outline: none;
+            border-color: #ff5555;
+            box-shadow: 0 0 10px rgba(255, 85, 85, 0.3);
+        }
+
+        /* 高级选项 */
+        .advanced-options {
+            background: #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 10px;
+            border: 1px solid #555;
+        }
+
+        .advanced-title {
+            color: #ff9999;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .advanced-title span {
+            transition: transform 0.3s ease;
+        }
+
+        .advanced-title.active span {
+            transform: rotate(90deg);
+        }
+
+        .advanced-content {
+            display: none;
+            padding-top: 15px;
+            border-top: 1px solid #555;
+        }
+
+        .advanced-content.show {
+            display: block;
+        }
+
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .date-range-text {
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* 搜索按钮 */
+        .search-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .search-btn {
+            background: linear-gradient(45deg, #ff3333, #ff5555);
+            border: none;
+            border-radius: 8px;
+            padding: 15px 40px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(45deg, #ff5555, #ff7777);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 85, 85, 0.4);
+        }
+
+        .reset-btn {
+            background: #555;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 40px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .reset-btn:hover {
+            background: #666;
+            transform: translateY(-3px);
+        }
+
+        /* 搜索结果区域 */
+        .results-container {
+            background: #4a4a4a;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            min-height: 300px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #555;
+        }
+
+        .results-title {
+            color: #ff5555;
+            font-size: 1.8rem;
+        }
+
+        .results-count {
+            color: #bbb;
+            font-size: 1.1rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #bbb;
+            font-size: 1.3rem;
+        }
+
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        /* 语录卡片 - 长条形状 */
+        .result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            position: relative;
+            min-height: 80px;
+        }
+
+        .result-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .result-number {
+            background: #ff3333;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            margin-right: 20px;
+        }
+
+        .result-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #333;
+            flex-grow: 1;
+            padding-right: 20px;
+        }
+
+        .result-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+            min-width: 200px;
+        }
+
+        .result-date {
+            color: #888;
+            font-size: 0.95rem;
+            font-style: italic;
+            padding: 5px 15px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        .result-category {
+            color: white;
+            font-size: 0.85rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .category-old {
+            background: #ff9900;
+        }
+
+        .category-new {
+            background: #ff5555;
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            display: block;
+            width: 200px;
+            margin: 40px auto;
+            text-align: center;
+            background: #555;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #666;
+            transform: translateY(-3px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .search-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .search-label {
+                min-width: auto;
+            }
+            
+            .keyword-input, .date-input {
+                width: 100%;
+            }
+            
+            .result-card {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            
+            .result-number {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .result-text {
+                padding-right: 0;
+                margin-bottom: 15px;
+                width: 100%;
+            }
+            
+            .result-meta {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-buttons {
+                flex-direction: column;
+            }
+            
+            .search-btn, .reset-btn {
+                width: 100%;
+            }
+            
+            .results-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .warning-banner {
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+            
+            .search-title {
+                font-size: 2rem;
+            }
+            
+            .search-box, .results-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 警告标语 -->
+    <div class="warning-banner">
+        温馨提示：本语录含有逆天与猎奇内容，班主任与段长请在学生的陪同下阅读。
+    </div>
+
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <a href="shishuojiayu-content.html" class="logo">
+            <span>🗒️</span> 世说佳语
+        </a>
+        <div class="nav-links">
+            <a href="shishuojiayu-content.html" class="nav-link">返回主页</a>
+            <a href="shishuojiayu-search2.html" class="nav-link">全站搜索</a>
+        </div>
+    </div>
+
+    <!-- 搜索主容器 -->
+    <div class="search-container">
+        <!-- 搜索标题 -->
+        <div class="search-header">
+            <h1 class="search-title">世说佳语搜索</h1>
+            <p class="search-subtitle">在本站语录中搜索关键词，支持时间筛选</p>
+        </div>
+
+        <!-- 搜索框区域 -->
+        <div class="search-box">
+            <form id="searchForm" class="search-form">
+                <!-- 关键词搜索 -->
+                <div class="search-row">
+                    <label class="search-label">🔍 关键词搜索：</label>
+                    <input type="text" id="keywordInput" class="keyword-input" 
+                           placeholder="输入要搜索的关键词（留空则显示所有语录）">
+                </div>
+
+                <!-- 高级搜索选项 -->
+                <div class="advanced-options">
+                    <div class="advanced-title" id="advancedToggle">
+                        <span>▶</span> 高级搜索选项
+                    </div>
+                    <div class="advanced-content" id="advancedContent">
+                        <div class="search-row">
+                            <label class="search-label">📅 日期筛选：</label>
+                            <input type="date" id="dateInput" class="date-input" 
+                                   min="2025-06-03" max="">
+                            <div class="date-range">
+                                <span class="date-range-text">可选范围：2025-06-03 至 今日</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 搜索按钮 -->
+                <div class="search-buttons">
+                    <button type="submit" class="search-btn">开始搜索</button>
+                    <button type="button" class="reset-btn" id="resetBtn">重置条件</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 搜索结果区域 -->
+        <div class="results-container">
+            <div class="results-header">
+                <h2 class="results-title">搜索结果</h2>
+                <div class="results-count" id="resultsCount">共找到 0 条语录</div>
+            </div>
+            
+            <div class="result-list" id="resultList">
+                <!-- 搜索结果将在这里动态生成 -->
+                <div class="no-results" id="noResults">
+                    <div class="no-results-icon">🔍</div>
+                    <p>请输入搜索条件并点击"开始搜索"按钮</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返回按钮 -->
+        <a href="shishuojiayu-content.html" class="back-button">返回语录主页</a>
+    </div>
+
+    <script>
+        // 所有语录数据（6条语录）
+        const allQuotes = [
+            // 旧世说佳语 - 2025年6月语录
+            {
+                text: "我就是'细胞质'！（佳佳发现自己与'细胞质'同一天生日）",
+                date: "2025-06-03",
+                category: "旧世说佳语",
+                categoryClass: "category-old"
+            },
+            {
+                text: "来迟了，不曾迎接远客（koè）",
+                date: "2025-06-03",
+                category: "旧世说佳语",
+                categoryClass: "category-old"
+            },
+            {
+                text: "你是不是一头——大肥猪（对林铠墨）",
+                date: "2025-06-03",
+                category: "旧世说佳语",
+                categoryClass: "category-old"
+            },
+            
+            // 新世说佳语 - 2025年12月语录
+            {
+                text: "你也是css大神？（张子扬：我这全部代码都是用Deepseek写的）啊？",
+                date: "2025-12-01",
+                category: "新世说佳语",
+                categoryClass: "category-new"
+            },
+            {
+                text: "先在家里找嘛…（指找Sara）",
+                date: "2025-12-01",
+                category: "新世说佳语",
+                categoryClass: "category-new"
+            },
+            {
+                text: "对不起……（陈卉琴：对不起有用要警察干嘛）",
+                date: "2025-12-01",
+                category: "新世说佳语",
+                categoryClass: "category-new"
+            }
+        ];
+
+        // 设置日期选择器的最大值为今天
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateInput').max = today;
+            
+            // 初始化高级搜索选项
+            initAdvancedOptions();
+            
+            // 显示所有语录
+            performSearch('', '');
+        });
+
+        // 高级搜索选项切换
+        function initAdvancedOptions() {
+            const advancedToggle = document.getElementById('advancedToggle');
+            const advancedContent = document.getElementById('advancedContent');
+            
+            advancedToggle.addEventListener('click', function() {
+                advancedContent.classList.toggle('show');
+                advancedToggle.classList.toggle('active');
+            });
+        }
+
+        // 搜索函数
+        function performSearch(keyword, date) {
+            let results = [...allQuotes];
+            
+            // 关键词筛选
+            if (keyword.trim() !== '') {
+                results = results.filter(quote => 
+                    quote.text.toLowerCase().includes(keyword.toLowerCase())
+                );
+            }
+            
+            // 日期筛选
+            if (date !== '') {
+                results = results.filter(quote => quote.date === date);
+            }
+            
+            // 显示结果
+            displayResults(results);
+        }
+
+        // 显示搜索结果
+        function displayResults(results) {
+            const resultList = document.getElementById('resultList');
+            const resultsCount = document.getElementById('resultsCount');
+            const noResults = document.getElementById('noResults');
+            
+            // 更新结果数量
+            resultsCount.textContent = `共找到 ${results.length} 条语录`;
+            
+            // 清空现有结果
+            resultList.innerHTML = '';
+            
+            // 如果没有结果
+            if (results.length === 0) {
+                noResults.style.display = 'block';
+                resultList.appendChild(noResults);
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            // 生成结果卡片
+            results.forEach((quote, index) => {
+                const resultCard = document.createElement('div');
+                resultCard.className = 'result-card';
+                resultCard.innerHTML = `
+                    <span class="result-number">${index + 1}</span>
+                    <p class="result-text">${quote.text}</p>
+                    <div class="result-meta">
+                        <div class="result-date">📅 ${quote.date}</div>
+                        <div class="result-category ${quote.categoryClass}">${quote.category}</div>
+                    </div>
+                `;
+                resultList.appendChild(resultCard);
+            });
+        }
+
+        // 表单提交事件
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const keyword = document.getElementById('keywordInput').value;
+            const date = document.getElementById('dateInput').value;
+            
+            performSearch(keyword, date);
+        });
+
+        // 重置按钮事件
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.getElementById('keywordInput').value = '';
+            document.getElementById('dateInput').value = '';
+            
+            // 显示所有语录
+            performSearch('', '');
+        });
+
+        // 页面加载时显示所有语录
+        window.addEventListener('load', function() {
+            performSearch('', '');
+        });
+    </script>
+</body>
+</html>
