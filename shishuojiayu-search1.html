@@ -43,7 +43,7 @@
         .top-nav {
             background: #2a2a2a;
             padding: 15px 20px;
-            margin-top: 50px; /* 给警告标语留出空间 */
+            margin-top: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -572,49 +572,71 @@
     </div>
 
     <script>
-        // 所有语录数据（6条语录）
-        const allQuotes = [
-            // 旧世说佳语 - 2025年6月语录
-            {
-                text: "我就是'细胞质'！（佳佳发现自己与'细胞质'同一天生日）",
-                date: "2025-06-03",
-                category: "旧世说佳语",
-                categoryClass: "category-old"
-            },
-            {
-                text: "来迟了，不曾迎接远客（koè）",
-                date: "2025-06-03",
-                category: "旧世说佳语",
-                categoryClass: "category-old"
-            },
-            {
-                text: "你是不是一头——大肥猪（对林铠墨）",
-                date: "2025-06-03",
-                category: "旧世说佳语",
-                categoryClass: "category-old"
-            },
+        // ============================================
+        // 第一步：语录数据区（完全按照世说金语的方式）
+        // ============================================
+        // 格式：{"分类-子分类": [语录数组]}
+        const quoteData = {
+            // 旧世说佳语
+            "旧世说佳语-2025年6月": [
+                "我就是'细胞质'！（佳佳发现自己与'细胞质'同一天生日）",
+                "来迟了，不曾迎接远客（koè）",
+                "你是不是一头——大肥猪（对林铠墨）"
+                // 添加新语录示例："新语录内容"
+            ],
             
-            // 新世说佳语 - 2025年12月语录
-            {
-                text: "你也是css大神？（张子扬：我这全部代码都是用Deepseek写的）啊？",
-                date: "2025-12-01",
-                category: "新世说佳语",
-                categoryClass: "category-new"
-            },
-            {
-                text: "先在家里找嘛…（指找Sara）",
-                date: "2025-12-01",
-                category: "新世说佳语",
-                categoryClass: "category-new"
-            },
-            {
-                text: "对不起……（陈卉琴：对不起有用要警察干嘛）",
-                date: "2025-12-01",
-                category: "新世说佳语",
-                categoryClass: "category-new"
-            }
-        ];
+            // 新世说佳语
+            "新世说佳语-2025年12月": [
+                "你也是css大神？（张子扬：我这全部代码都是用Deepseek写的）啊？",
+                "先在家里找嘛…（指找Sara）",
+                "对不起……（陈卉琴：对不起有用要警察干嘛）"
+                // 添加新语录示例："新语录内容"
+            ]
+        };
 
+        // 语录日期映射（语录内容 -> 日期）
+        // 这是可选的，如果不提供日期，将显示"未设置日期"
+        const quoteDates = {
+            // 旧世说佳语日期
+            "我就是'细胞质'！（佳佳发现自己与'细胞质'同一天生日）": "2025-06-03",
+            "来迟了，不曾迎接远客（koè）": "2025-06-03",
+            "你是不是一头——大肥猪（对林铠墨）": "2025-06-03",
+            
+            // 新世说佳语日期
+            "你也是css大神？（张子扬：我这全部代码都是用Deepseek写的）啊？": "2025-12-01",
+            "先在家里找嘛…（指找Sara）": "2025-12-01",
+            "对不起……（陈卉琴：对不起有用要警察干嘛）": "2025-12-01"
+            // 添加新语录日期："新语录内容": "YYYY-MM-DD"
+        };
+
+        // ============================================
+        // 第二步：将所有语录转换为统一的格式
+        // ============================================
+        function getAllQuotes() {
+            let allQuotes = [];
+            
+            for (const category in quoteData) {
+                const [subject, teacher] = category.split('-');
+                quoteData[category].forEach(quote => {
+                    allQuotes.push({
+                        text: quote,
+                        date: quoteDates[quote] || "未设置日期",
+                        category: subject,
+                        subCategory: teacher,
+                        fullCategory: category
+                    });
+                });
+            }
+            
+            return allQuotes;
+        }
+
+        // 获取所有语录（初始加载）
+        const allQuotes = getAllQuotes();
+
+        // ============================================
+        // 第三步：搜索功能（保持原有外观）
+        // ============================================
         // 设置日期选择器的最大值为今天
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
@@ -688,7 +710,7 @@
                     <p class="result-text">${quote.text}</p>
                     <div class="result-meta">
                         <div class="result-date">📅 ${quote.date}</div>
-                        <div class="result-category ${quote.categoryClass}">${quote.category}</div>
+                        <div class="result-category ${quote.category.includes('旧') ? 'category-old' : 'category-new'}">${quote.category}</div>
                     </div>
                 `;
                 resultList.appendChild(resultCard);
@@ -718,6 +740,45 @@
         window.addEventListener('load', function() {
             performSearch('', '');
         });
+
+        // ============================================
+        // 第四步：添加新语录的辅助函数
+        // ============================================
+        // 这个函数可以让你在控制台中添加新语录
+        window.addNewQuote = function(category, quoteText, date = null) {
+            // 参数：
+            // category: 分类，如 "新世说佳语-2025年12月"
+            // quoteText: 语录内容
+            // date: 可选，日期字符串，如 "2025-12-15"
+            
+            if (!quoteData[category]) {
+                console.error(`分类 ${category} 不存在`);
+                return false;
+            }
+            
+            // 添加到语录数组
+            quoteData[category].push(quoteText);
+            
+            // 添加日期映射（如果提供）
+            if (date) {
+                quoteDates[quoteText] = date;
+            }
+            
+            // 重新生成所有语录
+            allQuotes.length = 0;
+            allQuotes.push(...getAllQuotes());
+            
+            console.log(`已添加语录到 ${category}: "${quoteText}"`);
+            return true;
+        };
+
+        // 批量添加语录
+        window.batchAddQuotes = function(category, quotesArray) {
+            // quotesArray: [{text: "语录", date: "日期"}, ...]
+            quotesArray.forEach(quote => {
+                addNewQuote(category, quote.text, quote.date);
+            });
+        };
     </script>
 </body>
 </html>
