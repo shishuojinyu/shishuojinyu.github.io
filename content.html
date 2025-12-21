@@ -4,68 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>世说金语 - 校园语录合集</title>
-    <!-- 引用全局样式文件（index的样式+新增扩展） -->
     <link rel="stylesheet" href="style.css">
-    <!-- 添加语录卡片基本样式 -->
-    <style>
-        /* 语录卡片基本样式 */
-        .quote-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid #4CAF50;
-            position: relative;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .quote-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
-        }
-        
-        .quote-number {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        .quote-text {
-            margin: 0;
-            line-height: 1.6;
-            color: #333;
-            font-size: 16px;
-            padding-right: 40px; /* 给编号留空间 */
-        }
-        
-        .quotes-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        /* 赛博档案链接样式 */
-        .cyber-archive-link {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            padding: 10px 0;
-        }
-        
-        .cyber-archive-link:hover {
-            color: #4CAF50;
-        }
-    </style>
 </head>
 <body class="content-page">
     <!-- 左侧侧边栏容器 -->
@@ -153,9 +92,10 @@
                 </div>
                 <!-- 赛博档案（新增） -->
                 <div class="subject-item">
-                    <a href="picture.html" class="subject-title cyber-archive-link">
-                        💾 赛博档案
-                    </a>
+                    <span class="subject-title">💾 赛博档案</span>
+                    <div class="teacher-list">
+                        <a href="picture.html" class="teacher-item" data-subject="赛博档案" data-teacher="图片库">图片档案</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -177,38 +117,31 @@
                 <h3>请从左侧选择科目/老师查看语录</h3>
             </div>
 
-            <!-- 金声专属模块（默认隐藏，点击金声后显示） -->
+            <!-- 金声专属模块 -->
             <div class="jin-sheng-module" id="jin-sheng-module" style="display: none;">
                 <div class="module-title">金氏专属档案</div>
                 <div class="module-content">
                     <div class="module-item">
                         <h4>🔢 金氏方法</h4>
                         <p>金氏代入法，特征三角形，主导函数，谁大显谁形，设联判韦译，焦点三角形，班牌拐杖，六大经典结论，等距抽取，基本量，先猜后证，颠来倒去，二检字，定序问题，除序法，查字典，正难则反，看图说话；</p>
-                        <!-- 预留补充空间（可直接在下方加文本） -->
-                        <div class="add-space"></div>
                     </div>
                     <div class="module-item">
                         <h4>💬 金氏评语</h4>
                         <p>土人计算，化简土人，土人，打死，乱来，面批，做的跟屎一样，太假，过了，计算好像有问题，好可怕的作业！</p>
-                        <div class="add-space"></div>
                     </div>
                     <div class="module-item">
                         <h4>🥊 金氏拳法</h4>
                         <p>响指，勾引；狂扇猛攻；捂嘴擦黑板；左手插口袋；伸长脖子喝水；最丑的马步姿势；让啊猛推，反手扫码，金氏遮板法，金氏空间四边形。</p>
-                        <div class="add-space"></div>
                     </div>
                     <div class="module-item">
                         <h4>🏆 独特称号</h4>
                         <p>金·土人的培育者·先行的教育家·金氏代入法的创造者·每日一笑的拍摄者·乱来做法的批判者·金氏拳法的代言人·新型擦黑板方式的发明家·太阳光芒的播撒者·课前五分钟的美食家·极化恒等式的摧毁者·物理强于数学的特异人士·逆水行舟的逆行者·太极扇与跑操的阻挡者·保持生气的情绪管理者·注意力资源分配失衡的宏观调控者·排列组合的掌控者·粉圈文化与宗教文化的集大成者·金声玉振的传播者·金声模仿大赛亚军·全年段所有人的爸爸·故意写错字的钓鱼者·发现火车站生育率高的调查者·作业的守护者·萝莉曲线的发明者·发现y=tanx曲线前凸后翘的量化调酒师·真实身份为柯西的弟弟柯南·韦神的接班人伪神（金神）·认为出卷老师男子有坑的叛逆者·孤独狂欢的辩证转化者·勇于提出自身错误的自我革命者·做高考卷前沐浴更衣的天才·幼儿园的宝玉老师·比肩Yau的数学皇帝·有4/5很喜欢你的追慕者·集卡家·解题路径统一与国家统一的捍卫者·黄金组合成员·红包的发送者·不断做题的升级玩家·豆包的测试者·袒胸露乳的篮球运动员·泄露天机的普罗米修斯·GPT5的翻墙使用者·烂唧唧的剩蛋老人·眼高手高作文题目的出题人·很有安全感之人·拉马努"金"·声老师。</p>
-                        <!-- 预留大量补充空间 -->
-                        <div class="add-space"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 语录列表容器（默认隐藏） -->
+            <!-- 语录列表容器 -->
             <div class="quote-list" id="quote-list" style="display: none;">
-                <!-- 标题区 -->
                 <h1 class="quote-main-title">校园语录合集</h1>
                 <div class="teacher-info">
                     <span class="teacher-name" id="teacher-name">XXX老师</span>
@@ -216,20 +149,25 @@
                 </div>
                 <p class="current-location" id="current-location">当前位置：科目/XXX老师。</p>
                 <hr class="content-divider">
-
-                <!-- 语录内容（动态填充） -->
                 <div class="quotes-container" id="quotes-container"></div>
             </div>
 
-            <!-- 学生语录未整理提示（默认隐藏） -->
+            <!-- 学生语录未整理提示 -->
             <div class="student-tip" id="student-tip" style="display: none;">
                 <h3>正在整理中，敬请期待✨</h3>
+            </div>
+            
+            <!-- 星辰老师预留模板提示 -->
+            <div class="xingchen-tip" id="xingchen-tip" style="display: none;">
+                <h3>星辰教官语录待补充～</h3>
             </div>
         </div>
     </div>
 
     <!-- 回到顶部按钮 -->
     <button class="back-to-top" id="back-to-top">↑</button>
+
+    
 
     <script>
         // **************************
@@ -2213,105 +2151,119 @@
             ]
         };
 
-        // **************************
-        // 第二步：核心交互逻辑
-        // **************************
-        // 1. 侧边栏收缩/展开
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const mainContent = document.getElementById('main-content');
-        let sidebarCollapsed = false;
+        // 核心交互逻辑
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. 侧边栏收缩/展开
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const mainContent = document.getElementById('main-content');
+            let sidebarCollapsed = false;
 
-        sidebarToggle.addEventListener('click', () => {
-            sidebarCollapsed = !sidebarCollapsed;
-            if (sidebarCollapsed) {
-                sidebar.classList.add('collapsed');
-                mainContent.classList.add('sidebar-collapsed');
-                sidebarToggle.textContent = '☰';
-            } else {
-                sidebar.classList.remove('collapsed');
-                mainContent.classList.remove('sidebar-collapsed');
-                sidebarToggle.textContent = '≡';
-            }
-        });
-
-        // 2. 点击老师标签加载语录
-        const teacherItems = document.querySelectorAll('.teacher-item');
-        const contentDisplay = document.getElementById('content-display');
-        const defaultTip = document.querySelector('.default-tip');
-        const jinShengModule = document.getElementById('jin-sheng-module');
-        const quoteList = document.getElementById('quote-list');
-        const studentTip = document.getElementById('student-tip');
-        const teacherName = document.getElementById('teacher-name');
-        const subjectTag = document.getElementById('subject-tag');
-        const currentLocation = document.getElementById('current-location');
-        const quotesContainer = document.getElementById('quotes-container');
-
-        teacherItems.forEach(item => {
-            item.addEventListener('click', () => {
-                // 隐藏所有区域
-                defaultTip.style.display = 'none';
-                jinShengModule.style.display = 'none';
-                quoteList.style.display = 'none';
-                studentTip.style.display = 'none';
-
-                const subject = item.dataset.subject;
-                const teacher = item.dataset.teacher;
-
-                // 学生语录
-                if (subject === '学生语录') {
-                    studentTip.style.display = 'flex';
-                    return;
-                }
-
-                // 加载语录列表
-                quoteList.style.display = 'block';
-                teacherName.textContent = `${teacher}老师`;
-                subjectTag.textContent = subject;
-                currentLocation.textContent = `当前位置：${subject}/${teacher}老师。`;
-
-                // 金声专属模块显示
-                if (teacher === '金声') {
-                    jinShengModule.style.display = 'block';
-                }
-
-                // 填充语录
-                const quotes = quoteData[`${subject}-${teacher}`] || [];
-                quotesContainer.innerHTML = '';
-                
-                if (quotes.length === 0) {
-                    quotesContainer.innerHTML = '<p class="no-quotes">暂无语录，欢迎补充！</p>';
+            sidebarToggle.addEventListener('click', () => {
+                sidebarCollapsed = !sidebarCollapsed;
+                if (sidebarCollapsed) {
+                    sidebar.classList.add('collapsed');
+                    mainContent.classList.add('sidebar-collapsed');
+                    sidebarToggle.textContent = '☰';
                 } else {
-                    quotes.forEach((quote, index) => {
-                        const quoteCard = document.createElement('div');
-                        quoteCard.className = 'quote-card';
-                        quoteCard.innerHTML = `
-                            <span class="quote-number">${index + 1}</span>
-                            <p class="quote-text">${quote}</p>
-                        `;
-                        quotesContainer.appendChild(quoteCard);
-                    });
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('sidebar-collapsed');
+                    sidebarToggle.textContent = '≡';
                 }
-
-                // 滚动到顶部
-                window.scrollTo(0, 0);
             });
-        });
 
-        // 3. 回到顶部按钮
-        const backToTopBtn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.style.display = 'block';
-            } else {
-                backToTopBtn.style.display = 'none';
-            }
-        });
+            // 2. 点击老师标签加载语录
+            const teacherItems = document.querySelectorAll('.teacher-item');
+            const defaultTip = document.querySelector('.default-tip');
+            const jinShengModule = document.getElementById('jin-sheng-module');
+            const quoteList = document.getElementById('quote-list');
+            const studentTip = document.getElementById('student-tip');
+            const xingchenTip = document.getElementById('xingchen-tip');
+            const teacherName = document.getElementById('teacher-name');
+            const subjectTag = document.getElementById('subject-tag');
+            const currentLocation = document.getElementById('current-location');
+            const quotesContainer = document.getElementById('quotes-container');
 
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            teacherItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // 如果是链接（赛博档案），直接跳转，不执行语录加载
+                    if (this.tagName === 'A') {
+                        return; // 让链接正常跳转
+                    }
+                    
+                    e.preventDefault();
+                    
+                    // 隐藏所有区域
+                    defaultTip.style.display = 'none';
+                    jinShengModule.style.display = 'none';
+                    quoteList.style.display = 'none';
+                    studentTip.style.display = 'none';
+                    xingchenTip.style.display = 'none';
+
+                    const subject = this.dataset.subject;
+                    const teacher = this.dataset.teacher;
+
+                    // 学生语录
+                    if (subject === '学生语录') {
+                        studentTip.style.display = 'flex';
+                        return;
+                    }
+
+                    // 星辰教官（已补充）
+                    if (subject === '教官语录' && teacher === '星辰') {
+                        xingchenTip.style.display = 'flex';
+                        return;
+                    }
+
+                    // 加载语录列表
+                    quoteList.style.display = 'block';
+                    teacherName.textContent = `${teacher}老师`;
+                    subjectTag.textContent = subject;
+                    currentLocation.textContent = `当前位置：${subject}/${teacher}老师。`;
+
+                    // 金声专属模块显示
+                    if (teacher === '金声') {
+                        jinShengModule.style.display = 'block';
+                    }
+
+                    // 填充语录
+                    const quotes = quoteData[`${subject}-${teacher}`] || [];
+                    quotesContainer.innerHTML = '';
+                    
+                    if (quotes.length === 0) {
+                        quotesContainer.innerHTML = '<div class="no-quotes"><p>暂无语录，欢迎补充！</p></div>';
+                    } else {
+                        quotes.forEach((quote, index) => {
+                            const quoteCard = document.createElement('div');
+                            quoteCard.className = 'quote-card';
+                            quoteCard.innerHTML = `
+                                <span class="quote-number">${index + 1}</span>
+                                <p class="quote-text">${quote}</p>
+                            `;
+                            quotesContainer.appendChild(quoteCard);
+                        });
+                    }
+
+                    // 滚动到顶部
+                    window.scrollTo(0, 0);
+                });
+            });
+
+            // 3. 回到顶部按钮
+            const backToTopBtn = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.style.display = 'block';
+                } else {
+                    backToTopBtn.style.display = 'none';
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
