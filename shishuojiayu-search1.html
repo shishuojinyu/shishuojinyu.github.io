@@ -572,17 +572,17 @@
     </div>
 
     <script>
-        // ============================================
-        // 第一步：语录数据区（完全按照世说金语的方式）
-        // ============================================
-        // 格式：{"分类-子分类": [语录数组]}
+        // ************************************
+        // 语录数据部分（完全按照世说金语的方式）
+        // 你只需要在这里添加/修改语录即可
+        // ************************************
         const quoteData = {
             // 旧世说佳语
             "旧世说佳语-2025年6月": [
                 "我就是'细胞质'！（佳佳发现自己与'细胞质'同一天生日）",
                 "来迟了，不曾迎接远客（koè）",
                 "你是不是一头——大肥猪（对林铠墨）"
-                // 添加新语录示例："新语录内容"
+                // 在这里添加更多旧语录...
             ],
             
             // 新世说佳语
@@ -590,12 +590,11 @@
                 "你也是css大神？（张子扬：我这全部代码都是用Deepseek写的）啊？",
                 "先在家里找嘛…（指找Sara）",
                 "对不起……（陈卉琴：对不起有用要警察干嘛）"
-                // 添加新语录示例："新语录内容"
+                // 在这里添加更多新语录...
             ]
         };
 
-        // 语录日期映射（语录内容 -> 日期）
-        // 这是可选的，如果不提供日期，将显示"未设置日期"
+        // 语录日期映射（用于时间筛选）
         const quoteDates = {
             // 旧世说佳语日期
             "我就是'细胞质'！（佳佳发现自己与'细胞质'同一天生日）": "2025-06-03",
@@ -606,39 +605,36 @@
             "你也是css大神？（张子扬：我这全部代码都是用Deepseek写的）啊？": "2025-12-01",
             "先在家里找嘛…（指找Sara）": "2025-12-01",
             "对不起……（陈卉琴：对不起有用要警察干嘛）": "2025-12-01"
-            // 添加新语录日期："新语录内容": "YYYY-MM-DD"
+            // 新语录的日期也要在这里添加
         };
 
-        // ============================================
-        // 第二步：将所有语录转换为统一的格式
-        // ============================================
-        function getAllQuotes() {
-            let allQuotes = [];
+        // ************************************
+        // 数据预处理：将所有语录转换为一维数组
+        // ************************************
+        let allQuotes = [];
+
+        // 遍历所有分类，构建完整的语录数组
+        for (const category in quoteData) {
+            const [subject, teacher] = category.split('-');
+            const quotes = quoteData[category];
             
-            for (const category in quoteData) {
-                const [subject, teacher] = category.split('-');
-                quoteData[category].forEach(quote => {
-                    allQuotes.push({
-                        text: quote,
-                        date: quoteDates[quote] || "未设置日期",
-                        category: subject,
-                        subCategory: teacher,
-                        fullCategory: category
-                    });
+            quotes.forEach(quote => {
+                allQuotes.push({
+                    text: quote,
+                    date: quoteDates[quote] || "未设置日期",
+                    category: subject,
+                    subCategory: teacher,
+                    fullCategory: category,
+                    categoryClass: category.includes('旧') ? "category-old" : "category-new"
                 });
-            }
-            
-            return allQuotes;
+            });
         }
 
-        // 获取所有语录（初始加载）
-        const allQuotes = getAllQuotes();
-
-        // ============================================
-        // 第三步：搜索功能（保持原有外观）
-        // ============================================
-        // 设置日期选择器的最大值为今天
+        // ************************************
+        // 页面初始化
+        // ************************************
         document.addEventListener('DOMContentLoaded', function() {
+            // 设置日期选择器的最大值为今天
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dateInput').max = today;
             
@@ -660,7 +656,9 @@
             });
         }
 
-        // 搜索函数
+        // ************************************
+        // 核心搜索函数
+        // ************************************
         function performSearch(keyword, date) {
             let results = [...allQuotes];
             
@@ -680,7 +678,9 @@
             displayResults(results);
         }
 
-        // 显示搜索结果
+        // ************************************
+        // 显示搜索结果函数（修复了bug）
+        // ************************************
         function displayResults(results) {
             const resultList = document.getElementById('resultList');
             const resultsCount = document.getElementById('resultsCount');
@@ -694,12 +694,12 @@
             
             // 如果没有结果
             if (results.length === 0) {
-                noResults.style.display = 'block';
-                resultList.appendChild(noResults);
+                // 克隆并添加无结果提示
+                const newNoResults = noResults.cloneNode(true);
+                newNoResults.style.display = 'block';
+                resultList.appendChild(newNoResults);
                 return;
             }
-            
-            noResults.style.display = 'none';
             
             // 生成结果卡片
             results.forEach((quote, index) => {
@@ -710,14 +710,16 @@
                     <p class="result-text">${quote.text}</p>
                     <div class="result-meta">
                         <div class="result-date">📅 ${quote.date}</div>
-                        <div class="result-category ${quote.category.includes('旧') ? 'category-old' : 'category-new'}">${quote.category}</div>
+                        <div class="result-category ${quote.categoryClass}">${quote.category}</div>
                     </div>
                 `;
                 resultList.appendChild(resultCard);
             });
         }
 
-        // 表单提交事件
+        // ************************************
+        // 事件绑定
+        // ************************************
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -740,45 +742,6 @@
         window.addEventListener('load', function() {
             performSearch('', '');
         });
-
-        // ============================================
-        // 第四步：添加新语录的辅助函数
-        // ============================================
-        // 这个函数可以让你在控制台中添加新语录
-        window.addNewQuote = function(category, quoteText, date = null) {
-            // 参数：
-            // category: 分类，如 "新世说佳语-2025年12月"
-            // quoteText: 语录内容
-            // date: 可选，日期字符串，如 "2025-12-15"
-            
-            if (!quoteData[category]) {
-                console.error(`分类 ${category} 不存在`);
-                return false;
-            }
-            
-            // 添加到语录数组
-            quoteData[category].push(quoteText);
-            
-            // 添加日期映射（如果提供）
-            if (date) {
-                quoteDates[quoteText] = date;
-            }
-            
-            // 重新生成所有语录
-            allQuotes.length = 0;
-            allQuotes.push(...getAllQuotes());
-            
-            console.log(`已添加语录到 ${category}: "${quoteText}"`);
-            return true;
-        };
-
-        // 批量添加语录
-        window.batchAddQuotes = function(category, quotesArray) {
-            // quotesArray: [{text: "语录", date: "日期"}, ...]
-            quotesArray.forEach(quote => {
-                addNewQuote(category, quote.text, quote.date);
-            });
-        };
     </script>
 </body>
 </html>
