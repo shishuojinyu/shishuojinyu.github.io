@@ -96,12 +96,12 @@
                     </div>
                 </div>
                 
-                <!-- 新增：数据分析 -->
+                <!-- 数据分析 -->
                 <div class="subject-item">
                     <span class="subject-title">📊 数据分析</span>
                     <div class="teacher-list">
-                        <a href="rank.html" class="teacher-item-link" data-subject="数据分析" data-teacher="人气排行榜">人气排行榜🏆</a>
-                        <a href="summary.html" class="teacher-item-link" data-subject="数据分析" data-teacher="统计">统计📈</a>
+                        <a href="rank.html" class="teacher-item" data-subject="数据分析" data-teacher="人气排行榜">人气排行榜🏆</a>
+                        <a href="summary.html" class="teacher-item" data-subject="数据分析" data-teacher="统计">统计📈</a>
                     </div>
                 </div>
                 
@@ -109,7 +109,7 @@
                 <div class="subject-item">
                     <span class="subject-title">🤖 赛博档案</span>
                     <div class="teacher-list">
-                        <a href="picture.html" class="teacher-item-link" data-subject="赛博档案" data-teacher="图片集">图片集</a>
+                        <a href="picture.html" class="teacher-item" data-subject="赛博档案" data-teacher="图片集">图片集</a>
                     </div>
                 </div>
             </div>
@@ -183,9 +183,25 @@
 
     <button class="back-to-top" id="back-to-top">↑</button>
 
-   
+    <style>
+        /* 为链接形式的teacher-item添加样式 */
+        .teacher-item[href] {
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        .teacher-item[href]:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+    </style>
 
-  <script>
+    <script>
         // **************************
         // 第一步：语录数据区（你新增语录只需改这里！）
         // **************************
@@ -2304,7 +2320,6 @@
 
         // 2. 点击老师标签加载语录
         const teacherItems = document.querySelectorAll('.teacher-item');
-        const teacherItemLinks = document.querySelectorAll('.teacher-item-link');
         const contentDisplay = document.getElementById('content-display');
         const defaultTip = document.querySelector('.default-tip');
         const jinShengModule = document.getElementById('jin-sheng-module');
@@ -2316,16 +2331,15 @@
         const currentLocation = document.getElementById('current-location');
         const quotesContainer = document.getElementById('quotes-container');
 
-        // 为所有链接添加点击事件处理（允许默认跳转行为）
-        teacherItemLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                // 允许默认的链接跳转行为
-                // 这里不需要阻止默认行为，因为它是一个链接
-            });
-        });
-
         teacherItems.forEach(item => {
-            item.addEventListener('click', () => {
+            item.addEventListener('click', function(e) {
+                // 如果是链接，允许跳转，不执行语录加载
+                if (this.hasAttribute('href')) {
+                    return; // 允许默认跳转行为
+                }
+                
+                e.preventDefault();
+                
                 // 隐藏所有区域
                 defaultTip.style.display = 'none';
                 jinShengModule.style.display = 'none';
@@ -2333,8 +2347,8 @@
                 studentTip.style.display = 'none';
                 xingchenTip.style.display = 'none';
 
-                const subject = item.dataset.subject;
-                const teacher = item.dataset.teacher;
+                const subject = this.dataset.subject;
+                const teacher = this.dataset.teacher;
 
                 // 学生语录
                 if (subject === '学生语录') {
