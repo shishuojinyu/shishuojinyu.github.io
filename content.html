@@ -96,7 +96,16 @@
                     </div>
                 </div>
                 
-                <!-- 新增：赛博档案 -->
+                <!-- 新增：数据分析 -->
+                <div class="subject-item">
+                    <span class="subject-title">📊 数据分析</span>
+                    <div class="teacher-list">
+                        <a href="rank.html" class="teacher-item-link" data-subject="数据分析" data-teacher="人气排行榜">人气排行榜🏆</a>
+                        <a href="summary.html" class="teacher-item-link" data-subject="数据分析" data-teacher="统计">统计📈</a>
+                    </div>
+                </div>
+                
+                <!-- 赛博档案 -->
                 <div class="subject-item">
                     <span class="subject-title">🤖 赛博档案</span>
                     <div class="teacher-list">
@@ -176,7 +185,7 @@
 
    
 
-    <script>
+  <script>
         // **************************
         // 第一步：语录数据区（你新增语录只需改这里！）
         // **************************
@@ -2295,7 +2304,7 @@
 
         // 2. 点击老师标签加载语录
         const teacherItems = document.querySelectorAll('.teacher-item');
-        const teacherItemLink = document.querySelector('.teacher-item-link');
+        const teacherItemLinks = document.querySelectorAll('.teacher-item-link');
         const contentDisplay = document.getElementById('content-display');
         const defaultTip = document.querySelector('.default-tip');
         const jinShengModule = document.getElementById('jin-sheng-module');
@@ -2307,10 +2316,12 @@
         const currentLocation = document.getElementById('current-location');
         const quotesContainer = document.getElementById('quotes-container');
 
-        // 为赛博档案添加点击事件
-        teacherItemLink.addEventListener('click', function(e) {
-            // 允许默认的链接跳转行为
-            // 这里不需要阻止默认行为，因为它是一个链接
+        // 为所有链接添加点击事件处理（允许默认跳转行为）
+        teacherItemLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 允许默认的链接跳转行为
+                // 这里不需要阻止默认行为，因为它是一个链接
+            });
         });
 
         teacherItems.forEach(item => {
