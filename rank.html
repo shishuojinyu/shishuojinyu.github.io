@@ -1,232 +1,1225 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>排名列表（修复空白+流畅动画）</title>
-  <style>
-    /* 1. 完整CSS样式（包含容器、排名项、动画定义） */
-    /* 页面基础样式，避免默认边距导致布局异常 */
-    body {
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
-
-    /* 排名容器：确保高度足够，不隐藏后续内容 */
-    #rank-container {
-      width: 80%;
-      max-width: 600px;
-      /* 避免固定高度导致4-20名被隐藏，使用最小高度自适应 */
-      min-height: 800px;
-      margin: 50px auto;
-      padding: 20px;
-      box-sizing: border-box;
-      /* 避免溢出隐藏 */
-      overflow: visible;
-      position: relative;
-      /* 初始隐藏动画，滚动触发后显示 */
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    /* 滚动触发后激活动画（对应JS中的animate-active类） */
-    #rank-container.animate-active {
-      opacity: 1;
-    }
-
-    /* 通用排名项样式 */
-    .rank-item {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 60px;
-      margin-bottom: 15px;
-      padding: 0 20px;
-      box-sizing: border-box;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.9);
-      /* 确保层级不被遮挡 */
-      z-index: 1;
-      position: relative;
-    }
-
-    /* 前3名：炫酷样式（保留原有视觉效果） */
-    .rank-item.top3 {
-      height: 80px;
-      background: linear-gradient(135deg, #ffd700, #ffed4b);
-      color: #333;
-      font-weight: bold;
-    }
-
-    /* 4-20名：正常显示，基础样式（无隐藏） */
-    .rank-item.other-rank {
-      background: rgba(255, 255, 255, 0.7);
-      color: #666;
-      /* 移除可能的隐藏样式 */
-      display: flex !important;
-      opacity: 1 !important;
-    }
-
-    /* 排名数字样式：确保4-20名排名清晰显示 */
-    .rank-num {
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
-      text-align: center;
-      border-radius: 50%;
-      margin-right: 20px;
-      font-size: 18px;
-    }
-
-    .rank-item.top3 .rank-num {
-      background: #ff4500;
-      color: #fff;
-      font-size: 24px;
-    }
-
-    .rank-item.other-rank .rank-num {
-      background: #ccc;
-      color: #fff;
-    }
-
-    /* 动画优化：统一使用高效属性，开启GPU加速 */
-    @keyframes top3-enter {
-      /* 前3名：炫酷入场动画（保留视觉效果，使用transform/opacity） */
-      0% {
-        opacity: 0;
-        /* 位移+缩放：GPU加速，无重排 */
-        transform: translateY(50px) scale(0.8) translateZ(0);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1) translateZ(0);
-      }
-    }
-
-    @keyframes other-enter {
-      /* 4-20名：轻量入场动画（减少性能消耗，保持基础炫酷感） */
-      0% {
-        opacity: 0;
-        /* 仅小幅位移，无多余动画 */
-        transform: translateX(20px) translateZ(0);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0) translateZ(0);
-      }
-    }
-
-    /* 前3名：保留炫酷动画，延长动画时间（视觉更流畅） */
-    .rank-item.top3 {
-      animation: top3-enter 0.8s ease-out forwards;
-      /* 告知浏览器优化动画图层，开启GPU加速 */
-      will-change: transform, opacity;
-      /* 避免动画结束后触发重排 */
-      backface-visibility: hidden;
-    }
-
-    /* 4-20名：轻量动画，缩短动画时间（减少渲染压力），批量延迟（避免同时渲染） */
-    .rank-item.other-rank {
-      animation: other-enter 0.3s ease-out forwards;
-      will-change: transform, opacity;
-      backface-visibility: hidden;
-    }
-
-    /* 4-20名：批量延迟动画，避免同时渲染20个元素导致卡顿 */
-    .rank-item.other-rank:nth-child(4) { animation-delay: 0.1s; }
-    .rank-item.other-rank:nth-child(5) { animation-delay: 0.15s; }
-    .rank-item.other-rank:nth-child(6) { animation-delay: 0.2s; }
-    .rank-item.other-rank:nth-child(7) { animation-delay: 0.25s; }
-    .rank-item.other-rank:nth-child(8) { animation-delay: 0.3s; }
-    .rank-item.other-rank:nth-child(9) { animation-delay: 0.35s; }
-    .rank-item.other-rank:nth-child(10) { animation-delay: 0.4s; }
-    .rank-item.other-rank:nth-child(n+11) { animation-delay: 0.45s; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人气排行榜 - 世说金语</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* 排行榜页面专用样式 - 简化版 */
+        :root {
+            --gold-color: #FFD700;
+            --gold-light: #FFEC8B;
+            --gold-dark: #FFA500;
+            --silver-color: #C0C0C0;
+            --bronze-color: #CD7F32;
+            --dark-bg: #0a0a0a;
+        }
+        
+        body.rank-page {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            font-family: 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 主内容区 */
+        .rank-main-content {
+            margin-left: 280px;
+            padding: 0;
+            min-height: 100vh;
+            background: transparent;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .rank-main-content.sidebar-collapsed {
+            margin-left: 80px;
+        }
+        
+        /* 顶部横幅 */
+        .rank-header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+        }
+        
+        .rank-title {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--gold-color), var(--gold-dark), var(--gold-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .rank-subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .update-time {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--gold-color);
+        }
+        
+        /* 导航标签 */
+        .rank-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 20px 30px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .rank-tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            color: #ccc;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .rank-tab:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: rgba(255, 215, 0, 0.5);
+            color: var(--gold-color);
+            transform: translateY(-2px);
+        }
+        
+        .rank-tab.active {
+            background: linear-gradient(45deg, var(--gold-color), var(--gold-dark));
+            color: #000;
+            font-weight: bold;
+            border-color: var(--gold-color);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .rank-tab-icon {
+            margin-right: 5px;
+        }
+        
+        /* 英雄舞台区 */
+        .hero-stage {
+            padding: 20px 20px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .stage-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: var(--gold-color);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .stage-title::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-color), transparent);
+            margin: 15px auto;
+        }
+        
+        .podium-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 20px;
+            min-height: 400px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        /* 通用奖台样式 */
+        .podium {
+            position: relative;
+            border-radius: 15px 15px 0 0;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1;
+            border: 2px solid transparent;
+        }
+        
+        .podium:hover {
+            transform: translateY(-5px);
+        }
+        
+        .rank-badge {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            border: 3px solid;
+        }
+        
+        .person-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 4px solid;
+            overflow: hidden;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .person-name {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .person-title {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            padding: 5px 15px;
+            border-radius: 15px;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .person-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .influence-score {
+            font-size: 1.5rem;
+            color: var(--gold-color);
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 8px 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        /* 冠军样式 */
+        .podium-first {
+            width: 300px;
+            height: 380px;
+            background: linear-gradient(135deg, var(--gold-color) 0%, var(--gold-dark) 100%);
+            order: 2;
+            position: relative;
+            z-index: 3;
+            border-color: var(--gold-color);
+        }
+        
+        .podium-first .rank-badge {
+            background: #000;
+            color: var(--gold-color);
+            border-color: #000;
+        }
+        
+        .podium-first .person-avatar {
+            border-color: #000;
+            background: rgba(255, 255, 255, 0.2);
+            color: #000;
+        }
+        
+        .podium-first .person-name {
+            color: #000;
+        }
+        
+        .podium-first .person-title {
+            background: rgba(0, 0, 0, 0.15);
+            color: #000;
+        }
+        
+        .podium-first .stat-value {
+            color: #000;
+        }
+        
+        .podium-first .influence-score {
+            color: #000;
+            background: rgba(0, 0, 0, 0.15);
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 亚军样式 */
+        .podium-second {
+            width: 280px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--silver-color) 0%, #A9A9A9 100%);
+            order: 1;
+            z-index: 2;
+            border-color: var(--silver-color);
+        }
+        
+        .podium-second .rank-badge {
+            background: #333;
+            color: var(--silver-color);
+            border-color: #333;
+        }
+        
+        .podium-second .person-avatar {
+            border-color: #333;
+            background: rgba(255, 255, 255, 0.2);
+            color: #333;
+        }
+        
+        .podium-second .person-name {
+            color: #fff;
+        }
+        
+        .podium-second .person-title {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .podium-second .stat-value {
+            color: #fff;
+        }
+        
+        .podium-second .influence-score {
+            color: var(--silver-color);
+        }
+        
+        /* 季军样式 */
+        .podium-third {
+            width: 280px;
+            height: 330px;
+            background: linear-gradient(135deg, var(--bronze-color) 0%, #8B4513 100%);
+            order: 3;
+            z-index: 2;
+            border-color: var(--bronze-color);
+        }
+        
+        .podium-third .rank-badge {
+            background: #5D4037;
+            color: var(--bronze-color);
+            border-color: #5D4037;
+        }
+        
+        .podium-third .person-avatar {
+            border-color: #5D4037;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        
+        .podium-third .person-name {
+            color: #fff;
+        }
+        
+        .podium-third .person-title {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .podium-third .stat-value {
+            color: #fff;
+        }
+        
+        .podium-third .influence-score {
+            color: var(--bronze-color);
+        }
+        
+        /* 精英榜单区 */
+        .elite-rankings {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        
+        .elite-title {
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            color: var(--gold-color);
+            text-align: center;
+        }
+        
+        .elite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .elite-card {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .elite-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .elite-rank {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--gold-color);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .elite-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .elite-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(255, 215, 0, 0.15);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            flex-shrink: 0;
+        }
+        
+        .elite-info {
+            flex: 1;
+        }
+        
+        .elite-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        
+        .elite-type {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: var(--gold-color);
+        }
+        
+        .elite-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .elite-stat {
+            text-align: center;
+            padding: 10px 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .elite-stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--gold-color);
+        }
+        
+        .elite-stat-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1100px) {
+            .podium-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+            
+            .podium {
+                width: 80% !important;
+                max-width: 400px;
+                height: auto !important;
+            }
+            
+            .podium-first {
+                order: 1;
+            }
+            
+            .podium-second {
+                order: 2;
+            }
+            
+            .podium-third {
+                order: 3;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .rank-main-content {
+                margin-left: 0;
+            }
+            
+            .rank-title {
+                font-size: 2.2rem;
+            }
+            
+            .rank-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .rank-tab {
+                width: 90%;
+                max-width: 300px;
+            }
+            
+            .elite-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 加载动画 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-top: 4px solid var(--gold-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 无数据提示 */
+        .no-data {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            grid-column: 1 / -1;
+        }
+    </style>
 </head>
-<body>
-  <!-- 2. 核心：添加HTML容器（JS中需要获取的rank-container） -->
-  <div id="rank-container"></div>
+<body class="content-page rank-page">
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- 左侧侧边栏容器 -->
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-toggle" id="sidebar-toggle">≡</button>
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <h2 class="sidebar-main-title">世说金语</h2>
+                <p class="sidebar-sub-title">校园语录档案馆</p>
+                <hr class="sidebar-divider">
+            </div>
+            
+            <div class="subject-list">
+                <!-- 语文 -->
+                <div class="subject-item">
+                    <span class="subject-title">📖 语文</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="语文" data-teacher="陈琳">陈琳</span>
+                        <span class="teacher-item" data-subject="语文" data-teacher="范叶斌">范叶斌</span>
+                        <span class="teacher-item" data-subject="语文" data-teacher="郑宇">郑宇</span>
+                    </div>
+                </div>
+                
+                <!-- 数学 -->
+                <div class="subject-item">
+                    <span class="subject-title">🔢 数学</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="数学" data-teacher="金声">金声</span>
+                    </div>
+                </div>
+                
+                <!-- 英语 -->
+                <div class="subject-item">
+                    <span class="subject-title">🗣️ 英语</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="英语" data-teacher="冯秋云">冯秋云</span>
+                        <span class="teacher-item" data-subject="英语" data-teacher="赵永恒">赵永恒</span>
+                    </div>
+                </div>
+                
+                <!-- 物理 -->
+                <div class="subject-item">
+                    <span class="subject-title">⚛️ 物理</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="物理" data-teacher="颜有虹">颜有虹</span>
+                    </div>
+                </div>
+                
+                <!-- 化学 -->
+                <div class="subject-item">
+                    <span class="subject-title">🧪 化学</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="化学" data-teacher="严志芳">严志芳</span>
+                        <span class="teacher-item" data-subject="化学" data-teacher="程保权">程保权</span>
+                    </div>
+                </div>
+                
+                <!-- 生物 -->
+                <div class="subject-item">
+                    <span class="subject-title">🧬 生物</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="生物" data-teacher="陈卉琴">陈卉琴</span>
+                        <span class="teacher-item" data-subject="生物" data-teacher="叶永菁">叶永菁</span>
+                    </div>
+                </div>
+                
+                <!-- 政治 -->
+                <div class="subject-item">
+                    <span class="subject-title">📜 政治</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="政治" data-teacher="傅敏">傅敏</span>
+                        <span class="teacher-item" data-subject="政治" data-teacher="林根">林根</span>
+                    </div>
+                </div>
+                
+                <!-- 教官语录 -->
+                <div class="subject-item">
+                    <span class="subject-title">🥁 教官语录</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="教官语录" data-teacher="星辰">星辰</span>
+                    </div>
+                </div>
+                
+                <!-- 学生语录 -->
+                <div class="subject-item">
+                    <span class="subject-title">👨‍🎓 学生语录</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="学生语录" data-teacher="未整理">学生语录</span>
+                    </div>
+                </div>
+                
+                <!-- 数据分析 -->
+                <div class="subject-item">
+                    <span class="subject-title">📊 数据分析</span>
+                    <div class="teacher-list">
+                        <a href="rank.html" class="teacher-item" data-subject="数据分析" data-teacher="人气排行榜">人气排行榜🏆</a>
+                        <a href="summary.html" class="teacher-item" data-subject="数据分析" data-teacher="统计">统计📈</a>
+                    </div>
+                </div>
+                
+                <!-- 赛博档案 -->
+                <div class="subject-item">
+                    <span class="subject-title">🤖 赛博档案</span>
+                    <div class="teacher-list">
+                        <a href="picture.html" class="teacher-item" data-subject="赛博档案" data-teacher="图片集">图片集</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <!-- 3. 完整JS逻辑（包裹在<script>标签中，确保浏览器解析为可执行脚本） -->
-  <script>
-    // 步骤1：定义完整排名数据（1-20名）
-    const rankList = [];
-    for (let i = 1; i <= 20; i++) {
-      rankList.push({
-        id: i,
-        name: `第${i}名用户`,
-        score: 999 - (i - 1) * 10 // 分数递减，模拟真实排名
-      });
-    }
+    <!-- 右侧内容区 -->
+    <div class="rank-main-content" id="rank-main-content">
+        <div class="top-bar">
+            <a href="search.html" class="search-btn">
+                <span>🔍</span> 搜索
+            </a>
+        </div>
 
-    // 步骤2：完整渲染函数（生成1-20名DOM，解决4-20名不显示问题）
-    const renderRankList = () => {
-      const rankContainer = document.getElementById("rank-container");
-      if (!rankContainer) return; // 容错：若容器不存在则终止
+        <!-- 排行榜页面内容 -->
+        <div class="rank-content">
+            <!-- 顶部横幅 -->
+            <div class="rank-header">
+                <h1 class="rank-title">🏆 人气风云榜 🏆</h1>
+                <p class="rank-subtitle">金声闪耀，语录争锋 · 荣耀属于每一位校园传奇</p>
+                <div class="update-time" id="updateTimeDisplay">数据更新于：2025年12月28日11时06分00秒</div>
+            </div>
+            
+            <!-- 导航标签 -->
+            <div class="rank-tabs">
+                <button class="rank-tab active" data-rank-type="all">
+                    <span class="rank-tab-icon">🔥</span> 综合影响力榜
+                </button>
+                <button class="rank-tab" data-rank-type="teachers">
+                    <span class="rank-tab-icon">👨‍🏫</span> 教师精英榜
+                </button>
+                <button class="rank-tab" data-rank-type="students">
+                    <span class="rank-tab-icon">👨‍🎓</span> 学生新星榜
+                </button>
+                <button class="rank-tab" data-rank-type="quotes">
+                    <span class="rank-tab-icon">💬</span> 语录数量榜
+                </button>
+                <button class="rank-tab" data-rank-type="mentioned">
+                    <span class="rank-tab-icon">👁️</span> 被提及榜
+                </button>
+            </div>
+            
+            <!-- 英雄舞台区 -->
+            <div class="hero-stage">
+                <h2 class="stage-title">🏅 荣耀殿堂 · 前三甲</h2>
+                
+                <div class="podium-container" id="podium-container">
+                    <!-- 前三名动态生成 -->
+                </div>
+            </div>
+            
+            <!-- 精英榜单区 -->
+            <div class="elite-rankings">
+                <h2 class="elite-title">🎖️ 精英榜单 · 第4-20名</h2>
+                <div class="elite-grid" id="elite-grid">
+                    <!-- 精英榜单动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
 
-      // 清空容器（避免重复渲染）
-      rankContainer.innerHTML = "";
-
-      rankList.forEach((item, index) => {
-        const rankItem = document.createElement("div");
-        const rank = index + 1; // 排名1-20
-
-        // 给不同排名设置不同类名（区分样式/动画）
-        if (rank <= 3) {
-          rankItem.className = "rank-item top3"; // 前3名：炫酷样式+复杂动画
-        } else {
-          rankItem.className = "rank-item other-rank"; // 4-20名：正常显示+轻量动画
+    <script>
+        // ============================================
+        // 数据配置区 - 使用真实数据
+        // ============================================
+        
+        const UPDATE_TIME = "2025年12月28日11时06分00秒";
+        
+        // 教师真实数据
+        const TEACHER_DATA = {
+            "陈琳": [341, 25],
+            "范叶斌": [19, 8],
+            "郑宇": [30, 12],
+            "金声": [870, 185],
+            "冯秋云": [42, 18],
+            "赵永恒": [27, 10],
+            "颜有虹": [322, 68],
+            "严志芳": [97, 22],
+            "程保权": [20, 9],
+            "陈卉琴": [102, 30],
+            "叶永菁": [21, 6],
+            "傅敏": [26, 15],
+            "林根": [104, 32],
+            "星辰": [29, 12]
+        };
+        
+        // 学生真实数据
+        const STUDENT_DATA = {
+            "谢昊辰": [0, 2],
+            "邱浩宸": [1, 2],
+            "韩金成": [0, 1],
+            "郑景严": [0, 5],
+            "郑九鼎": [0, 4],
+            "王浩宇": [0, 0],
+            "黄芷裳": [0, 0],
+            "刘梓楷": [2, 39],
+            "陈林佳": [5, 18],
+            "倪楷楠": [0, 2],
+            "陈浩天": [0, 3],
+            "张子扬": [1, 16],
+            "吴昊天": [0, 5],
+            "张皓": [3, 12],
+            "汪千雅": [0, 0],
+            "黄朵儿": [0, 0],
+            "吴泽曦": [0, 2],
+            "林曾竤": [0, 3],
+            "陈易航": [0, 4],
+            "林荣昕": [0, 2],
+            "林筠铭": [0, 1],
+            "叶一帆": [1, 7],
+            "黄楷杰": [0, 2],
+            "温静媛": [0, 1],
+            "孙澜菁": [0, 0],
+            "黄家耀": [13, 64],
+            "叶可聿": [0, 6],
+            "兰嘉涵": [0, 3],
+            "吕奕铮": [6, 8],
+            "常凯": [0, 14],
+            "林峻源": [0, 0],
+            "章皓晨": [0, 2],
+            "陈栎彤": [0, 0],
+            "陈佳鑫": [0, 2],
+            "吴兆元": [0, 0],
+            "何冬昱": [0, 2],
+            "赖祉祺": [0, 2],
+            "林靖轩": [0, 0],
+            "蔡达礼": [2, 6],
+            "叶子尧": [0, 1],
+            "蔡铠泽": [0, 6],
+            "陆庭锴": [0, 0],
+            "林嘉豪": [1, 0],
+            "陈睿杰": [0, 3],
+            "江智成": [0, 1],
+            "李浩一": [0, 1],
+            "李奥": [0, 2],
+            "刘雨琪": [0, 2],
+            "刘辰睿": [0, 0],
+            "林亦轲": [0, 5],
+            "巫夏朵": [0, 0],
+            "周善进": [0, 1],
+            "林铠墨": [2, 13],
+            "伍厚锴": [0, 3]
+        };
+        
+        // 教师科目信息
+        const TEACHER_SUBJECTS = {
+            "陈琳": "语文",
+            "范叶斌": "语文",
+            "郑宇": "语文",
+            "金声": "数学",
+            "冯秋云": "英语",
+            "赵永恒": "英语",
+            "颜有虹": "物理",
+            "严志芳": "化学",
+            "程保权": "化学",
+            "陈卉琴": "生物",
+            "叶永菁": "生物",
+            "傅敏": "政治",
+            "林根": "政治",
+            "星辰": "教官语录"
+        };
+        
+        // ============================================
+        // 核心数据函数
+        // ============================================
+        
+        // 生成完整数据集合
+        function generateRankData() {
+            const allData = [];
+            
+            // 添加教师数据
+            Object.keys(TEACHER_DATA).forEach((teacherName, index) => {
+                const [quoteCount, mentionedCount] = TEACHER_DATA[teacherName];
+                const influenceScore = calculateInfluenceScore(quoteCount, mentionedCount);
+                const subject = TEACHER_SUBJECTS[teacherName] || "未知科目";
+                
+                allData.push({
+                    id: `T${String(index + 1).padStart(2, '0')}`,
+                    name: teacherName,
+                    displayName: `${subject}-${teacherName}`,
+                    type: "teacher",
+                    subject: subject,
+                    quoteCount: quoteCount,
+                    mentionedCount: mentionedCount,
+                    influenceScore: influenceScore,
+                    title: getTitleByScore(influenceScore, "teacher")
+                });
+            });
+            
+            // 添加学生数据
+            let studentIndex = 1;
+            Object.keys(STUDENT_DATA).forEach((studentName) => {
+                const studentStats = STUDENT_DATA[studentName] || [0, 0];
+                const [quoteCount, mentionedCount] = studentStats;
+                const influenceScore = calculateInfluenceScore(quoteCount, mentionedCount);
+                const seatNumber = String(studentIndex).padStart(2, '0');
+                
+                allData.push({
+                    id: seatNumber,
+                    name: studentName,
+                    displayName: `${seatNumber}-${studentName}`,
+                    type: "student",
+                    subject: "1班",
+                    quoteCount: quoteCount,
+                    mentionedCount: mentionedCount,
+                    influenceScore: influenceScore,
+                    title: getTitleByScore(influenceScore, "student")
+                });
+                
+                studentIndex++;
+            });
+            
+            return allData;
         }
-
-        // 设置排名内容（确保4-20名有完整内容渲染）
-        rankItem.innerHTML = `
-          <div class="rank-num">${rank}</div>
-          <div class="rank-info">
-            <span class="rank-name">${item.name}</span>
-            <span class="rank-score">${item.score}分</span>
-          </div>
-        `;
-
-        // 追加到容器（确保不被隐藏）
-        rankContainer.appendChild(rankItem);
-      });
-    };
-
-    // 步骤3：执行渲染（页面加载时先渲染排名列表，解决空白问题）
-    renderRankList();
-
-    // 步骤4：节流函数（保留原有优化逻辑）
-    function throttle(fn, delay = 300) {
-      let timer = null;
-      return function(...args) {
-        if (!timer) {
-          timer = setTimeout(() => {
-            fn.apply(this, args);
-            timer = null;
-          }, delay);
+        
+        // 计算影响力指数
+        function calculateInfluenceScore(quoteCount, mentionedCount) {
+            return (quoteCount * 1.0) + (mentionedCount * 0.7);
         }
-      };
-    }
+        
+        // 根据分数获取称号
+        function getTitleByScore(score, type) {
+            if (type === "teacher") {
+                if (score >= 200) return "传奇宗师";
+                if (score >= 100) return "金牌讲师";
+                if (score >= 50) return "人气教师";
+                if (score >= 20) return "潜力教师";
+                return "新晋教师";
+            } else {
+                if (score >= 50) return "校园之星";
+                if (score >= 20) return "人气新星";
+                if (score >= 10) return "活跃分子";
+                if (score >= 5) return "潜力新人";
+                return "观察学员";
+            }
+        }
+        
+        // 获取头像颜色
+        function getAvatarColor(name) {
+            const colors = [
+                "#FFD700", "#FFA500", "#FF6347", "#FF69B4", "#9370DB",
+                "#00CED1", "#32CD32", "#1E90FF", "#FF4500", "#DA70D6"
+            ];
+            let hash = 0;
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return colors[Math.abs(hash) % colors.length];
+        }
+        
+        // 获取名字首字母
+        function getInitials(name) {
+            if (/[\u4e00-\u9fa5]/.test(name)) {
+                return name.length >= 2 ? name.substring(0, 2) : name;
+            }
+            return name.substring(0, 1).toUpperCase();
+        }
+        
+        // ============================================
+        // 排名渲染函数
+        // ============================================
+        
+        let allRankData = [];
+        let currentRankType = 'all';
+        
+        // 渲染前三名奖台
+        function renderPodium(topThree) {
+            const container = document.getElementById('podium-container');
+            if (!container) return;
+            
+            if (!topThree || topThree.length === 0) {
+                container.innerHTML = '<div class="no-data">暂无前三名数据</div>';
+                return;
+            }
+            
+            let podiumHTML = '';
+            
+            // 确保至少有3个位置，如果不够就用空位填充
+            for (let i = 0; i < 3; i++) {
+                const person = topThree[i] || null;
+                const rank = i + 1;
+                
+                let podiumClass = '';
+                if (rank === 1) podiumClass = 'podium-first';
+                else if (rank === 2) podiumClass = 'podium-second';
+                else podiumClass = 'podium-third';
+                
+                if (person) {
+                    podiumHTML += `
+                        <div class="podium ${podiumClass}">
+                            <div class="rank-badge">${rank}</div>
+                            
+                            <div class="person-avatar" style="border-color: ${getAvatarColor(person.name)}; color: ${getAvatarColor(person.name)};">
+                                ${getInitials(person.name)}
+                            </div>
+                            
+                            <h3 class="person-name">${person.name}</h3>
+                            <div class="person-title">${person.title}</div>
+                            
+                            <div class="person-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">${person.quoteCount}</div>
+                                    <div class="stat-label">语录数</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">${person.mentionedCount}</div>
+                                    <div class="stat-label">被提及</div>
+                                </div>
+                            </div>
+                            
+                            <div class="influence-score">
+                                影响力: ${person.influenceScore.toFixed(1)}
+                            </div>
+                            
+                            <div class="person-type" style="margin-top: 10px; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                ${person.type === 'teacher' ? '👨‍🏫 教师 · ' + person.subject : '👨‍🎓 学生 · ' + person.subject}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // 空位
+                    podiumHTML += `
+                        <div class="podium ${podiumClass}" style="opacity: 0.5;">
+                            <div class="rank-badge">${rank}</div>
+                            <div class="person-avatar" style="border-color: #666; color: #666;">
+                                ?
+                            </div>
+                            <h3 class="person-name">虚位以待</h3>
+                            <div class="person-title">等待上榜</div>
+                            <div style="margin-top: 40px; color: rgba(255,255,255,0.5);">
+                                暂无数据
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            container.innerHTML = podiumHTML;
+        }
+        
+        // 渲染精英榜单（4-20名）
+        function renderEliteRankings(rankings) {
+            const container = document.getElementById('elite-grid');
+            if (!container) return;
+            
+            // 取4-20名，如果不够则取全部
+            const eliteData = rankings.length > 3 ? rankings.slice(3, 20) : [];
+            
+            if (!eliteData || eliteData.length === 0) {
+                container.innerHTML = '<div class="no-data">暂无精英榜单数据</div>';
+                return;
+            }
+            
+            let eliteHTML = '';
+            
+            eliteData.forEach((person, index) => {
+                const rank = index + 4; // 从第4名开始
+                
+                eliteHTML += `
+                    <div class="elite-card" data-rank="${rank}">
+                        <div class="elite-rank">${rank}</div>
+                        
+                        <div class="elite-content">
+                            <div class="elite-avatar" style="border-color: ${getAvatarColor(person.name)}; color: ${getAvatarColor(person.name)};">
+                                ${getInitials(person.name)}
+                            </div>
+                            
+                            <div class="elite-info">
+                                <h4 class="elite-name">${person.name}</h4>
+                                <span class="elite-type">${person.type === 'teacher' ? '教师' : '学生'}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="elite-stats">
+                            <div class="elite-stat">
+                                <div class="elite-stat-value">${person.quoteCount}</div>
+                                <div class="elite-stat-label">语录数</div>
+                            </div>
+                            <div class="elite-stat">
+                                <div class="elite-stat-value">${person.mentionedCount}</div>
+                                <div class="elite-stat-label">被提及</div>
+                            </div>
+                            <div class="elite-stat">
+                                <div class="elite-stat-value">${person.influenceScore.toFixed(1)}</div>
+                                <div class="elite-stat-label">影响力</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = eliteHTML;
+        }
+        
+        // 根据类型筛选和排序数据
+        function getRankedData(type) {
+            let filteredData = [...allRankData];
+            
+            // 根据类型筛选
+            if (type === 'teachers') {
+                filteredData = filteredData.filter(item => item.type === 'teacher');
+            } else if (type === 'students') {
+                filteredData = filteredData.filter(item => item.type === 'student');
+            } else if (type === 'quotes') {
+                // 按语录数量排序
+                filteredData.sort((a, b) => b.quoteCount - a.quoteCount);
+                return filteredData;
+            } else if (type === 'mentioned') {
+                // 按被提及次数排序
+                filteredData.sort((a, b) => b.mentionedCount - a.mentionedCount);
+                return filteredData;
+            }
+            
+            // 默认按影响力排序
+            filteredData.sort((a, b) => b.influenceScore - a.influenceScore);
+            return filteredData;
+        }
+        
+        // 更新所有排名显示
+        function updateRankings(type) {
+            currentRankType = type;
+            const rankedData = getRankedData(type);
+            
+            // 渲染前三名
+            renderPodium(rankedData.slice(0, 3));
+            
+            // 渲染精英榜单
+            renderEliteRankings(rankedData);
+            
+            // 隐藏加载动画
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 300);
+            }
+        }
+        
+        // ============================================
+        // 页面初始化
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新页面上的时间显示
+            const updateTimeDisplay = document.getElementById('updateTimeDisplay');
+            if (updateTimeDisplay) {
+                updateTimeDisplay.textContent = `数据更新于：${UPDATE_TIME}`;
+            }
+            
+            // 生成数据
+            allRankData = generateRankData();
+            
+            // 初始显示综合榜
+            updateRankings('all');
+            
+            // ============================================
+            // 事件绑定
+            // ============================================
+            
+            // 导航标签点击事件
+            document.querySelectorAll('.rank-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 更新按钮状态
+                    document.querySelectorAll('.rank-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 获取排名类型
+                    const type = this.dataset.rankType;
+                    
+                    // 更新排名
+                    updateRankings(type);
+                });
+            });
+            
+            // ============================================
+            // 侧边栏功能
+            // ============================================
+            
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const mainContent = document.getElementById('rank-main-content');
+            
+            if (sidebar && sidebarToggle && mainContent) {
+                let sidebarCollapsed = false;
 
-    // 步骤5：滚动触发动画（节流优化，补充完整逻辑）
-    window.addEventListener("scroll", throttle(() => {
-      const rankContainer = document.getElementById("rank-container");
-      if (!rankContainer) return; // 容错处理
-      const rect = rankContainer.getBoundingClientRect();
-      // 当容器进入视口时触发动画（添加激活类）
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        rankContainer.classList.add("animate-active");
-      }
-    }), 300);
-
-    // 额外：页面加载完成后主动触发一次激活（确保首次加载即可看到动画）
-    window.addEventListener("load", () => {
-      const rankContainer = document.getElementById("rank-container");
-      if (rankContainer) {
-        rankContainer.classList.add("animate-active");
-      }
-    });
-  </script>
+                sidebarToggle.addEventListener('click', () => {
+                    sidebarCollapsed = !sidebarCollapsed;
+                    if (sidebarCollapsed) {
+                        sidebar.classList.add('collapsed');
+                        mainContent.classList.add('sidebar-collapsed');
+                        sidebarToggle.textContent = '☰';
+                    } else {
+                        sidebar.classList.remove('collapsed');
+                        mainContent.classList.remove('sidebar-collapsed');
+                        sidebarToggle.textContent = '≡';
+                    }
+                });
+            }
+            
+            // 侧边栏导航项点击事件
+            document.querySelectorAll('.teacher-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // 如果是链接，允许跳转
+                    if (this.hasAttribute('href')) {
+                        return;
+                    }
+                    e.preventDefault();
+                    // 如果是语录项，跳回主页
+                    window.location.href = 'index.html';
+                });
+            });
+            
+            // 添加简单的入场动画
+            setTimeout(() => {
+                const podiumElements = document.querySelectorAll('.podium');
+                podiumElements.forEach((el, index) => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(50px)';
+                    setTimeout(() => {
+                        el.style.transition = 'all 0.5s ease';
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 200);
+                });
+                
+                const eliteCards = document.querySelectorAll('.elite-card');
+                eliteCards.forEach((el, index) => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        el.style.transition = 'all 0.4s ease';
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, 600 + (index * 50));
+                });
+            }, 100);
+        });
+    </script>
 </body>
 </html>
