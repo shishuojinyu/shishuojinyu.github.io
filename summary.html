@@ -305,7 +305,7 @@
                     <div class="teacher-list">
                         <span class="teacher-item" data-subject="语文" data-teacher="陈琳">陈琳</span>
                         <span class="teacher-item" data-subject="语文" data-teacher="范叶斌">范叶斌</span>
-                        <span class="teacher-item" data-subject="语文" data-teacher="郑宇（小宝）">郑宇（小宝）</span>
+                        <span class="teacher-item" data-subject="语文" data-teacher="郑宇">郑宇</span>
                     </div>
                 </div>
                 
@@ -321,8 +321,8 @@
                 <div class="subject-item">
                     <span class="subject-title">🗣️ 英语</span>
                     <div class="teacher-list">
-                        <span class="teacher-item" data-subject="英语" data-teacher="冯秋云（fqy，frequently）">冯秋云</span>
-                        <span class="teacher-item" data-subject="英语" data-teacher="赵永恒（仓山一哥）">赵永恒（仓山一哥）</span>
+                        <span class="teacher-item" data-subject="英语" data-teacher="冯秋云">冯秋云</span>
+                        <span class="teacher-item" data-subject="英语" data-teacher="赵永恒">赵永恒</span>
                     </div>
                 </div>
                 
@@ -412,10 +412,10 @@
                 <h1>📊 语录统计数据中心</h1>
                 <div class="stats-meta">
                     <!-- 请在这里修改更新时间 -->
-                    本网站语录收录截止<span style="color: #007bff; font-weight: bold;">2024年12月31日23时59分59秒</span>
+                    本网站语录收录截止<span style="color: #007bff; font-weight: bold;">2025年12月28日11时06分00秒</span>
                 </div>
                 <div class="stats-note">
-                    ⚠️ 重要说明：由于准确识别每条语录提及的人工程量巨大，AI无法胜任，而且本人暂时没有时间完成此工作，因此会在高考完进行此工作。
+                    ⚠️ 重要说明：部分语录中可能对某人使用外号来称呼，因此数据短时间内难以准确统计，可能有偏差。本人将会在高考后完成全部工作。
                 </div>
             </div>
             
@@ -490,7 +490,7 @@
         // ============================================
         
         // 语录收录截止时间（请在这里修改）
-        const UPDATE_TIME = "2024年12月31日23时59分59秒";
+        const UPDATE_TIME = "2025年12月28日11时06分00秒";
         
         // 学生名单（按您提供的顺序）
         const STUDENTS = [
@@ -506,10 +506,10 @@
         const TEACHERS = [
             { name: "陈琳", subject: "语文" },
             { name: "范叶斌", subject: "语文" },
-            { name: "郑宇（小宝）", subject: "语文" },
+            { name: "郑宇", subject: "语文" },
             { name: "金声", subject: "数学" },
-            { name: "冯秋云（fqy，frequently）", subject: "英语" },
-            { name: "赵永恒（仓山一哥）", subject: "英语" },
+            { name: "冯秋云", subject: "英语" },
+            { name: "赵永恒", subject: "英语" },
             { name: "颜有虹", subject: "物理" },
             { name: "严志芳", subject: "化学" },
             { name: "程保权", subject: "化学" },
@@ -538,20 +538,20 @@
         
         // 模拟教师语录数量
         const teacherQuoteCounts = {
-            "陈琳": 200,
-            "范叶斌": 20,
-            "郑宇（小宝）": 35,
-            "金声": 837,
-            "冯秋云（fqy，frequently）": 30,
-            "赵永恒（仓山一哥）": 25,
-            "颜有虹": 300,
-            "严志芳": 50,
+            "陈琳": 341,
+            "范叶斌": 19,
+            "郑宇（小宝）": 30,
+            "金声": 870,
+            "冯秋云（fqy，frequently）": 42,
+            "赵永恒（仓山一哥）": 27,
+            "颜有虹": 322,
+            "严志芳": 97,
             "程保权": 20,
-            "陈卉琴": 80,
-            "叶永菁": 15,
-            "傅敏": 30,
-            "林根": 100,
-            "星辰": 25
+            "陈卉琴": 102,
+            "叶永菁": 21,
+            "傅敏": 26,
+            "林根": 104,
+            "星辰": 29
         };
         
         // 模拟被提及次数（老师之间的互相提及，以及学生被提及）
