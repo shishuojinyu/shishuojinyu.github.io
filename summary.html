@@ -412,7 +412,7 @@
                 <h1>📊 语录统计数据中心</h1>
                 <div class="stats-meta">
                     <!-- 请在这里修改更新时间 -->
-                    本网站语录收录截止<span style="color: #007bff; font-weight: bold;">2025年12月28日11时06分00秒</span>
+                    本网站语录收录截止<span style="color: #007bff; font-weight: bold;" id="updateTimeDisplay">2025年12月28日11时06分00秒</span>
                 </div>
                 <div class="stats-note">
                     ⚠️ 重要说明：部分语录中可能对某人使用外号来称呼，因此数据短时间内难以准确统计，可能有偏差。本人将会在高考后完成全部工作。
@@ -486,13 +486,102 @@
 
     <script>
         // ============================================
-        // 配置文件（请根据需要修改）
+        // 【数据配置区】从这里开始修改！
         // ============================================
         
-        // 语录收录截止时间（请在这里修改）
+        // 1. 语录收录截止时间（请修改这里）
         const UPDATE_TIME = "2025年12月28日11时06分00秒";
         
-        // 学生名单（按您提供的顺序）
+        // 2. 教师数据配置（格式：姓名: [语录数量, 被提及次数]）
+        //    注意：姓名必须和侧边栏中的一致
+        const TEACHER_DATA = {
+            "陈琳": [341, 25],
+            "范叶斌": [19, 8],
+            "郑宇": [30, 12],
+            "金声": [870, 185],
+            "冯秋云": [42, 18],
+            "赵永恒": [27, 10],
+            "颜有虹": [322, 68],
+            "严志芳": [97, 22],
+            "程保权": [20, 9],
+            "陈卉琴": [102, 30],
+            "叶永菁": [21, 6],
+            "傅敏": [26, 15],
+            "林根": [104, 32],
+            "星辰": [29, 12]
+        };
+        
+        // 3. 学生数据配置（格式：姓名: [语录数量, 被提及次数]）
+        //    注意：姓名必须和学生名单中的一致
+        //    暂时全部设置为[1, 1]，您可以逐个修改
+        const STUDENT_DATA = {
+            "谢昊辰": [1, 1],
+            "邱浩宸": [1, 1],
+            "韩金成": [1, 1],
+            "郑景严": [1, 1],
+            "郑九鼎": [1, 1],
+            "王浩宇": [1, 1],
+            "黄芷裳": [1, 1],
+            "刘梓楷": [1, 1],
+            "陈林佳": [1, 1],
+            "倪楷楠": [1, 1],
+            "陈浩天": [1, 1],
+            "张子扬": [1, 1],
+            "吴昊天": [1, 1],
+            "张皓": [1, 1],
+            "汪千雅": [1, 1],
+            "黄朵儿": [1, 1],
+            "吴泽曦": [1, 1],
+            "林曾竤": [1, 1],
+            "陈易航": [1, 1],
+            "林荣昕": [1, 1],
+            "林筠铭": [1, 1],
+            "叶一帆": [1, 1],
+            "黄楷杰": [1, 1],
+            "温静媛": [1, 1],
+            "孙澜菁": [1, 1],
+            "黄家耀": [1, 1],
+            "叶可聿": [1, 1],
+            "兰嘉涵": [1, 1],
+            "吕奕铮": [1, 1],
+            "常凯": [1, 1],
+            "林峻源": [1, 1],
+            "章皓晨": [1, 1],
+            "陈栎彤": [1, 1],
+            "陈佳鑫": [1, 1],
+            "吴兆元": [1, 1],
+            "何冬昱": [1, 1],
+            "赖祉祺": [1, 1],
+            "林靖轩": [1, 1],
+            "蔡达礼": [1, 1],
+            "叶子尧": [1, 1],
+            "蔡铠泽": [1, 1],
+            "陆庭锴": [1, 1],
+            "林嘉豪": [1, 1],
+            "陈睿杰": [1, 1],
+            "江智成": [1, 1],
+            "李浩一": [1, 1],
+            "李奥": [1, 1],
+            "刘雨琪": [1, 1],
+            "刘辰睿": [1, 1],
+            "林亦轲": [1, 1],
+            "巫夏朵": [1, 1],
+            "周善进": [1, 1],
+            "林铠墨": [1, 1],
+            "伍厚锴": [1, 1]
+        };
+        
+        // 4. 影响力指数权重（可以调整）
+        const WEIGHTS = {
+            quoteWeight: 1.0,      // 语录数量权重
+            mentionedWeight: 0.7   // 被提及次数权重
+        };
+        
+        // ============================================
+        // 【以下为固定配置，无需修改】
+        // ============================================
+        
+        // 学生名单（按座号顺序）
         const STUDENTS = [
             "谢昊辰", "邱浩宸", "韩金成", "郑景严", "郑九鼎", "王浩宇", "黄芷裳", "刘梓楷", "陈林佳",
             "倪楷楠", "陈浩天", "张子扬", "吴昊天", "张皓", "汪千雅", "黄朵儿", "吴泽曦", "林曾竤",
@@ -502,28 +591,22 @@
             "李浩一", "李奥", "刘雨琪", "刘辰睿", "林亦轲", "巫夏朵", "周善进", "林铠墨", "伍厚锴"
         ];
         
-        // 教师名单（从语录数据中提取）
-        const TEACHERS = [
-            { name: "陈琳", subject: "语文" },
-            { name: "范叶斌", subject: "语文" },
-            { name: "郑宇", subject: "语文" },
-            { name: "金声", subject: "数学" },
-            { name: "冯秋云", subject: "英语" },
-            { name: "赵永恒", subject: "英语" },
-            { name: "颜有虹", subject: "物理" },
-            { name: "严志芳", subject: "化学" },
-            { name: "程保权", subject: "化学" },
-            { name: "陈卉琴", subject: "生物" },
-            { name: "叶永菁", subject: "生物" },
-            { name: "傅敏", subject: "政治" },
-            { name: "林根", subject: "政治" },
-            { name: "星辰", subject: "教官语录" }
-        ];
-        
-        // 影响力指数计算权重
-        const WEIGHTS = {
-            quoteWeight: 1.0,      // 语录数量权重
-            mentionedWeight: 0.7   // 被提及次数权重
+        // 教师科目信息
+        const TEACHER_SUBJECTS = {
+            "陈琳": "语文",
+            "范叶斌": "语文",
+            "郑宇": "语文",
+            "金声": "数学",
+            "冯秋云": "英语",
+            "赵永恒": "英语",
+            "颜有虹": "物理",
+            "严志芳": "化学",
+            "程保权": "化学",
+            "陈卉琴": "生物",
+            "叶永菁": "生物",
+            "傅敏": "政治",
+            "林根": "政治",
+            "星辰": "教官语录"
         };
         
         // 表格分页配置
@@ -531,40 +614,6 @@
             pageSize: 15,          // 每页显示行数
             currentPage: 1         // 当前页码
         };
-        
-        // ============================================
-        // 模拟数据（实际使用时将从语录数据中提取）
-        // ============================================
-        
-        // 模拟教师语录数量
-        const teacherQuoteCounts = {
-            "陈琳": 341,
-            "范叶斌": 19,
-            "郑宇（小宝）": 30,
-            "金声": 870,
-            "冯秋云（fqy，frequently）": 42,
-            "赵永恒（仓山一哥）": 27,
-            "颜有虹": 322,
-            "严志芳": 97,
-            "程保权": 20,
-            "陈卉琴": 102,
-            "叶永菁": 21,
-            "傅敏": 26,
-            "林根": 104,
-            "星辰": 29
-        };
-        
-        // 模拟被提及次数（老师之间的互相提及，以及学生被提及）
-        const mentionedCounts = {};
-        
-        // 初始化所有人员的被提及次数为0
-        TEACHERS.forEach(teacher => {
-            mentionedCounts[teacher.name] = Math.floor(Math.random() * 50) + 10;
-        });
-        
-        STUDENTS.forEach(student => {
-            mentionedCounts[student] = Math.floor(Math.random() * 30) + 5;
-        });
         
         // ============================================
         // 数据准备和计算函数
@@ -575,40 +624,41 @@
             const allData = [];
             
             // 添加教师数据
-            TEACHERS.forEach((teacher, index) => {
-                const quoteCount = teacherQuoteCounts[teacher.name] || 0;
-                const mentioned = mentionedCounts[teacher.name] || 0;
-                const influenceScore = calculateInfluenceScore(quoteCount, mentioned);
+            Object.keys(TEACHER_DATA).forEach((teacherName, index) => {
+                const [quoteCount, mentionedCount] = TEACHER_DATA[teacherName];
+                const influenceScore = calculateInfluenceScore(quoteCount, mentionedCount);
+                const subject = TEACHER_SUBJECTS[teacherName] || "未知科目";
                 
                 allData.push({
                     id: `T${String(index + 1).padStart(2, '0')}`,
                     originalId: index + 1,
-                    name: teacher.name,
-                    displayName: `${teacher.subject}-${teacher.name}`,
+                    name: teacherName,
+                    displayName: `${subject}-${teacherName}`,
                     type: "teacher",
-                    subject: teacher.subject,
+                    subject: subject,
                     quoteCount: quoteCount,
-                    mentionedCount: mentioned,
+                    mentionedCount: mentionedCount,
                     influenceScore: influenceScore
                 });
             });
             
             // 添加学生数据
-            STUDENTS.forEach((student, index) => {
-                const quoteCount = 0; // 学生语录目前为0
-                const mentioned = mentionedCounts[student] || 0;
-                const influenceScore = calculateInfluenceScore(quoteCount, mentioned);
+            STUDENTS.forEach((studentName, index) => {
+                // 从配置中获取数据，如果没有则使用默认值[0, 0]
+                const studentStats = STUDENT_DATA[studentName] || [0, 0];
+                const [quoteCount, mentionedCount] = studentStats;
+                const influenceScore = calculateInfluenceScore(quoteCount, mentionedCount);
                 const seatNumber = String(index + 1).padStart(2, '0');
                 
                 allData.push({
                     id: seatNumber,
                     originalId: index + 1,
-                    name: student,
-                    displayName: `${seatNumber}-${student}`,
+                    name: studentName,
+                    displayName: `${seatNumber}-${studentName}`,
                     type: "student",
                     subject: "1班",
                     quoteCount: quoteCount,
-                    mentionedCount: mentioned,
+                    mentionedCount: mentionedCount,
                     influenceScore: influenceScore
                 });
             });
@@ -626,16 +676,21 @@
             const teachers = data.filter(item => item.type === 'teacher');
             const students = data.filter(item => item.type === 'student');
             
+            const totalQuotes = data.reduce((sum, item) => sum + item.quoteCount, 0);
+            const totalMentions = data.reduce((sum, item) => sum + item.mentionedCount, 0);
+            
             return {
                 totalCount: data.length,
                 teacherCount: teachers.length,
                 studentCount: students.length,
-                totalQuotes: data.reduce((sum, item) => sum + item.quoteCount, 0),
-                totalMentions: data.reduce((sum, item) => sum + item.mentionedCount, 0),
+                totalQuotes: totalQuotes,
+                totalMentions: totalMentions,
                 avgQuotesPerTeacher: teachers.length > 0 ? 
                     (teachers.reduce((sum, item) => sum + item.quoteCount, 0) / teachers.length).toFixed(1) : 0,
                 avgMentionsPerPerson: data.length > 0 ? 
-                    (data.reduce((sum, item) => sum + item.mentionedCount, 0) / data.length).toFixed(1) : 0
+                    (totalMentions / data.length).toFixed(1) : 0,
+                avgInfluenceScore: data.length > 0 ? 
+                    (data.reduce((sum, item) => sum + item.influenceScore, 0) / data.length).toFixed(1) : 0
             };
         }
         
@@ -869,9 +924,9 @@
                     <div class="stat-detail">人均 ${summary.avgMentionsPerPerson}次</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">数据类型</div>
-                    <div class="stat-value">${currentFilter === 'all' ? '全部' : currentFilter === 'teachers' ? '教师' : '学生'}</div>
-                    <div class="stat-detail">${filteredData.length}条记录</div>
+                    <div class="stat-label">平均影响力</div>
+                    <div class="stat-value">${summary.avgInfluenceScore}</div>
+                    <div class="stat-detail">当前筛选: ${currentFilter === 'all' ? '全部' : currentFilter === 'teachers' ? '教师' : '学生'}</div>
                 </div>
             `;
         }
@@ -1095,7 +1150,7 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             // 更新页面上的时间显示
-            document.querySelector('.stats-meta span').textContent = UPDATE_TIME;
+            document.getElementById('updateTimeDisplay').textContent = UPDATE_TIME;
             
             // 生成数据
             allStatsData = generateStatsData();
