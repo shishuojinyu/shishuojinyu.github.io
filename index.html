@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>世说金语 · 校园语录档案馆</title>
+    <style>
+        /* ========== CSS 变量（亮色主题，预留暗色） ========== */
+        :root {
+            --bg-gradient-start: #f5f7fc;
+            --bg-gradient-end: #eef2f9;
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --text-primary: #1e1f3a;
+            --text-secondary: #4a4c6e;
+            --accent-gold: #ffb347;
+            --accent-gold-dark: #e69500;
+            --shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+            --border-radius-card: 32px;
+            --border-radius-btn: 48px;
+            --font-title: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
+        }
+
+        /* 暗色主题（通过 .dark-mode 切换，暂时不用但预留） */
+        .dark-mode {
+            --bg-gradient-start: #12121c;
+            --bg-gradient-end: #1a1a2e;
+            --card-bg: rgba(30, 31, 58, 0.95);
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0cf;
+            --shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-title);
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            transition: background 0.3s ease;
+        }
+
+        /* 主卡片容器 */
+        .hero {
+            max-width: 780px;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(0px);
+            border-radius: var(--border-radius-card);
+            box-shadow: var(--shadow);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        /* 大大的标题 */
+        .title {
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd966, var(--accent-gold));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 4px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 550px) {
+            .title {
+                font-size: 3.2rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* 副线 / 英文 */
+        .sub {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            border-bottom: 1px dashed rgba(255, 180, 70, 0.3);
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+
+        /* 简介段落 */
+        .description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 2rem 0;
+            text-align: left;
+            background: rgba(255, 248, 225, 0.3);
+            padding: 1.5rem;
+            border-radius: 24px;
+            border-left: 5px solid var(--accent-gold);
+        }
+
+        .description p {
+            margin-bottom: 0.8rem;
+        }
+
+        .description p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 访问按钮 */
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(105deg, #ffd966, var(--accent-gold));
+            border: none;
+            color: #1e1f3a;
+            font-weight: 700;
+            font-size: 1.4rem;
+            padding: 0.9rem 2.5rem;
+            border-radius: var(--border-radius-btn);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            gap: 12px;
+            box-shadow: 0 8px 18px rgba(255, 180, 70, 0.3);
+            margin: 1.2rem 0 2rem 0;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 28px rgba(255, 160, 50, 0.4);
+            background: linear-gradient(105deg, #ffe085, #ffb347);
+        }
+
+        .enter-btn:active {
+            transform: translateY(2px);
+        }
+
+        /* 底部小字 */
+        .footer-note {
+            margin-top: 2.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-note span {
+            opacity: 0.8;
+        }
+
+        /* 一个小点缀 */
+        .quote-icon {
+            font-size: 2rem;
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="quote-icon">“</div>
+    <h1 class="title">世说金语</h1>
+    <div class="sub">校园语录档案馆</div>
+
+    <div class="description">
+        <p>📖还没想好写啥 </p>
+        <p>✨ 还没想好写啥</p>
+        <p>🎓 还没想好写啥</p>
+    </div>
+
+    <a href="content.html" class="enter-btn">
+        🌟 进入语录 · 重温美好 🌟
+    </a>
+
+    <div class="footer-note">
+        <span>🖋️ 邻氯苯甲醛</span>
+        <span>📅 2026.6.12</span>
+        <span>🏫 献给永远的·我们</span>
+    </div>
+</div>
+
+<!-- 预留未来主题切换脚本（极简，未激活） -->
+<script>
+    // （可选）将来你加上主题切换按钮时，可以在这里读取localStorage并应用.dark-mode
+    // 目前不做任何强制，保持亮色
+    // 如果你稍后需要，可以直接在这段脚本里添加逻辑，不影响现有布局
+    console.log("世说金语 · 首页加载完毕");
+</script>
+</body>
+</html>
