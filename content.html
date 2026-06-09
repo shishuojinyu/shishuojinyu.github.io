@@ -5,35 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>世说金语 - 校园语录合集</title>
     <style>
-        /* ========== 全局重置 & 基础风格 ========== */
+        /* ========== 全局重置 & 浅色主题 ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
-            background: #0a0f1f;
-            color: #eef2ff;
+            background: #f5f7fc;  /* 右侧整体背景浅灰白 */
+            color: #1e293b;
             line-height: 1.5;
         }
 
-        /* ========== 侧边栏 ========== */
+        /* ========== 侧边栏（深蓝紫色） ========== */
         .sidebar {
             position: fixed;
             top: 0;
             left: 0;
             width: 280px;
             height: 100vh;
-            background: rgba(18, 25, 45, 0.95);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(255, 215, 0, 0.3);
+            background: #1a1c3b;  /* 深蓝紫基调 */
+            background: linear-gradient(145deg, #1e1f3a 0%, #16172e 100%);
+            border-right: 1px solid rgba(255, 215, 0, 0.4);
             overflow-y: auto;
             transition: transform 0.3s ease;
             z-index: 100;
-            box-shadow: 2px 0 12px rgba(0,0,0,0.3);
+            box-shadow: 2px 0 12px rgba(0,0,0,0.2);
         }
 
         .sidebar.collapsed {
@@ -44,7 +43,7 @@
             width: 5px;
         }
         .sidebar::-webkit-scrollbar-track {
-            background: #1e2a3a;
+            background: #2a2c4a;
         }
         .sidebar::-webkit-scrollbar-thumb {
             background: #f5b042;
@@ -72,13 +71,13 @@
 
         .sidebar-sub-title {
             font-size: 0.85rem;
-            color: #8e9ecc;
+            color: #b9c3e6;
             margin-top: 0.25rem;
         }
 
         .sidebar-divider {
             margin: 1rem 0;
-            border-color: #2a3a5a;
+            border-color: #3a3c6a;
         }
 
         .subject-item {
@@ -104,30 +103,30 @@
 
         .teacher-item {
             display: inline-block;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 215, 0, 0.15);
             padding: 0.25rem 0.7rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            color: #cfdef5;
+            color: #eef2ff;
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
 
         .teacher-item:hover {
             background: #ffb347;
-            color: #0a0f1f;
+            color: #1a1c3b;
             border-color: #ffb347;
             transform: translateY(-1px);
         }
 
         .teacher-item-link {
             display: inline-block;
-            background: rgba(100, 150, 255, 0.2);
+            background: rgba(100, 150, 255, 0.25);
             padding: 0.25rem 0.7rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            color: #aaccff;
+            color: #cbd5ff;
             text-decoration: none;
             transition: all 0.2s;
         }
@@ -137,13 +136,14 @@
             color: white;
         }
 
+        /* 侧边栏收起按钮 */
         .sidebar-toggle {
             position: absolute;
             top: 1rem;
             right: -2.5rem;
             width: 2.2rem;
             height: 2.2rem;
-            background: #1e2f45;
+            background: #2e2f55;
             border: 1px solid #ffb347;
             border-radius: 0 8px 8px 0;
             color: #ffd966;
@@ -159,15 +159,16 @@
 
         .sidebar-toggle:hover {
             background: #ffb347;
-            color: #0a0f1f;
+            color: #1a1c3b;
         }
 
-        /* ========== 主内容区 ========== */
+        /* ========== 主内容区（偏白背景） ========== */
         .main-content {
             margin-left: 280px;
             min-height: 100vh;
             padding: 2rem 2rem 3rem;
             transition: margin-left 0.3s ease;
+            background: #fefefe;
         }
 
         .main-content.sidebar-collapsed {
@@ -181,34 +182,35 @@
         }
 
         .search-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: #ffffff;
             padding: 0.5rem 1rem;
             border-radius: 40px;
-            color: #eef2ff;
+            color: #1e293b;
             text-decoration: none;
             font-size: 0.9rem;
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            border: 1px solid #cfdde6;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             transition: 0.2s;
         }
 
         .search-btn:hover {
             background: #ffb347;
-            color: #0a0f1f;
             border-color: #ffb347;
+            color: white;
         }
 
         .content-display {
-            background: rgba(10, 15, 31, 0.7);
-            backdrop-filter: blur(4px);
-            border-radius: 32px;
+            background: #ffffff;
+            border-radius: 28px;
             padding: 1.8rem;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f8;
         }
 
         .default-tip {
             text-align: center;
             padding: 4rem 1rem;
-            color: #8e9ecc;
+            color: #6c7a91;
             font-size: 1.1rem;
         }
 
@@ -219,10 +221,7 @@
         .quote-main-title {
             font-size: 2rem;
             font-weight: 600;
-            background: linear-gradient(135deg, #fff, #ffd966);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: #1e293b;
             margin-bottom: 1rem;
         }
 
@@ -236,26 +235,27 @@
         .teacher-name {
             font-size: 1.6rem;
             font-weight: 600;
-            color: #ffd966;
+            color: #b45309; /* 深金色调 */
         }
 
         .subject-tag {
-            background: #ffb34720;
+            background: #fef3e8;
             padding: 0.2rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
             border-left: 2px solid #ffb347;
+            color: #7c5e2a;
         }
 
         .current-location {
-            color: #8e9ecc;
+            color: #6c7a91;
             font-size: 0.85rem;
             margin-bottom: 1rem;
         }
 
         .content-divider {
             margin: 1rem 0 1.5rem;
-            border-color: #2a3a5a;
+            border-color: #e2e8f0;
         }
 
         .quotes-container {
@@ -265,8 +265,7 @@
         }
 
         .quote-card {
-            background: rgba(30, 40, 60, 0.5);
-            backdrop-filter: blur(4px);
+            background: #fafcff;
             border-left: 4px solid #ffb347;
             padding: 1rem 1.2rem;
             border-radius: 20px;
@@ -274,16 +273,19 @@
             display: flex;
             gap: 1rem;
             align-items: flex-start;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            border: 1px solid #edf2f7;
         }
 
         .quote-card:hover {
-            background: rgba(50, 65, 95, 0.6);
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             transform: translateX(4px);
         }
 
         .quote-number {
             background: #ffb347;
-            color: #0a0f1f;
+            color: white;
             font-weight: bold;
             width: 28px;
             height: 28px;
@@ -300,22 +302,23 @@
             flex: 1;
             font-size: 0.95rem;
             line-height: 1.5;
-            color: #f0f3fa;
+            color: #1e293b;
         }
 
+        /* 金声专属模块（浅色风格） */
         .jin-sheng-module {
             margin-top: 2rem;
-            background: rgba(0, 0, 0, 0.3);
+            background: #fffaf0;
             border-radius: 28px;
             padding: 1.2rem;
-            border: 1px solid rgba(255, 200, 100, 0.4);
+            border: 1px solid #ffeaaf;
         }
 
         .module-title {
             font-size: 1.6rem;
             font-weight: bold;
             text-align: center;
-            color: #ffd966;
+            color: #b45309;
             margin-bottom: 1rem;
         }
 
@@ -327,29 +330,33 @@
 
         .module-item h4 {
             font-size: 1.2rem;
-            color: #ffb347;
+            color: #b45309;
             margin-bottom: 0.5rem;
             border-left: 3px solid #ffb347;
             padding-left: 0.7rem;
         }
 
         .module-item p {
-            background: rgba(20, 30, 50, 0.6);
+            background: #ffffff;
             padding: 0.8rem;
             border-radius: 20px;
             font-size: 0.9rem;
             line-height: 1.5;
+            border: 1px solid #ffedc9;
+            color: #2d3a4b;
         }
 
+        /* 学生语录 / 星辰提示 */
         .student-tip, .xingchen-tip {
             text-align: center;
             padding: 3rem;
             font-size: 1.2rem;
-            color: #aaccff;
-            background: rgba(0,0,0,0.2);
+            color: #6c7a91;
+            background: #f8fafc;
             border-radius: 28px;
         }
 
+        /* 返回顶部按钮 */
         .back-to-top {
             position: fixed;
             bottom: 2rem;
@@ -359,12 +366,12 @@
             background: #ffb347;
             border: none;
             border-radius: 30px;
-            color: #0a0f1f;
+            color: #1e293b;
             font-size: 1.6rem;
             font-weight: bold;
             cursor: pointer;
             display: none;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
             transition: 0.2s;
             z-index: 99;
         }
@@ -379,6 +386,7 @@
             to { opacity: 1; transform: translateY(0);}
         }
 
+        /* 响应式 */
         @media (max-width: 768px) {
             .sidebar {
                 width: 260px;
@@ -578,7 +586,7 @@
     <button class="back-to-top" id="back-to-top">↑</button>
 
     <script>
-        // ==================== 语录数据（每人仅保留3条示例） ====================
+        // ==================== 语录数据（每人3条示例） ====================
         const quoteData = {
             "语文-陈琳": [
                 "平时不愿意做这些事，要成绩时又那么迫切，让人匪夷所思",
@@ -652,7 +660,7 @@
             ]
         };
 
-        // ==================== 交互逻辑 ====================
+        // ==================== 交互逻辑（保持不变） ====================
         const sidebar = document.getElementById('sidebar');
         const sidebarToggle = document.getElementById('sidebar-toggle');
         const mainContent = document.getElementById('main-content');
@@ -672,7 +680,6 @@
         });
 
         const teacherItems = document.querySelectorAll('.teacher-item');
-        const contentDisplay = document.getElementById('content-display');
         const defaultTip = document.querySelector('.default-tip');
         const jinShengModule = document.getElementById('jin-sheng-module');
         const quoteList = document.getElementById('quote-list');
