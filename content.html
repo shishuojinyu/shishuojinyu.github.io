@@ -14,20 +14,20 @@
 
         body {
             font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
-            background: #f5f7fc;  /* 右侧整体背景浅灰白 */
+            background: #f5f7fc;
             color: #1e293b;
             line-height: 1.5;
         }
 
-        /* ========== 侧边栏（深蓝紫色） ========== */
+        /* ========== 侧边栏（浅了一些的深蓝灰） ========== */
         .sidebar {
             position: fixed;
             top: 0;
             left: 0;
             width: 280px;
             height: 100vh;
-            background: #1a1c3b;  /* 深蓝紫基调 */
-            background: linear-gradient(145deg, #1e1f3a 0%, #16172e 100%);
+            background: #2d3b5a;  /* 比之前浅的深蓝灰 */
+            background: linear-gradient(145deg, #2d3b5a 0%, #253048 100%);
             border-right: 1px solid rgba(255, 215, 0, 0.4);
             overflow-y: auto;
             transition: transform 0.3s ease;
@@ -43,7 +43,7 @@
             width: 5px;
         }
         .sidebar::-webkit-scrollbar-track {
-            background: #2a2c4a;
+            background: #3e4d70;
         }
         .sidebar::-webkit-scrollbar-thumb {
             background: #f5b042;
@@ -52,6 +52,7 @@
 
         .sidebar-content {
             padding: 1.5rem 1rem 2rem;
+            min-height: 100%;  /* 确保内容撑开，边框拉满 */
         }
 
         .sidebar-header {
@@ -77,7 +78,7 @@
 
         .sidebar-divider {
             margin: 1rem 0;
-            border-color: #3a3c6a;
+            border-color: #4a5a7e;
         }
 
         .subject-item {
@@ -162,10 +163,10 @@
             color: #1a1c3b;
         }
 
-        /* ========== 主内容区（偏白背景） ========== */
+        /* ========== 主内容区（填满视口，消除底部空白） ========== */
         .main-content {
             margin-left: 280px;
-            min-height: 100vh;
+            min-height: 100vh;   /* 让白色背景填满整个视口高度 */
             padding: 2rem 2rem 3rem;
             transition: margin-left 0.3s ease;
             background: #fefefe;
@@ -175,28 +176,48 @@
             margin-left: 0;
         }
 
+        /* 搜索栏改造为输入框+按钮 */
         .top-bar {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 2rem;
         }
 
-        .search-btn {
-            background: #ffffff;
-            padding: 0.5rem 1rem;
-            border-radius: 40px;
-            color: #1e293b;
-            text-decoration: none;
-            font-size: 0.9rem;
+        .search-container {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
             border: 1px solid #cfdde6;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            border-radius: 40px;
+            padding: 0.3rem 0.3rem 0.3rem 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 0.9rem;
+            padding: 0.4rem 0;
+            width: 180px;
+            background: transparent;
+        }
+
+        .search-btn {
+            background: #ffb347;
+            border: none;
+            border-radius: 40px;
+            padding: 0.4rem 1rem;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
         }
 
         .search-btn:hover {
-            background: #ffb347;
-            border-color: #ffb347;
-            color: white;
+            background: #e6952e;
         }
 
         .content-display {
@@ -235,7 +256,7 @@
         .teacher-name {
             font-size: 1.6rem;
             font-weight: 600;
-            color: #b45309; /* 深金色调 */
+            color: #b45309;
         }
 
         .subject-tag {
@@ -305,7 +326,7 @@
             color: #1e293b;
         }
 
-        /* 金声专属模块（浅色风格） */
+        /* 金声专属模块 */
         .jin-sheng-module {
             margin-top: 2rem;
             background: #fffaf0;
@@ -346,6 +367,40 @@
             color: #2d3a4b;
         }
 
+        /* 大事记专用样式 */
+        .events-container {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .events-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #b45309;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .events-content {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .events-image {
+            max-width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+        }
+
+        .image-note {
+            background: #fef3e8;
+            padding: 1rem;
+            border-radius: 20px;
+            color: #b45309;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
         /* 学生语录 / 星辰提示 */
         .student-tip, .xingchen-tip {
             text-align: center;
@@ -356,7 +411,7 @@
             border-radius: 28px;
         }
 
-        /* 返回顶部按钮 */
+        /* 返回顶部 */
         .back-to-top {
             position: fixed;
             bottom: 2rem;
@@ -401,6 +456,7 @@
             .main-content {
                 margin-left: 0;
                 padding: 1rem;
+                min-height: 100vh;
             }
             .main-content.sidebar-collapsed {
                 margin-left: 0;
@@ -419,6 +475,9 @@
             }
             .teacher-name {
                 font-size: 1.3rem;
+            }
+            .search-input {
+                width: 120px;
             }
         }
     </style>
@@ -520,6 +579,14 @@
                         <a href="picture.html" class="teacher-item-link" data-subject="赛博档案" data-teacher="图片集">图片集</a>
                     </div>
                 </div>
+
+                <!-- ========= 新增：高三（1）班大事记 ========= -->
+                <div class="subject-item">
+                    <span class="subject-title">📅 高三（1）班大事记</span>
+                    <div class="teacher-list">
+                        <span class="teacher-item" data-subject="大事记" data-teacher="高三1班">大事记</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -527,14 +594,17 @@
     <!-- 右侧内容区 -->
     <div class="main-content" id="main-content">
         <div class="top-bar">
-            <a href="search.html" class="search-btn">
-                <span>🔍</span> 搜索
-            </a>
+            <div class="search-container">
+                <input type="text" class="search-input" id="search-input" placeholder="搜索老师或语录...">
+                <button class="search-btn" id="search-button">
+                    <span>🔍</span> 搜索
+                </button>
+            </div>
         </div>
 
         <div class="content-display" id="content-display">
             <!-- 默认提示 -->
-            <div class="default-tip">
+            <div class="default-tip" id="default-tip">
                 <h3>请从左侧选择科目/老师查看语录</h3>
             </div>
 
@@ -579,14 +649,37 @@
             </div>
 
             <!-- 星辰教官语录预留 -->
-            <div class="xingchen-tip" id="xingchen-tip" style="display: none;"></div>
+            <div class="xingchen-tip" id="xingchen-tip" style="display: none;">
+                <h3>星辰教官语录 · 待补充</h3>
+            </div>
+
+            <!-- 大事记专用容器 -->
+            <div class="events-container" id="events-container" style="display: none;">
+                <div class="events-title">📸 高三（1）班大事记</div>
+                <div class="events-content">
+                    <p style="margin-bottom: 1rem;">这里记录我们班的高光时刻、搞笑瞬间、青春回忆～</p>
+                    <!-- 图片示例：把你想放的图片命名为 class-photo.jpg 放在同一个文件夹下，然后取消下面的注释 -->
+                    <!-- 
+                    <img src="class-photo.jpg" alt="班级合照" class="events-image">
+                    -->
+                    <!-- 也可以使用网络图片，例如： -->
+                    <img src="https://picsum.photos/id/20/600/400" alt="示例图片（请替换成你的班级照片）" class="events-image" style="max-width:100%; border-radius:20px;">
+                    <div class="image-note">
+                        📌 如何添加自己的图片？<br>
+                        方法1（推荐）：将图片文件（例如 myphoto.jpg）和本网页放在同一个文件夹里，然后修改上面的 src="myphoto.jpg"<br>
+                        方法2：使用网络图片链接，把 src 改为图片网址（如 https://xxx.com/photo.jpg）<br>
+                        方法3：右键复制图片地址，粘贴到 src="" 里面。<br>
+                        <strong>现在这里是示例图片，你可以替换成班级合照、活动照等</strong>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <button class="back-to-top" id="back-to-top">↑</button>
 
     <script>
-        // ==================== 语录数据（每人3条示例） ====================
+        // ==================== 语录数据（示例，后续可大量扩充） ====================
         const quoteData = {
             "语文-陈琳": [
                 "平时不愿意做这些事，要成绩时又那么迫切，让人匪夷所思",
@@ -653,14 +746,10 @@
                 "下雨要带伞（咯吱也有自己的天气之子）",
                 "只有两条路：考公，考研"
             ],
-            "教官语录-星辰": [
-                "国有国法，家有家规，实践基地也有自己的规章制度",
-                "我信任你们，相信你们已经将手机和零食上交了",
-                "向前对正1,2,3！调整坐姿四变二！"
-            ]
+            "教官语录-星辰": []  // 星辰教官语录暂空，后续添加
         };
 
-        // ==================== 交互逻辑（保持不变） ====================
+        // ==================== DOM 元素 ====================
         const sidebar = document.getElementById('sidebar');
         const sidebarToggle = document.getElementById('sidebar-toggle');
         const mainContent = document.getElementById('main-content');
@@ -680,63 +769,114 @@
         });
 
         const teacherItems = document.querySelectorAll('.teacher-item');
-        const defaultTip = document.querySelector('.default-tip');
+        const defaultTip = document.getElementById('default-tip');
         const jinShengModule = document.getElementById('jin-sheng-module');
         const quoteList = document.getElementById('quote-list');
         const studentTip = document.getElementById('student-tip');
         const xingchenTip = document.getElementById('xingchen-tip');
+        const eventsContainer = document.getElementById('events-container');
         const teacherNameSpan = document.getElementById('teacher-name');
         const subjectTagSpan = document.getElementById('subject-tag');
         const currentLocationSpan = document.getElementById('current-location');
         const quotesContainer = document.getElementById('quotes-container');
 
+        // 隐藏所有内容区块
+        function hideAllContent() {
+            defaultTip.style.display = 'none';
+            jinShengModule.style.display = 'none';
+            quoteList.style.display = 'none';
+            studentTip.style.display = 'none';
+            xingchenTip.style.display = 'none';
+            eventsContainer.style.display = 'none';
+        }
+
+        // 显示老师语录（通用）
+        function showTeacherQuotes(subject, teacher) {
+            hideAllContent();
+            quoteList.style.display = 'block';
+            teacherNameSpan.textContent = `${teacher}老师`;
+            subjectTagSpan.textContent = subject;
+            currentLocationSpan.textContent = `当前位置：${subject}/${teacher}老师。`;
+
+            // 金声特殊：额外显示专属模块
+            if (teacher === '金声') {
+                jinShengModule.style.display = 'block';
+            } else {
+                jinShengModule.style.display = 'none';
+            }
+
+            const key = `${subject}-${teacher}`;
+            const quotes = quoteData[key] || [];
+            quotesContainer.innerHTML = '';
+            
+            if (quotes.length === 0) {
+                quotesContainer.innerHTML = '<p class="no-quotes">暂无收录语录，欢迎补充！</p>';
+            } else {
+                quotes.forEach((quote, index) => {
+                    const quoteCard = document.createElement('div');
+                    quoteCard.className = 'quote-card';
+                    quoteCard.innerHTML = `
+                        <span class="quote-number">${index + 1}</span>
+                        <p class="quote-text">${quote}</p>
+                    `;
+                    quotesContainer.appendChild(quoteCard);
+                });
+            }
+        }
+
+        // 点击左侧条目处理
         teacherItems.forEach(item => {
             item.addEventListener('click', () => {
-                defaultTip.style.display = 'none';
-                jinShengModule.style.display = 'none';
-                quoteList.style.display = 'none';
-                studentTip.style.display = 'none';
-                xingchenTip.style.display = 'none';
-
                 const subject = item.dataset.subject;
                 const teacher = item.dataset.teacher;
 
+                // 大事记特殊处理
+                if (subject === '大事记') {
+                    hideAllContent();
+                    eventsContainer.style.display = 'block';
+                    window.scrollTo(0, 0);
+                    return;
+                }
+
+                // 学生语录
                 if (subject === '学生语录') {
+                    hideAllContent();
                     studentTip.style.display = 'flex';
                     return;
                 }
 
-                quoteList.style.display = 'block';
-                teacherNameSpan.textContent = `${teacher}老师`;
-                subjectTagSpan.textContent = subject;
-                currentLocationSpan.textContent = `当前位置：${subject}/${teacher}老师。`;
-
-                if (teacher === '金声') {
-                    jinShengModule.style.display = 'block';
+                // 星辰教官（后续补充）
+                if (subject === '教官语录' && teacher === '星辰') {
+                    hideAllContent();
+                    xingchenTip.style.display = 'flex';
+                    return;
                 }
 
-                const key = `${subject}-${teacher}`;
-                const quotes = quoteData[key] || [];
-                quotesContainer.innerHTML = '';
-                
-                if (quotes.length === 0) {
-                    quotesContainer.innerHTML = '<p class="no-quotes">暂无收录语录，欢迎补充！</p>';
-                } else {
-                    quotes.forEach((quote, index) => {
-                        const quoteCard = document.createElement('div');
-                        quoteCard.className = 'quote-card';
-                        quoteCard.innerHTML = `
-                            <span class="quote-number">${index + 1}</span>
-                            <p class="quote-text">${quote}</p>
-                        `;
-                        quotesContainer.appendChild(quoteCard);
-                    });
-                }
-
+                // 正常老师语录
+                showTeacherQuotes(subject, teacher);
                 window.scrollTo(0, 0);
             });
         });
 
+        // 搜索功能（简单前端过滤，先做占位提示）
+        const searchBtn = document.getElementById('search-button');
+        const searchInput = document.getElementById('search-input');
+        searchBtn.addEventListener('click', () => {
+            const keyword = searchInput.value.trim();
+            if (keyword === '') {
+                alert('请输入搜索内容');
+                return;
+            }
+            alert(`🔍 搜索功能开发中...\n当前想搜索：“${keyword}”\n后续会帮你快速找到老师和语录。`);
+        });
+        // 按回车也可以搜索
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
+
+        // 返回顶部
         const backToTopBtn = document.getElementById('back-to-top');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
@@ -745,7 +885,6 @@
                 backToTopBtn.style.display = 'none';
             }
         });
-
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
