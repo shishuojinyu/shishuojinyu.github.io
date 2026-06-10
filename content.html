@@ -2,667 +2,84 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>世说金语 - 校园语录合集</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世说金语 - 大事记测试</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
-            background: #f5f7fc;
-            color: #1e293b;
-            line-height: 1.5;
-        }
-
-        /* 侧边栏（浅蓝灰色） */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui; background: #f5f7fc; }
+        /* 侧边栏 */
         .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 280px;
-            height: 100vh;
-            background: #2d3b5a;
-            background: linear-gradient(145deg, #2d3b5a 0%, #253048 100%);
-            border-right: 1px solid rgba(255, 215, 0, 0.4);
+            position: fixed; left: 0; top: 0; width: 260px; height: 100vh;
+            background: #2d3b5a; color: #eef2ff; padding: 1.5rem;
             overflow-y: auto;
-            transition: transform 0.3s ease;
-            z-index: 100;
-            box-shadow: 2px 0 12px rgba(0,0,0,0.2);
         }
-
-        .sidebar.collapsed {
-            transform: translateX(-280px);
-        }
-
-        .sidebar::-webkit-scrollbar {
-            width: 5px;
-        }
-        .sidebar::-webkit-scrollbar-track {
-            background: #3e4d70;
-        }
-        .sidebar::-webkit-scrollbar-thumb {
-            background: #f5b042;
-            border-radius: 4px;
-        }
-
-        .sidebar-content {
-            padding: 1.5rem 1rem 2rem;
-            min-height: 100%;
-        }
-
-        .sidebar-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .sidebar-main-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #ffd966, #ffb347);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-sub-title {
-            font-size: 0.85rem;
-            color: #b9c3e6;
-            margin-top: 0.25rem;
-        }
-
-        .sidebar-divider {
-            margin: 1rem 0;
-            border-color: #4a5a7e;
-        }
-
-        .subject-item {
-            margin-bottom: 1.2rem;
-        }
-
-        .subject-title {
-            display: block;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #ffd966;
-            margin-bottom: 0.5rem;
-            padding-left: 0.25rem;
-            border-left: 3px solid #ffb347;
-        }
-
-        .teacher-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding-left: 0.5rem;
-        }
-
+        .sidebar h2 { color: #ffd966; margin-bottom: 1rem; }
         .teacher-item {
-            display: inline-block;
-            background: rgba(255, 215, 0, 0.15);
-            padding: 0.25rem 0.7rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #eef2ff;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            display: block; background: rgba(255,215,0,0.15);
+            padding: 0.5rem 1rem; margin: 0.5rem 0; border-radius: 30px;
+            cursor: pointer; transition: 0.2s;
         }
-
-        .teacher-item:hover {
-            background: #ffb347;
-            color: #1a1c3b;
-            border-color: #ffb347;
-            transform: translateY(-1px);
-        }
-
-        .teacher-item-link {
-            display: inline-block;
-            background: rgba(100, 150, 255, 0.25);
-            padding: 0.25rem 0.7rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #cbd5ff;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .teacher-item-link:hover {
-            background: #3a6ea5;
-            color: white;
-        }
-
-        .sidebar-toggle {
-            position: absolute;
-            top: 1rem;
-            right: -2.5rem;
-            width: 2.2rem;
-            height: 2.2rem;
-            background: #2e2f55;
-            border: 1px solid #ffb347;
-            border-radius: 0 8px 8px 0;
-            color: #ffd966;
-            font-size: 1.4rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-            z-index: 101;
-        }
-
-        .sidebar-toggle:hover {
-            background: #ffb347;
-            color: #1a1c3b;
-        }
-
+        .teacher-item:hover { background: #ffb347; color: #1a1c3b; }
         /* 主内容区 */
-        .main-content {
-            margin-left: 280px;
-            min-height: 100vh;
-            padding: 2rem 2rem 3rem;
-            transition: margin-left 0.3s ease;
-            background: #fefefe;
+        .main { margin-left: 260px; padding: 2rem; min-height: 100vh; }
+        .content-card {
+            background: white; border-radius: 28px; padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-
-        .main-content.sidebar-collapsed {
-            margin-left: 0;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 2rem;
-        }
-
-        .search-container {
-            display: flex;
-            gap: 0.5rem;
-            background: white;
-            border: 1px solid #cfdde6;
-            border-radius: 40px;
-            padding: 0.3rem 0.3rem 0.3rem 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .search-input {
-            border: none;
-            outline: none;
-            font-size: 0.9rem;
-            padding: 0.4rem 0;
-            width: 180px;
-            background: transparent;
-        }
-
-        .search-btn {
-            background: #ffb347;
-            border: none;
-            border-radius: 40px;
-            padding: 0.4rem 1rem;
-            color: white;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .search-btn:hover {
-            background: #e6952e;
-        }
-
-        .content-display {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 1.8rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
-            border: 1px solid #eef2f8;
-        }
-
-        .default-tip {
-            text-align: center;
-            padding: 4rem 1rem;
-            color: #6c7a91;
-            font-size: 1.1rem;
-        }
-
-        .quote-list {
-            animation: fadeIn 0.3s ease;
-        }
-
-        .quote-main-title {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-
-        .teacher-info {
-            display: flex;
-            gap: 1rem;
-            align-items: baseline;
-            margin: 1rem 0 0.5rem;
-        }
-
-        .teacher-name {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #b45309;
-        }
-
-        .subject-tag {
-            background: #fef3e8;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            border-left: 2px solid #ffb347;
-            color: #7c5e2a;
-        }
-
-        .current-location {
-            color: #6c7a91;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-        }
-
-        .content-divider {
-            margin: 1rem 0 1.5rem;
-            border-color: #e2e8f0;
-        }
-
-        .quotes-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .quote-card {
-            background: #fafcff;
-            border-left: 4px solid #ffb347;
-            padding: 1rem 1.2rem;
-            border-radius: 20px;
-            transition: all 0.2s;
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-            border: 1px solid #edf2f7;
-        }
-
-        .quote-card:hover {
-            background: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transform: translateX(4px);
-        }
-
-        .quote-number {
-            background: #ffb347;
-            color: white;
-            font-weight: bold;
-            width: 28px;
-            height: 28px;
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            flex-shrink: 0;
-            margin-top: 0.1rem;
-        }
-
-        .quote-text {
-            flex: 1;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #1e293b;
-        }
-
-        .jin-sheng-module {
-            margin-top: 2rem;
-            background: #fffaf0;
-            border-radius: 28px;
-            padding: 1.2rem;
-            border: 1px solid #ffeaaf;
-        }
-
-        .module-title {
-            font-size: 1.6rem;
-            font-weight: bold;
-            text-align: center;
-            color: #b45309;
-            margin-bottom: 1rem;
-        }
-
-        .module-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-
-        .module-item h4 {
-            font-size: 1.2rem;
-            color: #b45309;
-            margin-bottom: 0.5rem;
-            border-left: 3px solid #ffb347;
-            padding-left: 0.7rem;
-        }
-
-        .module-item p {
-            background: #ffffff;
-            padding: 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            border: 1px solid #ffedc9;
-            color: #2d3a4b;
-        }
-
-        /* 大事记样式 */
-        .events-container {
-            animation: fadeIn 0.3s ease;
-        }
-
-        .events-title {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #b45309;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .events-content {
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .events-image {
-            max-width: 100%;
-            border-radius: 24px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            margin: 1rem 0;
-        }
-
-        .student-tip, .xingchen-tip {
-            text-align: center;
-            padding: 3rem;
-            font-size: 1.2rem;
-            color: #6c7a91;
-            background: #f8fafc;
-            border-radius: 28px;
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 44px;
-            height: 44px;
-            background: #ffb347;
-            border: none;
-            border-radius: 30px;
-            color: #1e293b;
-            font-size: 1.6rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: none;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-            transition: 0.2s;
-            z-index: 99;
-        }
-
-        .back-to-top:hover {
-            background: #ffd966;
-            transform: scale(1.05);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 260px;
-                transform: translateX(-260px);
-            }
-            .sidebar:not(.collapsed) {
-                transform: translateX(0);
-            }
-            .sidebar.collapsed {
-                transform: translateX(-260px);
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-                min-height: 100vh;
-            }
-            .main-content.sidebar-collapsed {
-                margin-left: 0;
-            }
-            .sidebar-toggle {
-                right: -2.2rem;
-                width: 2rem;
-                height: 2rem;
-            }
-            .quote-card {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .quote-number {
-                align-self: flex-start;
-            }
-            .teacher-name {
-                font-size: 1.3rem;
-            }
-            .search-input {
-                width: 120px;
-            }
+        .default-tip { text-align: center; color: #6c7a91; padding: 3rem; }
+        .events-container { text-align: center; }
+        .events-title { font-size: 2rem; color: #b45309; margin-bottom: 1rem; }
+        .events-image { max-width: 100%; border-radius: 24px; margin-top: 1rem; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        @media (max-width: 700px) {
+            .sidebar { width: 220px; }
+            .main { margin-left: 220px; }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar" id="sidebar">
-        <button class="sidebar-toggle" id="sidebar-toggle">≡</button>
-        <div class="sidebar-content">
-            <div class="sidebar-header">
-                <h2 class="sidebar-main-title">世说金语</h2>
-                <p class="sidebar-sub-title">校园语录档案馆</p>
-                <hr class="sidebar-divider">
-            </div>
-
-            <div class="subject-list">
-                <div class="subject-item"><span class="subject-title">📖 语文</span><div class="teacher-list"><span class="teacher-item" data-subject="语文" data-teacher="陈琳">陈琳</span><span class="teacher-item" data-subject="语文" data-teacher="范叶斌">范叶斌</span><span class="teacher-item" data-subject="语文" data-teacher="郑宇（小宝）">郑宇（小宝）</span></div></div>
-                <div class="subject-item"><span class="subject-title">🔢 数学</span><div class="teacher-list"><span class="teacher-item" data-subject="数学" data-teacher="金声">金声</span></div></div>
-                <div class="subject-item"><span class="subject-title">🗣️ 英语</span><div class="teacher-list"><span class="teacher-item" data-subject="英语" data-teacher="冯秋云（fqy，frequently）">冯秋云</span><span class="teacher-item" data-subject="英语" data-teacher="赵永恒（仓山一哥）">赵永恒（仓山一哥）</span></div></div>
-                <div class="subject-item"><span class="subject-title">⚛️ 物理</span><div class="teacher-list"><span class="teacher-item" data-subject="物理" data-teacher="颜有虹">颜有虹</span></div></div>
-                <div class="subject-item"><span class="subject-title">🧪 化学</span><div class="teacher-list"><span class="teacher-item" data-subject="化学" data-teacher="严志芳">严志芳</span><span class="teacher-item" data-subject="化学" data-teacher="程保权">程保权</span></div></div>
-                <div class="subject-item"><span class="subject-title">🧬 生物</span><div class="teacher-list"><span class="teacher-item" data-subject="生物" data-teacher="陈卉琴">陈卉琴</span><span class="teacher-item" data-subject="生物" data-teacher="叶永菁">叶永菁</span></div></div>
-                <div class="subject-item"><span class="subject-title">📜 政治</span><div class="teacher-list"><span class="teacher-item" data-subject="政治" data-teacher="傅敏">傅敏</span><span class="teacher-item" data-subject="政治" data-teacher="林根">林根</span></div></div>
-                <div class="subject-item"><span class="subject-title">🥁 教官语录</span><div class="teacher-list"><span class="teacher-item" data-subject="教官语录" data-teacher="星辰">星辰</span></div></div>
-                <div class="subject-item"><span class="subject-title">👨‍🎓 学生语录</span><div class="teacher-list"><span class="teacher-item" data-subject="学生语录" data-teacher="未整理">学生语录</span></div></div>
-                <div class="subject-item"><span class="subject-title">🤖 赛博档案</span><div class="teacher-list"><a href="picture.html" class="teacher-item-link">图片集</a></div></div>
-                <!-- 大事记条目：data-subject 严格为 "大事记" -->
-                <div class="subject-item"><span class="subject-title">📅 高三（1）班大事记</span><div class="teacher-list"><span class="teacher-item" data-subject="大事记" data-teacher="高三1班">大事记</span></div></div>
-            </div>
+    <div class="sidebar">
+        <h2>📖 世说金语</h2>
+        <div class="teacher-list">
+            <!-- 只有大事记一个条目，用于测试 -->
+            <span class="teacher-item" data-subject="大事记">大事记</span>
         </div>
+        <!-- 你可以以后在这里加更多老师 -->
     </div>
-
-    <div class="main-content" id="main-content">
-        <div class="top-bar">
-            <div class="search-container">
-                <input type="text" class="search-input" id="search-input" placeholder="搜索老师或语录...">
-                <button class="search-btn" id="search-button">🔍 搜索</button>
+    <div class="main">
+        <div class="content-card">
+            <!-- 默认提示 -->
+            <div id="default-tip" class="default-tip">
+                <h3>✨ 请从左侧点击“大事记”查看班级照片 ✨</h3>
             </div>
-        </div>
-
-        <div class="content-display" id="content-display">
-            <div class="default-tip" id="default-tip"><h3>请从左侧选择科目/老师查看语录</h3></div>
-
-            <div class="jin-sheng-module" id="jin-sheng-module" style="display: none;">
-                <div class="module-title">金氏专属档案</div>
-                <div class="module-content">
-                    <div class="module-item"><h4>🔢 金氏方法</h4><p>金氏代入法，特征三角形，主导函数，谁大显谁形，设联判韦译，焦点三角形，班牌拐杖，六大经典结论，等距抽取，基本量，先猜后证，颠来倒去，二检字，定序问题，除序法，查字典，正难则反，看图说话；</p></div>
-                    <div class="module-item"><h4>💬 金氏评语</h4><p>土人计算，化简土人，土人，打死，乱来，面批，做的跟屎一样，太假，过了，计算好像有问题，好可怕的作业！</p></div>
-                    <div class="module-item"><h4>🥊 金氏拳法</h4><p>响指，勾引；狂扇猛攻；捂嘴擦黑板；左手插口袋；伸长脖子喝水；最丑的马步姿势；让啊猛推，反手扫码，金氏遮板法，金氏空间四边形。</p></div>
-                    <div class="module-item"><h4>🏆 独特称号</h4><p>金·土人的培育者·先行的教育家·金氏代入法的创造者·每日一笑的拍摄者·乱来做法的批判者·金氏拳法的代言人·新型擦黑板方式的发明家·太阳光芒的播撒者·课前五分钟的美食家·极化恒等式的摧毁者·物理强于数学的特异人士·逆水行舟的逆行者·太极扇与跑操的阻挡者·保持生气的情绪管理者·注意力资源分配失衡的宏观调控者·排列组合的掌控者·粉圈文化与宗教文化的集大成者·金声玉振的传播者·金声模仿大赛亚军·全年段所有人的爸爸·故意写错字的钓鱼者·发现火车站生育率高的调查者·作业的守护者·萝莉曲线的发明者·发现y=tanx曲线前凸后翘的量化调酒师·真实身份为柯西的弟弟柯南·韦神的接班人伪神（金神）·认为出卷老师男子有坑的叛逆者·孤独狂欢的辩证转化者·勇于提出自身错误的自我革命者·做高考卷前沐浴更衣的天才·幼儿园的宝玉老师·比肩Yau的数学皇帝·有4/5很喜欢你的追慕者·集卡家·解题路径统一与国家统一的捍卫者·黄金组合成员·红包的发送者·不断做题的升级玩家·豆包的测试者·袒胸露乳的篮球运动员·泄露天机的普罗米修斯·GPT5的翻墙使用者·烂唧唧的剩蛋老人·眼高手高作文题目的出题人·很有安全感之人·拉马努"金"·声老师。</p></div>
-                </div>
-            </div>
-
-            <div class="quote-list" id="quote-list" style="display: none;">
-                <h1 class="quote-main-title">校园语录合集</h1>
-                <div class="teacher-info"><span class="teacher-name" id="teacher-name">XXX老师</span><span class="subject-tag" id="subject-tag">科目</span></div>
-                <p class="current-location" id="current-location">当前位置：科目/XXX老师。</p>
-                <hr class="content-divider">
-                <div class="quotes-container" id="quotes-container"></div>
-            </div>
-
-            <div class="student-tip" id="student-tip" style="display: none;"><h3>正在整理中，敬请期待✨</h3></div>
-            <div class="xingchen-tip" id="xingchen-tip" style="display: none;"><h3>星辰教官语录 · 待补充</h3></div>
-
-            <!-- 大事记容器：图片路径请改为你的实际文件名 -->
-            <div class="events-container" id="events-container" style="display: none;">
+            <!-- 大事记容器，初始隐藏 -->
+            <div id="events-container" style="display: none;">
                 <div class="events-title">📸 高三（1）班大事记</div>
-                <div class="events-content">
-                    <p style="margin-bottom: 1rem;">愿以此照重新回忆我们相处的时光~</p>
-                    <img src="class-photo.jpg" alt="班级大事记照片" class="events-image" style="max-width:100%; border-radius:20px;">
-                </div>
+                <p style="margin-bottom: 1rem;">愿以此照重新回忆我们相处的时光~</p>
+                <!-- 图片路径：确保 class-photo.jpg 和本文件在同一目录 -->
+                <img src="class-photo.jpg" alt="班级大事记照片" class="events-image">
             </div>
         </div>
     </div>
-
-    <button class="back-to-top" id="back-to-top">↑</button>
 
     <script>
-        // 语录数据（示例，可任意扩充）
-        const quoteData = {
-            "语文-陈琳": ["平时不愿意做这些事，要成绩时又那么迫切，让人匪夷所思", "如果谁讲父为子纲，你要跳起来了", "人生的一些遗憾，比如考上清华没上北大"],
-            "语文-范叶斌": ["红颜福水", "她（孙犁）说了我就信了", "水生-水生嫂，木生-木生嫂，土生-土生嫂，金生-金生嫂"],
-            "语文-郑宇（小宝）": ["@全体成员 背诵《六国论》时，务必将译文放在边上", "大家还是尽可能把六国论给它背掉", "作业还没通过智学网上交的速速！"],
-            "数学-金声": ["赖祉祺，睡着了，是不是好久没上课睡习惯了", "你们把叶可聿照片放讲台上干嘛？", "让啊！！！"],
-            "英语-冯秋云（fqy，frequently）": ["出去！不要在我的课上写其他作业！", "你们全是情感荒漠", "阅读的耐受力太差"],
-            "英语-赵永恒（仓山一哥）": ["我的笔记本上有我的大头照，不过处理过了", "故意的，保留实力", "等我有钱的时候，就开万人演唱会"],
-            "物理-颜有虹": ["改到第一问：“嗯？三角函数还不错~”改到第二问：“还是一样的渣”", "密密麻麻地绕10圈", "所有的交流电统统给你掐死"],
-            "化学-严志芳": ["Na离子（第一声），估读（第三声），距离（第三声）", "根都要烂了（评价林根）", "中年油腻大叔（评价金声）"],
-            "化学-程保权": ["金刚石晶胞请牢牢记住它有9个C", "碳酸酸性怎么会比硝酸强呢？", "1mol金刚石含有8molC"],
-            "生物-陈卉琴": ["均匀地死去", "不讲评，我待会儿讲评", "现在这么会说，待会儿要给你一道题你又不乐意"],
-            "生物-叶永菁": ["你真是哪壶不开提哪壶，我就在这里算不算人", "OK你个头啊，我看你是要KO了", "这个男的是野生型"],
-            "政治-傅敏": ["人高马大，他还能涨，大学还能长", "黑猫白猫，能抓老鼠的就是好老鼠", "吕奕铮跟个猴系帅哥一样，陈林佳也是邻家小伙"],
-            "政治-林根": ["林氏哲学是唯一正确的哲学", "下雨要带伞（咯吱也有自己的天气之子）", "只有两条路：考公，考研"],
-            "教官语录-星辰": []
-        };
-
-        // DOM 元素
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('sidebar-toggle');
-        const mainContent = document.getElementById('main-content');
-        let collapsed = false;
-        toggleBtn.addEventListener('click', () => {
-            collapsed = !collapsed;
-            if (collapsed) {
-                sidebar.classList.add('collapsed');
-                mainContent.classList.add('sidebar-collapsed');
-                toggleBtn.textContent = '☰';
-            } else {
-                sidebar.classList.remove('collapsed');
-                mainContent.classList.remove('sidebar-collapsed');
-                toggleBtn.textContent = '≡';
-            }
-        });
-
+        // 获取元素
         const defaultTip = document.getElementById('default-tip');
-        const jinModule = document.getElementById('jin-sheng-module');
-        const quoteListDiv = document.getElementById('quote-list');
-        const studentTipDiv = document.getElementById('student-tip');
-        const xingchenTipDiv = document.getElementById('xingchen-tip');
-        const eventsDiv = document.getElementById('events-container');
-        const teacherNameSpan = document.getElementById('teacher-name');
-        const subjectTagSpan = document.getElementById('subject-tag');
-        const locationSpan = document.getElementById('current-location');
-        const quotesContainer = document.getElementById('quotes-container');
-
-        function hideAll() {
-            defaultTip.style.display = 'none';
-            jinModule.style.display = 'none';
-            quoteListDiv.style.display = 'none';
-            studentTipDiv.style.display = 'none';
-            xingchenTipDiv.style.display = 'none';
-            eventsDiv.style.display = 'none';
-        }
-
-        function showTeacher(subject, teacher) {
-            hideAll();
-            quoteListDiv.style.display = 'block';
-            teacherNameSpan.textContent = `${teacher}老师`;
-            subjectTagSpan.textContent = subject;
-            locationSpan.textContent = `当前位置：${subject}/${teacher}老师。`;
-
-            if (teacher === '金声') jinModule.style.display = 'block';
-            else jinModule.style.display = 'none';
-
-            const key = `${subject}-${teacher}`;
-            const quotes = quoteData[key] || [];
-            quotesContainer.innerHTML = '';
-            if (quotes.length === 0) {
-                quotesContainer.innerHTML = '<p class="no-quotes">暂无收录语录，欢迎补充！</p>';
-            } else {
-                quotes.forEach((q, idx) => {
-                    const card = document.createElement('div');
-                    card.className = 'quote-card';
-                    card.innerHTML = `<span class="quote-number">${idx+1}</span><p class="quote-text">${q}</p>`;
-                    quotesContainer.appendChild(card);
-                });
-            }
-        }
-
-        // 绑定所有 teacher-item 点击事件
-        document.querySelectorAll('.teacher-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const subject = item.dataset.subject;
-                const teacher = item.dataset.teacher;
-
+        const eventsContainer = document.getElementById('events-container');
+        // 获取所有 .teacher-item 并绑定点击事件
+        const teacherItems = document.querySelectorAll('.teacher-item');
+        teacherItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // 获取 data-subject 属性值
+                const subject = this.getAttribute('data-subject');
                 if (subject === '大事记') {
-                    hideAll();
-                    eventsDiv.style.display = 'block';
-                    window.scrollTo(0, 0);
-                    return;
+                    defaultTip.style.display = 'none';
+                    eventsContainer.style.display = 'block';
+                } else {
+                    // 其他老师的处理（以后再加）
+                    alert('其他老师语录待补充');
                 }
-                if (subject === '学生语录') {
-                    hideAll();
-                    studentTipDiv.style.display = 'flex';
-                    return;
-                }
-                if (subject === '教官语录' && teacher === '星辰') {
-                    hideAll();
-                    xingchenTipDiv.style.display = 'flex';
-                    return;
-                }
-                showTeacher(subject, teacher);
-                window.scrollTo(0, 0);
             });
         });
-
-        // 搜索占位
-        const searchBtn = document.getElementById('search-button');
-        const searchInput = document.getElementById('search-input');
-        searchBtn.addEventListener('click', () => {
-            const kw = searchInput.value.trim();
-            if (!kw) alert('请输入搜索内容');
-            else alert(`🔍 搜索功能开发中...\n你想搜：“${kw}”`);
-        });
-        searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchBtn.click(); });
-
-        // 返回顶部
-        const backBtn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            backBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
-        });
-        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     </script>
 </body>
 </html>
