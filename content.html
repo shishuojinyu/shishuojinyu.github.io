@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>世说金语 - 校园语录合集</title>
     <style>
-        /* ========== 全局重置 & 浅色主题 ========== */
         * {
             margin: 0;
             padding: 0;
@@ -19,7 +18,7 @@
             line-height: 1.5;
         }
 
-        /* ========== 侧边栏（浅了一些的深蓝灰） ========== */
+        /* 侧边栏（浅蓝灰色） */
         .sidebar {
             position: fixed;
             top: 0;
@@ -162,7 +161,7 @@
             color: #1a1c3b;
         }
 
-        /* ========== 主内容区 ========== */
+        /* 主内容区 */
         .main-content {
             margin-left: 280px;
             min-height: 100vh;
@@ -364,6 +363,7 @@
             color: #2d3a4b;
         }
 
+        /* 大事记样式 */
         .events-container {
             animation: fadeIn 0.3s ease;
         }
@@ -475,101 +475,20 @@
                 <p class="sidebar-sub-title">校园语录档案馆</p>
                 <hr class="sidebar-divider">
             </div>
-            
-            <div class="subject-list">
-                <!-- 语文 -->
-                <div class="subject-item">
-                    <span class="subject-title">📖 语文</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="语文" data-teacher="陈琳">陈琳</span>
-                        <span class="teacher-item" data-subject="语文" data-teacher="范叶斌">范叶斌</span>
-                        <span class="teacher-item" data-subject="语文" data-teacher="郑宇（小宝）">郑宇（小宝）</span>
-                    </div>
-                </div>
-                
-                <!-- 数学 -->
-                <div class="subject-item">
-                    <span class="subject-title">🔢 数学</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="数学" data-teacher="金声">金声</span>
-                    </div>
-                </div>
-                
-                <!-- 英语 -->
-                <div class="subject-item">
-                    <span class="subject-title">🗣️ 英语</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="英语" data-teacher="冯秋云（fqy，frequently）">冯秋云</span>
-                        <span class="teacher-item" data-subject="英语" data-teacher="赵永恒（仓山一哥）">赵永恒（仓山一哥）</span>
-                    </div>
-                </div>
-                
-                <!-- 物理 -->
-                <div class="subject-item">
-                    <span class="subject-title">⚛️ 物理</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="物理" data-teacher="颜有虹">颜有虹</span>
-                    </div>
-                </div>
-                
-                <!-- 化学 -->
-                <div class="subject-item">
-                    <span class="subject-title">🧪 化学</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="化学" data-teacher="严志芳">严志芳</span>
-                        <span class="teacher-item" data-subject="化学" data-teacher="程保权">程保权</span>
-                    </div>
-                </div>
-                
-                <!-- 生物 -->
-                <div class="subject-item">
-                    <span class="subject-title">🧬 生物</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="生物" data-teacher="陈卉琴">陈卉琴</span>
-                        <span class="teacher-item" data-subject="生物" data-teacher="叶永菁">叶永菁</span>
-                    </div>
-                </div>
-                
-                <!-- 政治 -->
-                <div class="subject-item">
-                    <span class="subject-title">📜 政治</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="政治" data-teacher="傅敏">傅敏</span>
-                        <span class="teacher-item" data-subject="政治" data-teacher="林根">林根</span>
-                    </div>
-                </div>
-                
-                <!-- 教官语录 -->
-                <div class="subject-item">
-                    <span class="subject-title">🥁 教官语录</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="教官语录" data-teacher="星辰">星辰</span>
-                    </div>
-                </div>
-                
-                <!-- 学生语录 -->
-                <div class="subject-item">
-                    <span class="subject-title">👨‍🎓 学生语录</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="学生语录" data-teacher="未整理">学生语录</span>
-                    </div>
-                </div>
-                
-                <!-- 赛博档案 -->
-                <div class="subject-item">
-                    <span class="subject-title">🤖 赛博档案</span>
-                    <div class="teacher-list">
-                        <a href="picture.html" class="teacher-item-link">图片集</a>
-                    </div>
-                </div>
 
-                <!-- 高三（1）班大事记 -->
-                <div class="subject-item">
-                    <span class="subject-title">📅 高三（1）班大事记</span>
-                    <div class="teacher-list">
-                        <span class="teacher-item" data-subject="大事记" data-teacher="高三1班">大事记</span>
-                    </div>
-                </div>
+            <div class="subject-list">
+                <div class="subject-item"><span class="subject-title">📖 语文</span><div class="teacher-list"><span class="teacher-item" data-subject="语文" data-teacher="陈琳">陈琳</span><span class="teacher-item" data-subject="语文" data-teacher="范叶斌">范叶斌</span><span class="teacher-item" data-subject="语文" data-teacher="郑宇（小宝）">郑宇（小宝）</span></div></div>
+                <div class="subject-item"><span class="subject-title">🔢 数学</span><div class="teacher-list"><span class="teacher-item" data-subject="数学" data-teacher="金声">金声</span></div></div>
+                <div class="subject-item"><span class="subject-title">🗣️ 英语</span><div class="teacher-list"><span class="teacher-item" data-subject="英语" data-teacher="冯秋云（fqy，frequently）">冯秋云</span><span class="teacher-item" data-subject="英语" data-teacher="赵永恒（仓山一哥）">赵永恒（仓山一哥）</span></div></div>
+                <div class="subject-item"><span class="subject-title">⚛️ 物理</span><div class="teacher-list"><span class="teacher-item" data-subject="物理" data-teacher="颜有虹">颜有虹</span></div></div>
+                <div class="subject-item"><span class="subject-title">🧪 化学</span><div class="teacher-list"><span class="teacher-item" data-subject="化学" data-teacher="严志芳">严志芳</span><span class="teacher-item" data-subject="化学" data-teacher="程保权">程保权</span></div></div>
+                <div class="subject-item"><span class="subject-title">🧬 生物</span><div class="teacher-list"><span class="teacher-item" data-subject="生物" data-teacher="陈卉琴">陈卉琴</span><span class="teacher-item" data-subject="生物" data-teacher="叶永菁">叶永菁</span></div></div>
+                <div class="subject-item"><span class="subject-title">📜 政治</span><div class="teacher-list"><span class="teacher-item" data-subject="政治" data-teacher="傅敏">傅敏</span><span class="teacher-item" data-subject="政治" data-teacher="林根">林根</span></div></div>
+                <div class="subject-item"><span class="subject-title">🥁 教官语录</span><div class="teacher-list"><span class="teacher-item" data-subject="教官语录" data-teacher="星辰">星辰</span></div></div>
+                <div class="subject-item"><span class="subject-title">👨‍🎓 学生语录</span><div class="teacher-list"><span class="teacher-item" data-subject="学生语录" data-teacher="未整理">学生语录</span></div></div>
+                <div class="subject-item"><span class="subject-title">🤖 赛博档案</span><div class="teacher-list"><a href="picture.html" class="teacher-item-link">图片集</a></div></div>
+                <!-- 大事记条目：data-subject 严格为 "大事记" -->
+                <div class="subject-item"><span class="subject-title">📅 高三（1）班大事记</span><div class="teacher-list"><span class="teacher-item" data-subject="大事记" data-teacher="高三1班">大事记</span></div></div>
             </div>
         </div>
     </div>
@@ -583,9 +502,7 @@
         </div>
 
         <div class="content-display" id="content-display">
-            <div class="default-tip" id="default-tip">
-                <h3>请从左侧选择科目/老师查看语录</h3>
-            </div>
+            <div class="default-tip" id="default-tip"><h3>请从左侧选择科目/老师查看语录</h3></div>
 
             <div class="jin-sheng-module" id="jin-sheng-module" style="display: none;">
                 <div class="module-title">金氏专属档案</div>
@@ -599,23 +516,16 @@
 
             <div class="quote-list" id="quote-list" style="display: none;">
                 <h1 class="quote-main-title">校园语录合集</h1>
-                <div class="teacher-info">
-                    <span class="teacher-name" id="teacher-name">XXX老师</span>
-                    <span class="subject-tag" id="subject-tag">科目</span>
-                </div>
+                <div class="teacher-info"><span class="teacher-name" id="teacher-name">XXX老师</span><span class="subject-tag" id="subject-tag">科目</span></div>
                 <p class="current-location" id="current-location">当前位置：科目/XXX老师。</p>
                 <hr class="content-divider">
                 <div class="quotes-container" id="quotes-container"></div>
             </div>
 
-            <div class="student-tip" id="student-tip" style="display: none;">
-                <h3>正在整理中，敬请期待✨</h3>
-            </div>
+            <div class="student-tip" id="student-tip" style="display: none;"><h3>正在整理中，敬请期待✨</h3></div>
+            <div class="xingchen-tip" id="xingchen-tip" style="display: none;"><h3>星辰教官语录 · 待补充</h3></div>
 
-            <div class="xingchen-tip" id="xingchen-tip" style="display: none;">
-                <h3>星辰教官语录 · 待补充</h3>
-            </div>
-
+            <!-- 大事记容器：图片路径请改为你的实际文件名 -->
             <div class="events-container" id="events-container" style="display: none;">
                 <div class="events-title">📸 高三（1）班大事记</div>
                 <div class="events-content">
@@ -629,7 +539,7 @@
     <button class="back-to-top" id="back-to-top">↑</button>
 
     <script>
-        // 语录数据（后续可扩充，数据与视图分离）
+        // 语录数据（示例，可任意扩充）
         const quoteData = {
             "语文-陈琳": ["平时不愿意做这些事，要成绩时又那么迫切，让人匪夷所思", "如果谁讲父为子纲，你要跳起来了", "人生的一些遗憾，比如考上清华没上北大"],
             "语文-范叶斌": ["红颜福水", "她（孙犁）说了我就信了", "水生-水生嫂，木生-木生嫂，土生-土生嫂，金生-金生嫂"],
@@ -649,56 +559,51 @@
 
         // DOM 元素
         const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const toggleBtn = document.getElementById('sidebar-toggle');
         const mainContent = document.getElementById('main-content');
-        let sidebarCollapsed = false;
-
-        sidebarToggle.addEventListener('click', () => {
-            sidebarCollapsed = !sidebarCollapsed;
-            if (sidebarCollapsed) {
+        let collapsed = false;
+        toggleBtn.addEventListener('click', () => {
+            collapsed = !collapsed;
+            if (collapsed) {
                 sidebar.classList.add('collapsed');
                 mainContent.classList.add('sidebar-collapsed');
-                sidebarToggle.textContent = '☰';
+                toggleBtn.textContent = '☰';
             } else {
                 sidebar.classList.remove('collapsed');
                 mainContent.classList.remove('sidebar-collapsed');
-                sidebarToggle.textContent = '≡';
+                toggleBtn.textContent = '≡';
             }
         });
 
-        const teacherItems = document.querySelectorAll('.teacher-item');
         const defaultTip = document.getElementById('default-tip');
-        const jinShengModule = document.getElementById('jin-sheng-module');
-        const quoteList = document.getElementById('quote-list');
-        const studentTip = document.getElementById('student-tip');
-        const xingchenTip = document.getElementById('xingchen-tip');
-        const eventsContainer = document.getElementById('events-container');
+        const jinModule = document.getElementById('jin-sheng-module');
+        const quoteListDiv = document.getElementById('quote-list');
+        const studentTipDiv = document.getElementById('student-tip');
+        const xingchenTipDiv = document.getElementById('xingchen-tip');
+        const eventsDiv = document.getElementById('events-container');
         const teacherNameSpan = document.getElementById('teacher-name');
         const subjectTagSpan = document.getElementById('subject-tag');
-        const currentLocationSpan = document.getElementById('current-location');
+        const locationSpan = document.getElementById('current-location');
         const quotesContainer = document.getElementById('quotes-container');
 
-        function hideAllContent() {
+        function hideAll() {
             defaultTip.style.display = 'none';
-            jinShengModule.style.display = 'none';
-            quoteList.style.display = 'none';
-            studentTip.style.display = 'none';
-            xingchenTip.style.display = 'none';
-            eventsContainer.style.display = 'none';
+            jinModule.style.display = 'none';
+            quoteListDiv.style.display = 'none';
+            studentTipDiv.style.display = 'none';
+            xingchenTipDiv.style.display = 'none';
+            eventsDiv.style.display = 'none';
         }
 
-        function showTeacherQuotes(subject, teacher) {
-            hideAllContent();
-            quoteList.style.display = 'block';
+        function showTeacher(subject, teacher) {
+            hideAll();
+            quoteListDiv.style.display = 'block';
             teacherNameSpan.textContent = `${teacher}老师`;
             subjectTagSpan.textContent = subject;
-            currentLocationSpan.textContent = `当前位置：${subject}/${teacher}老师。`;
+            locationSpan.textContent = `当前位置：${subject}/${teacher}老师。`;
 
-            if (teacher === '金声') {
-                jinShengModule.style.display = 'block';
-            } else {
-                jinShengModule.style.display = 'none';
-            }
+            if (teacher === '金声') jinModule.style.display = 'block';
+            else jinModule.style.display = 'none';
 
             const key = `${subject}-${teacher}`;
             const quotes = quoteData[key] || [];
@@ -706,47 +611,48 @@
             if (quotes.length === 0) {
                 quotesContainer.innerHTML = '<p class="no-quotes">暂无收录语录，欢迎补充！</p>';
             } else {
-                quotes.forEach((quote, idx) => {
+                quotes.forEach((q, idx) => {
                     const card = document.createElement('div');
                     card.className = 'quote-card';
-                    card.innerHTML = `<span class="quote-number">${idx+1}</span><p class="quote-text">${quote}</p>`;
+                    card.innerHTML = `<span class="quote-number">${idx+1}</span><p class="quote-text">${q}</p>`;
                     quotesContainer.appendChild(card);
                 });
             }
         }
 
-        teacherItems.forEach(item => {
+        // 绑定所有 teacher-item 点击事件
+        document.querySelectorAll('.teacher-item').forEach(item => {
             item.addEventListener('click', () => {
                 const subject = item.dataset.subject;
                 const teacher = item.dataset.teacher;
 
                 if (subject === '大事记') {
-                    hideAllContent();
-                    eventsContainer.style.display = 'block';
+                    hideAll();
+                    eventsDiv.style.display = 'block';
                     window.scrollTo(0, 0);
                     return;
                 }
                 if (subject === '学生语录') {
-                    hideAllContent();
-                    studentTip.style.display = 'flex';
+                    hideAll();
+                    studentTipDiv.style.display = 'flex';
                     return;
                 }
                 if (subject === '教官语录' && teacher === '星辰') {
-                    hideAllContent();
-                    xingchenTip.style.display = 'flex';
+                    hideAll();
+                    xingchenTipDiv.style.display = 'flex';
                     return;
                 }
-                showTeacherQuotes(subject, teacher);
+                showTeacher(subject, teacher);
                 window.scrollTo(0, 0);
             });
         });
 
-        // 搜索（占位）
+        // 搜索占位
         const searchBtn = document.getElementById('search-button');
         const searchInput = document.getElementById('search-input');
         searchBtn.addEventListener('click', () => {
             const kw = searchInput.value.trim();
-            if (kw === '') alert('请输入搜索内容');
+            if (!kw) alert('请输入搜索内容');
             else alert(`🔍 搜索功能开发中...\n你想搜：“${kw}”`);
         });
         searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchBtn.click(); });
