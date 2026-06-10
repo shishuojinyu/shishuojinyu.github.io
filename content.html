@@ -26,7 +26,7 @@
             left: 0;
             width: 280px;
             height: 100vh;
-            background: #2d3b5a;  /* 比之前浅的深蓝灰 */
+            background: #2d3b5a;
             background: linear-gradient(145deg, #2d3b5a 0%, #253048 100%);
             border-right: 1px solid rgba(255, 215, 0, 0.4);
             overflow-y: auto;
@@ -52,7 +52,7 @@
 
         .sidebar-content {
             padding: 1.5rem 1rem 2rem;
-            min-height: 100%;  /* 确保内容撑开，边框拉满 */
+            min-height: 100%;
         }
 
         .sidebar-header {
@@ -137,7 +137,6 @@
             color: white;
         }
 
-        /* 侧边栏收起按钮 */
         .sidebar-toggle {
             position: absolute;
             top: 1rem;
@@ -163,10 +162,10 @@
             color: #1a1c3b;
         }
 
-        /* ========== 主内容区（填满视口，消除底部空白） ========== */
+        /* ========== 主内容区 ========== */
         .main-content {
             margin-left: 280px;
-            min-height: 100vh;   /* 让白色背景填满整个视口高度 */
+            min-height: 100vh;
             padding: 2rem 2rem 3rem;
             transition: margin-left 0.3s ease;
             background: #fefefe;
@@ -176,7 +175,6 @@
             margin-left: 0;
         }
 
-        /* 搜索栏改造为输入框+按钮 */
         .top-bar {
             display: flex;
             justify-content: flex-end;
@@ -326,7 +324,6 @@
             color: #1e293b;
         }
 
-        /* 金声专属模块 */
         .jin-sheng-module {
             margin-top: 2rem;
             background: #fffaf0;
@@ -367,7 +364,6 @@
             color: #2d3a4b;
         }
 
-        /* 大事记专用样式 */
         .events-container {
             animation: fadeIn 0.3s ease;
         }
@@ -392,16 +388,6 @@
             margin: 1rem 0;
         }
 
-        .image-note {
-            background: #fef3e8;
-            padding: 1rem;
-            border-radius: 20px;
-            color: #b45309;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-
-        /* 学生语录 / 星辰提示 */
         .student-tip, .xingchen-tip {
             text-align: center;
             padding: 3rem;
@@ -411,7 +397,6 @@
             border-radius: 28px;
         }
 
-        /* 返回顶部 */
         .back-to-top {
             position: fixed;
             bottom: 2rem;
@@ -441,7 +426,6 @@
             to { opacity: 1; transform: translateY(0);}
         }
 
-        /* 响应式 */
         @media (max-width: 768px) {
             .sidebar {
                 width: 260px;
@@ -482,8 +466,7 @@
         }
     </style>
 </head>
-<body class="content-page">
-    <!-- 左侧侧边栏容器 -->
+<body>
     <div class="sidebar" id="sidebar">
         <button class="sidebar-toggle" id="sidebar-toggle">≡</button>
         <div class="sidebar-content">
@@ -576,11 +559,11 @@
                 <div class="subject-item">
                     <span class="subject-title">🤖 赛博档案</span>
                     <div class="teacher-list">
-                        <a href="picture.html" class="teacher-item-link" data-subject="赛博档案" data-teacher="图片集">图片集</a>
+                        <a href="picture.html" class="teacher-item-link">图片集</a>
                     </div>
                 </div>
 
-                <!-- ========= 新增：高三（1）班大事记 ========= -->
+                <!-- 高三（1）班大事记 -->
                 <div class="subject-item">
                     <span class="subject-title">📅 高三（1）班大事记</span>
                     <div class="teacher-list">
@@ -591,47 +574,29 @@
         </div>
     </div>
 
-    <!-- 右侧内容区 -->
     <div class="main-content" id="main-content">
         <div class="top-bar">
             <div class="search-container">
                 <input type="text" class="search-input" id="search-input" placeholder="搜索老师或语录...">
-                <button class="search-btn" id="search-button">
-                    <span>🔍</span> 搜索
-                </button>
+                <button class="search-btn" id="search-button">🔍 搜索</button>
             </div>
         </div>
 
         <div class="content-display" id="content-display">
-            <!-- 默认提示 -->
             <div class="default-tip" id="default-tip">
                 <h3>请从左侧选择科目/老师查看语录</h3>
             </div>
 
-            <!-- 金声专属模块 -->
             <div class="jin-sheng-module" id="jin-sheng-module" style="display: none;">
                 <div class="module-title">金氏专属档案</div>
                 <div class="module-content">
-                    <div class="module-item">
-                        <h4>🔢 金氏方法</h4>
-                        <p>金氏代入法，特征三角形，主导函数，谁大显谁形，设联判韦译，焦点三角形，班牌拐杖，六大经典结论，等距抽取，基本量，先猜后证，颠来倒去，二检字，定序问题，除序法，查字典，正难则反，看图说话；</p>
-                    </div>
-                    <div class="module-item">
-                        <h4>💬 金氏评语</h4>
-                        <p>土人计算，化简土人，土人，打死，乱来，面批，做的跟屎一样，太假，过了，计算好像有问题，好可怕的作业！</p>
-                    </div>
-                    <div class="module-item">
-                        <h4>🥊 金氏拳法</h4>
-                        <p>响指，勾引；狂扇猛攻；捂嘴擦黑板；左手插口袋；伸长脖子喝水；最丑的马步姿势；让啊猛推，反手扫码，金氏遮板法，金氏空间四边形。</p>
-                    </div>
-                    <div class="module-item">
-                        <h4>🏆 独特称号</h4>
-                        <p>金·土人的培育者·先行的教育家·金氏代入法的创造者·每日一笑的拍摄者·乱来做法的批判者·金氏拳法的代言人·新型擦黑板方式的发明家·太阳光芒的播撒者·课前五分钟的美食家·极化恒等式的摧毁者·物理强于数学的特异人士·逆水行舟的逆行者·太极扇与跑操的阻挡者·保持生气的情绪管理者·注意力资源分配失衡的宏观调控者·排列组合的掌控者·粉圈文化与宗教文化的集大成者·金声玉振的传播者·金声模仿大赛亚军·全年段所有人的爸爸·故意写错字的钓鱼者·发现火车站生育率高的调查者·作业的守护者·萝莉曲线的发明者·发现y=tanx曲线前凸后翘的量化调酒师·真实身份为柯西的弟弟柯南·韦神的接班人伪神（金神）·认为出卷老师男子有坑的叛逆者·孤独狂欢的辩证转化者·勇于提出自身错误的自我革命者·做高考卷前沐浴更衣的天才·幼儿园的宝玉老师·比肩Yau的数学皇帝·有4/5很喜欢你的追慕者·集卡家·解题路径统一与国家统一的捍卫者·黄金组合成员·红包的发送者·不断做题的升级玩家·豆包的测试者·袒胸露乳的篮球运动员·泄露天机的普罗米修斯·GPT5的翻墙使用者·烂唧唧的剩蛋老人·眼高手高作文题目的出题人·很有安全感之人·拉马努"金"·声老师。</p>
-                    </div>
+                    <div class="module-item"><h4>🔢 金氏方法</h4><p>金氏代入法，特征三角形，主导函数，谁大显谁形，设联判韦译，焦点三角形，班牌拐杖，六大经典结论，等距抽取，基本量，先猜后证，颠来倒去，二检字，定序问题，除序法，查字典，正难则反，看图说话；</p></div>
+                    <div class="module-item"><h4>💬 金氏评语</h4><p>土人计算，化简土人，土人，打死，乱来，面批，做的跟屎一样，太假，过了，计算好像有问题，好可怕的作业！</p></div>
+                    <div class="module-item"><h4>🥊 金氏拳法</h4><p>响指，勾引；狂扇猛攻；捂嘴擦黑板；左手插口袋；伸长脖子喝水；最丑的马步姿势；让啊猛推，反手扫码，金氏遮板法，金氏空间四边形。</p></div>
+                    <div class="module-item"><h4>🏆 独特称号</h4><p>金·土人的培育者·先行的教育家·金氏代入法的创造者·每日一笑的拍摄者·乱来做法的批判者·金氏拳法的代言人·新型擦黑板方式的发明家·太阳光芒的播撒者·课前五分钟的美食家·极化恒等式的摧毁者·物理强于数学的特异人士·逆水行舟的逆行者·太极扇与跑操的阻挡者·保持生气的情绪管理者·注意力资源分配失衡的宏观调控者·排列组合的掌控者·粉圈文化与宗教文化的集大成者·金声玉振的传播者·金声模仿大赛亚军·全年段所有人的爸爸·故意写错字的钓鱼者·发现火车站生育率高的调查者·作业的守护者·萝莉曲线的发明者·发现y=tanx曲线前凸后翘的量化调酒师·真实身份为柯西的弟弟柯南·韦神的接班人伪神（金神）·认为出卷老师男子有坑的叛逆者·孤独狂欢的辩证转化者·勇于提出自身错误的自我革命者·做高考卷前沐浴更衣的天才·幼儿园的宝玉老师·比肩Yau的数学皇帝·有4/5很喜欢你的追慕者·集卡家·解题路径统一与国家统一的捍卫者·黄金组合成员·红包的发送者·不断做题的升级玩家·豆包的测试者·袒胸露乳的篮球运动员·泄露天机的普罗米修斯·GPT5的翻墙使用者·烂唧唧的剩蛋老人·眼高手高作文题目的出题人·很有安全感之人·拉马努"金"·声老师。</p></div>
                 </div>
             </div>
 
-            <!-- 语录列表容器 -->
             <div class="quote-list" id="quote-list" style="display: none;">
                 <h1 class="quote-main-title">校园语录合集</h1>
                 <div class="teacher-info">
@@ -643,25 +608,20 @@
                 <div class="quotes-container" id="quotes-container"></div>
             </div>
 
-            <!-- 学生语录未整理提示 -->
             <div class="student-tip" id="student-tip" style="display: none;">
                 <h3>正在整理中，敬请期待✨</h3>
             </div>
 
-            <!-- 星辰教官语录预留 -->
             <div class="xingchen-tip" id="xingchen-tip" style="display: none;">
                 <h3>星辰教官语录 · 待补充</h3>
             </div>
 
-            <!-- 大事记专用容器 -->
             <div class="events-container" id="events-container" style="display: none;">
                 <div class="events-title">📸 高三（1）班大事记</div>
                 <div class="events-content">
-                    <p style="margin-bottom: 1rem;">愿从此图开始，展现我们的回忆~</p>
-                    <!-- 图片示例：把你想放的图片命名为 class-photo.jpg 放在同一个文件夹下，然后取消下面的注释 -->
-                    <!-- 
-                    <img src="class-photo.jpg" alt="班级教室照片" class="events-image">
-                    </div>
+                    <p style="margin-bottom: 1rem;">记录我们班的高光时刻、搞笑瞬间、青春回忆～</p>
+                    <!-- 请将你的图片文件名（例如 class-photo.jpg）填到 src 中，并确保图片和本网页放在同一个文件夹 -->
+                    <img src="your-image.jpg" alt="班级大事记照片" class="events-image" style="max-width:100%; border-radius:20px;">
                 </div>
             </div>
         </div>
@@ -670,77 +630,25 @@
     <button class="back-to-top" id="back-to-top">↑</button>
 
     <script>
-        // ==================== 语录数据（示例，后续可大量扩充） ====================
+        // 语录数据（后续可扩充，数据与视图分离）
         const quoteData = {
-            "语文-陈琳": [
-                "平时不愿意做这些事，要成绩时又那么迫切，让人匪夷所思",
-                "如果谁讲父为子纲，你要跳起来了",
-                "人生的一些遗憾，比如考上清华没上北大"
-            ],
-            "语文-范叶斌": [
-                "红颜福水",
-                "她（孙犁）说了我就信了",
-                "水生-水生嫂，木生-木生嫂，土生-土生嫂，金生-金生嫂"
-            ],
-            "语文-郑宇（小宝）": [
-                "@全体成员 背诵《六国论》时，务必将译文放在边上",
-                "大家还是尽可能把六国论给它背掉",
-                "作业还没通过智学网上交的速速！"
-            ],
-            "数学-金声": [
-                "赖祉祺，睡着了，是不是好久没上课睡习惯了",
-                "你们把叶可聿照片放讲台上干嘛？",
-                "让啊！！！"
-            ],
-            "英语-冯秋云（fqy，frequently）": [
-                "出去！不要在我的课上写其他作业！",
-                "你们全是情感荒漠",
-                "阅读的耐受力太差"
-            ],
-            "英语-赵永恒（仓山一哥）": [
-                "我的笔记本上有我的大头照，不过处理过了",
-                "故意的，保留实力",
-                "等我有钱的时候，就开万人演唱会"
-            ],
-            "物理-颜有虹": [
-                "改到第一问：“嗯？三角函数还不错~”改到第二问：“还是一样的渣”",
-                "密密麻麻地绕10圈",
-                "所有的交流电统统给你掐死"
-            ],
-            "化学-严志芳": [
-                "Na离子（第一声），估读（第三声），距离（第三声）",
-                "根都要烂了（评价林根）",
-                "中年油腻大叔（评价金声）"
-            ],
-            "化学-程保权": [
-                "金刚石晶胞请牢牢记住它有9个C",
-                "碳酸酸性怎么会比硝酸强呢？",
-                "1mol金刚石含有8molC"
-            ],
-            "生物-陈卉琴": [
-                "均匀地死去",
-                "不讲评，我待会儿讲评",
-                "现在这么会说，待会儿要给你一道题你又不乐意"
-            ],
-            "生物-叶永菁": [
-                "你真是哪壶不开提哪壶，我就在这里算不算人",
-                "OK你个头啊，我看你是要KO了",
-                "这个男的是野生型"
-            ],
-            "政治-傅敏": [
-                "人高马大，他还能涨，大学还能长",
-                "黑猫白猫，能抓老鼠的就是好老鼠",
-                "吕奕铮跟个猴系帅哥一样，陈林佳也是邻家小伙"
-            ],
-            "政治-林根": [
-                "林氏哲学是唯一正确的哲学",
-                "下雨要带伞（咯吱也有自己的天气之子）",
-                "只有两条路：考公，考研"
-            ],
-            "教官语录-星辰": []  // 星辰教官语录暂空，后续添加
+            "语文-陈琳": ["平时不愿意做这些事，要成绩时又那么迫切，让人匪夷所思", "如果谁讲父为子纲，你要跳起来了", "人生的一些遗憾，比如考上清华没上北大"],
+            "语文-范叶斌": ["红颜福水", "她（孙犁）说了我就信了", "水生-水生嫂，木生-木生嫂，土生-土生嫂，金生-金生嫂"],
+            "语文-郑宇（小宝）": ["@全体成员 背诵《六国论》时，务必将译文放在边上", "大家还是尽可能把六国论给它背掉", "作业还没通过智学网上交的速速！"],
+            "数学-金声": ["赖祉祺，睡着了，是不是好久没上课睡习惯了", "你们把叶可聿照片放讲台上干嘛？", "让啊！！！"],
+            "英语-冯秋云（fqy，frequently）": ["出去！不要在我的课上写其他作业！", "你们全是情感荒漠", "阅读的耐受力太差"],
+            "英语-赵永恒（仓山一哥）": ["我的笔记本上有我的大头照，不过处理过了", "故意的，保留实力", "等我有钱的时候，就开万人演唱会"],
+            "物理-颜有虹": ["改到第一问：“嗯？三角函数还不错~”改到第二问：“还是一样的渣”", "密密麻麻地绕10圈", "所有的交流电统统给你掐死"],
+            "化学-严志芳": ["Na离子（第一声），估读（第三声），距离（第三声）", "根都要烂了（评价林根）", "中年油腻大叔（评价金声）"],
+            "化学-程保权": ["金刚石晶胞请牢牢记住它有9个C", "碳酸酸性怎么会比硝酸强呢？", "1mol金刚石含有8molC"],
+            "生物-陈卉琴": ["均匀地死去", "不讲评，我待会儿讲评", "现在这么会说，待会儿要给你一道题你又不乐意"],
+            "生物-叶永菁": ["你真是哪壶不开提哪壶，我就在这里算不算人", "OK你个头啊，我看你是要KO了", "这个男的是野生型"],
+            "政治-傅敏": ["人高马大，他还能涨，大学还能长", "黑猫白猫，能抓老鼠的就是好老鼠", "吕奕铮跟个猴系帅哥一样，陈林佳也是邻家小伙"],
+            "政治-林根": ["林氏哲学是唯一正确的哲学", "下雨要带伞（咯吱也有自己的天气之子）", "只有两条路：考公，考研"],
+            "教官语录-星辰": []
         };
 
-        // ==================== DOM 元素 ====================
+        // DOM 元素
         const sidebar = document.getElementById('sidebar');
         const sidebarToggle = document.getElementById('sidebar-toggle');
         const mainContent = document.getElementById('main-content');
@@ -771,7 +679,6 @@
         const currentLocationSpan = document.getElementById('current-location');
         const quotesContainer = document.getElementById('quotes-container');
 
-        // 隐藏所有内容区块
         function hideAllContent() {
             defaultTip.style.display = 'none';
             jinShengModule.style.display = 'none';
@@ -781,7 +688,6 @@
             eventsContainer.style.display = 'none';
         }
 
-        // 显示老师语录（通用）
         function showTeacherQuotes(subject, teacher) {
             hideAllContent();
             quoteList.style.display = 'block';
@@ -789,7 +695,6 @@
             subjectTagSpan.textContent = subject;
             currentLocationSpan.textContent = `当前位置：${subject}/${teacher}老师。`;
 
-            // 金声特殊：额外显示专属模块
             if (teacher === '金声') {
                 jinShengModule.style.display = 'block';
             } else {
@@ -799,86 +704,60 @@
             const key = `${subject}-${teacher}`;
             const quotes = quoteData[key] || [];
             quotesContainer.innerHTML = '';
-            
             if (quotes.length === 0) {
                 quotesContainer.innerHTML = '<p class="no-quotes">暂无收录语录，欢迎补充！</p>';
             } else {
-                quotes.forEach((quote, index) => {
-                    const quoteCard = document.createElement('div');
-                    quoteCard.className = 'quote-card';
-                    quoteCard.innerHTML = `
-                        <span class="quote-number">${index + 1}</span>
-                        <p class="quote-text">${quote}</p>
-                    `;
-                    quotesContainer.appendChild(quoteCard);
+                quotes.forEach((quote, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'quote-card';
+                    card.innerHTML = `<span class="quote-number">${idx+1}</span><p class="quote-text">${quote}</p>`;
+                    quotesContainer.appendChild(card);
                 });
             }
         }
 
-        // 点击左侧条目处理
         teacherItems.forEach(item => {
             item.addEventListener('click', () => {
                 const subject = item.dataset.subject;
                 const teacher = item.dataset.teacher;
 
-                // 大事记特殊处理
                 if (subject === '大事记') {
                     hideAllContent();
                     eventsContainer.style.display = 'block';
                     window.scrollTo(0, 0);
                     return;
                 }
-
-                // 学生语录
                 if (subject === '学生语录') {
                     hideAllContent();
                     studentTip.style.display = 'flex';
                     return;
                 }
-
-                // 星辰教官（后续补充）
                 if (subject === '教官语录' && teacher === '星辰') {
                     hideAllContent();
                     xingchenTip.style.display = 'flex';
                     return;
                 }
-
-                // 正常老师语录
                 showTeacherQuotes(subject, teacher);
                 window.scrollTo(0, 0);
             });
         });
 
-        // 搜索功能（简单前端过滤，先做占位提示）
+        // 搜索（占位）
         const searchBtn = document.getElementById('search-button');
         const searchInput = document.getElementById('search-input');
         searchBtn.addEventListener('click', () => {
-            const keyword = searchInput.value.trim();
-            if (keyword === '') {
-                alert('请输入搜索内容');
-                return;
-            }
-            alert(`🔍 搜索功能开发中...\n当前想搜索：“${keyword}”\n后续会帮你快速找到老师和语录。`);
+            const kw = searchInput.value.trim();
+            if (kw === '') alert('请输入搜索内容');
+            else alert(`🔍 搜索功能开发中...\n你想搜：“${kw}”`);
         });
-        // 按回车也可以搜索
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                searchBtn.click();
-            }
-        });
+        searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchBtn.click(); });
 
         // 返回顶部
-        const backToTopBtn = document.getElementById('back-to-top');
+        const backBtn = document.getElementById('back-to-top');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.style.display = 'block';
-            } else {
-                backToTopBtn.style.display = 'none';
-            }
+            backBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
         });
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     </script>
 </body>
 </html>
